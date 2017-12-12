@@ -93,35 +93,37 @@ getDailyApiData = () => {
             wrapper.className = "wrapper";
 
             dailyData.forEach(function (element) {
+                const innerWrapper = document.createElement('div');
+                innerWrapper.className = "";
 
                 let summary = DOMManipulation.createNode('h1');
                 summary.innerHTML = `${element.time} ${element.temperatureMin} F - ${element.temperatureMax} F. ${element.summary}.`;
-                DOMManipulation.append(wrapper, summary);
+                DOMManipulation.append(innerWrapper, summary);
+
+                const innerWrapperMain = document.createElement('div');
+                innerWrapperMain.className = "inner-wrapper";
 
                 let windSpeed = DOMManipulation.createNode('div');
                 windSpeed.innerHTML = `Wind: ${element.windSpeed} m/s.`;
-                DOMManipulation.append(wrapper, windSpeed);
+                DOMManipulation.append(innerWrapperMain, windSpeed);
 
                 let humidity = DOMManipulation.createNode('div');
                 humidity.innerHTML = `Humidity: ${element.humidity} %.`;
-                DOMManipulation.append(wrapper, humidity);
+                DOMManipulation.append(innerWrapperMain, humidity);
 
                 let dewPoint = DOMManipulation.createNode('div');
                 dewPoint.innerHTML = `Dew Pt: ${element.dewPoint}˚.`;
-                DOMManipulation.append(wrapper, dewPoint);
+                DOMManipulation.append(innerWrapperMain, dewPoint);
 
                 let uvIndex = DOMManipulation.createNode('div');
                 uvIndex.innerHTML = `UV Index: ${element.uvIndex}.`;
-                DOMManipulation.append(wrapper, uvIndex);
-
-                let visibility = DOMManipulation.createNode('div');
-                visibility.innerHTML = `Visibility: ${element.visibility}+ km.`;
-                DOMManipulation.append(wrapper, visibility);
+                DOMManipulation.append(innerWrapperMain, uvIndex);
 
                 let pressure = DOMManipulation.createNode('div');
                 pressure.innerHTML = `Pressure: ${element.pressure} hPa.`;
-                DOMManipulation.append(wrapper, pressure);
-
+                DOMManipulation.append(innerWrapperMain, pressure);
+                innerWrapper.append(innerWrapperMain);
+                wrapper.append(innerWrapper);
             });
             appSettings.container.append(wrapper);
         })
