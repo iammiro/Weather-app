@@ -23,7 +23,7 @@ const DOMManipulation = {
     }
 };
 
-getCurrentLocation = () => {
+getCurrentUserLocation = () => {
     navigator.geolocation.getCurrentPosition(pos => {
             let crd = pos.coords;
             currentUserPosition.set('latitude', crd.latitude);
@@ -36,7 +36,7 @@ getCurrentLocation = () => {
         });
 };
 
-getCurrentlyApiData = () => {
+getTodayForecast = () => {
     let latitude = currentUserPosition.get('latitude');
     let longitude = currentUserPosition.get('longitude');
     let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}`;
@@ -78,7 +78,7 @@ getCurrentlyApiData = () => {
         });
 };
 
-getDailyApiData = () => {
+getWeekForecast = () => {
     let latitude = currentUserPosition.get('latitude');
     let longitude = currentUserPosition.get('longitude');
     let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}`;
@@ -132,4 +132,4 @@ getDailyApiData = () => {
         });
 };
 
-getCurrentLocation();
+getCurrentUserLocation();
