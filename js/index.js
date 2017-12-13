@@ -23,19 +23,6 @@ const DOMManipulation = {
     }
 };
 
-getCurrentUserLocation = () => {
-    navigator.geolocation.getCurrentPosition(pos => {
-            let crd = pos.coords;
-            currentUserPosition.set('latitude', crd.latitude);
-            currentUserPosition.set('longitude', crd.longitude);
-        }, err => console.warn(`ERROR(${err.code}): ${err.message}`),
-        {
-            enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 0
-        });
-};
-
 getTodayForecast = () => {
     let latitude = currentUserPosition.get('latitude');
     let longitude = currentUserPosition.get('longitude');
@@ -166,4 +153,37 @@ getWeekForecast = () => {
         });
 };
 
-getCurrentUserLocation();
+let promise = new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(pos => {
+            let crd = pos.coords;
+            currentUserPosition.set('latitude', crd.latitude);
+            currentUserPosition.set('longitude', crd.longitude);
+            resolve("result");
+        }, err => console.warn(`ERROR(${err.code}): ${err.message}`),
+        {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+        });
+});
+
+reject = () => console.log('Error');
+
+promise
+    .then(
+        result => {
+            // первая функция-обработчик - запустится при вызове resolve
+            getTodayForecast(); // result - аргумент resolve
+        },
+        error => {
+            // вторая функция - запустится при вызове reject
+            error(); // error - аргумент reject
+        }
+    ).then(
+    result => {
+        getWeekForecast();
+    },
+    error => {
+        error();
+    }
+);
