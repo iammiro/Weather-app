@@ -10,6 +10,17 @@ const appSettings = {
     }
 };
 
+//TODO:
+//1. Get city name from input, convert to latitude/longitude and send it to API.
+//2. URL API, put coordinates in url.
+//2. Save list of visited cities, save list of favorite cities, using browser history.
+
+
+
+
+
+
+
 const currentUserPosition = new Map();
 
 const DOMManipulation = {
@@ -67,7 +78,7 @@ getTodayForecast = () => {
             DOMManipulation.append(todayForecastWrapper, icon);
 
             let summary = DOMManipulation.createNode('h1');
-            summary.innerHTML = `${data.currently.temperature} F. ${data.currently.summary}`;
+            summary.innerHTML = `Today: ${data.currently.temperature} F. ${data.currently.summary}`;
             DOMManipulation.append(todayForecastWrapper, summary);
 
             let hourlySummary = DOMManipulation.createNode('h2');
