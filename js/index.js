@@ -44,33 +44,52 @@ getTodayForecast = () => {
         .then((response) => response.json())
         .then(data => {
             console.log(data);
-            let summary = DOMManipulation.createNode('h1');
-            summary.innerHTML = `${data.currently.temperature} F. ${data.currently.summary}.`;
-            DOMManipulation.append(appSettings.container, summary);
+
+            const todayForecastWrapper = document.createElement('div');
+            todayForecastWrapper.className = "today-forecast-wrapper";
+
+            const todayForecastHeaderWrapper = document.createElement('div');
+            todayForecastHeaderWrapper.className = "today-forecast-header-wrapper";
 
             let windSpeed = DOMManipulation.createNode('div');
             windSpeed.innerHTML = `Wind: ${data.currently.windSpeed} m/s.`;
-            DOMManipulation.append(appSettings.container, windSpeed);
+            DOMManipulation.append(todayForecastHeaderWrapper, windSpeed);
 
             let humidity = DOMManipulation.createNode('div');
             humidity.innerHTML = `Humidity: ${data.currently.humidity} %.`;
-            DOMManipulation.append(appSettings.container, humidity);
+            DOMManipulation.append(todayForecastHeaderWrapper, humidity);
 
             let dewPoint = DOMManipulation.createNode('div');
             dewPoint.innerHTML = `Dew Pt: ${data.currently.dewPoint}˚.`;
-            DOMManipulation.append(appSettings.container, dewPoint);
+            DOMManipulation.append(todayForecastHeaderWrapper, dewPoint);
 
             let uvIndex = DOMManipulation.createNode('div');
             uvIndex.innerHTML = `UV Index: ${data.currently.uvIndex}.`;
-            DOMManipulation.append(appSettings.container, uvIndex);
+            DOMManipulation.append(todayForecastHeaderWrapper, uvIndex);
 
             let visibility = DOMManipulation.createNode('div');
             visibility.innerHTML = `Visibility: ${data.currently.visibility}+ km.`;
-            DOMManipulation.append(appSettings.container, visibility);
+            DOMManipulation.append(todayForecastHeaderWrapper, visibility);
 
             let pressure = DOMManipulation.createNode('div');
             pressure.innerHTML = `Pressure: ${data.currently.pressure} hPa.`;
-            DOMManipulation.append(appSettings.container, pressure);
+            DOMManipulation.append(todayForecastHeaderWrapper, pressure);
+
+            let icon = DOMManipulation.createNode('img');
+            icon.src = `img/${data.currently.icon}.svg`;
+            DOMManipulation.append(todayForecastWrapper, icon);
+
+            let summary = DOMManipulation.createNode('h1');
+            summary.innerHTML = `${data.currently.temperature} F. ${data.currently.summary}`;
+            DOMManipulation.append(todayForecastWrapper, summary);
+
+            let hourlySummary = DOMManipulation.createNode('h2');
+            hourlySummary.innerHTML = `${data.hourly.summary}`;
+            DOMManipulation.append(todayForecastWrapper, hourlySummary);
+
+            DOMManipulation.append(appSettings.container, todayForecastHeaderWrapper);
+
+            DOMManipulation.append(appSettings.container, todayForecastWrapper);
 
         })
         .catch(function (error) {
@@ -86,6 +105,7 @@ getWeekForecast = () => {
         .then((response) => response.json())
         .then(function (data) {
             console.log(data);
+
             let dailyData = data.daily.data;
             console.log(dailyData);
 
@@ -93,12 +113,26 @@ getWeekForecast = () => {
             wrapper.className = "wrapper";
 
             dailyData.forEach(function (element) {
-                const innerWrapper = document.createElement('div');
-                innerWrapper.className = "";
+
+                let dayNumber = new Date(element.time * 1000);
+                let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                let day = days[dayNumber.getDay()];
+
+                const headerWrapperMain = document.createElement('div');
+                headerWrapperMain.className = "header-wrapper";
+
+                let icon = DOMManipulation.createNode('img');
+                icon.src = `img/${element.icon}.svg`;
+                DOMManipulation.append(headerWrapperMain, icon);
 
                 let summary = DOMManipulation.createNode('h1');
-                summary.innerHTML = `${element.time} ${element.temperatureMin} F - ${element.temperatureMax} F. ${element.summary}.`;
-                DOMManipulation.append(innerWrapper, summary);
+                summary.innerHTML = `${day} ${element.temperatureMin} &#10141; ${element.temperatureMax} F. ${element.summary}`;
+                DOMManipulation.append(headerWrapperMain, summary);
+
+                wrapper.append(headerWrapperMain);
+
+                const innerWrapper = document.createElement('div');
+                innerWrapper.className = "";
 
                 const innerWrapperMain = document.createElement('div');
                 innerWrapperMain.className = "inner-wrapper";
