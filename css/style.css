@@ -44,13 +44,22 @@ img {
     font-size: 22px;
     font-weight: 300;
     text-align: left;
-    margin: 24px 0;
+    margin: 5px 0;
     padding: 5px 10px;
     border-radius: 0 3px 3px 0;
     line-height: 1.5em;
     background-color: #80a5d6;
     text-shadow: -1px -1px 0 rgba(0, 0, 0, .15);
     color: #e5e5e5;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+    font-weight: 100;
 }
 
 footer {
@@ -117,4 +126,29 @@ footer {
     height: 40px;
     line-height: 40px;
     background-color: rgba(238, 238, 238, .35);
+}
+
+.accordion {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+}
+
+.panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.accordion:after {
+    content: '\02795';
+    font-size: 13px;
+    color: #777;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2796";
 }

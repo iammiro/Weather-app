@@ -4,6 +4,7 @@ const appSettings = {
     proxy: 'https://cors-anywhere.herokuapp.com/',
     apiKey: 'c0edd7e111d453106e09ff75c17397b8',
     units: 'auto',
+    defaultUnit: 'C',
     init: {
         method: 'GET',
         mode: 'cors',
@@ -29,7 +30,7 @@ document.getElementById('submit').addEventListener('click', function () {
             currentUserPosition.set('latitude', results[0].geometry.location.lat());
             currentUserPosition.set('longitude', results[0].geometry.location.lng());
             getTodayForecast();
-            // getWeekForecast();
+            getWeekForecast();
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
         }
@@ -128,7 +129,7 @@ getTodayForecast = () => {
             let icon = document.getElementById('icon');
             icon.src = `img/${data.currently.icon}.svg`;
             let summary = document.getElementById('summary');
-            summary.innerHTML = `Today in: ${data.currently.temperature} ${appSettings.unit}. ${data.currently.summary}`;
+            summary.innerHTML = `Today in: ${data.currently.temperature} ${appSettings.defaultUnit}. ${data.currently.summary}`;
             let hourlySummary = document.getElementById('hourlySummary');
             hourlySummary.innerHTML = `${data.hourly.summary}`;
 
@@ -138,74 +139,97 @@ getTodayForecast = () => {
         });
 };
 
-// getWeekForecast = () => {
-//     let latitude = currentUserPosition.get('latitude');
-//     let longitude = currentUserPosition.get('longitude');
-//     let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}`;
-//     fetch(url, appSettings.init)
-//         .then((response) => response.json())
-//         .then(function (data) {
-//             console.log(data);
-//
-//             let dailyData = data.daily.data;
-//             console.log(dailyData);
-//
-//             const wrapper = document.createElement('div');
-//             wrapper.className = "wrapper";
-//
-//             dailyData.forEach(function (element) {
-//
-//                 let dayNumber = new Date(element.time * 1000);
-//                 let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-//                 let day = days[dayNumber.getDay()];
-//
-//                 const headerWrapperMain = document.createElement('div');
-//                 headerWrapperMain.className = "header-wrapper";
-//
-//                 let icon = DOMManipulation.createNode('img');
-//                 icon.src = `img/${element.icon}.svg`;
-//                 DOMManipulation.append(headerWrapperMain, icon);
-//
-//                 let summary = DOMManipulation.createNode('h1');
-//                 summary.innerHTML = `${day} ${element.temperatureMin} &#10141; ${element.temperatureMax} F. ${element.summary}`;
-//                 DOMManipulation.append(headerWrapperMain, summary);
-//
-//                 wrapper.append(headerWrapperMain);
-//
-//                 const innerWrapper = document.createElement('div');
-//                 innerWrapper.className = "";
-//
-//                 const innerWrapperMain = document.createElement('div');
-//                 innerWrapperMain.className = "inner-wrapper";
-//
-//                 let windSpeed = DOMManipulation.createNode('div');
-//                 windSpeed.innerHTML = `Wind: ${element.windSpeed} m/s.`;
-//                 DOMManipulation.append(innerWrapperMain, windSpeed);
-//
-//                 let humidity = DOMManipulation.createNode('div');
-//                 humidity.innerHTML = `Humidity: ${element.humidity} %.`;
-//                 DOMManipulation.append(innerWrapperMain, humidity);
-//
-//                 let dewPoint = DOMManipulation.createNode('div');
-//                 dewPoint.innerHTML = `Dew Pt: ${element.dewPoint}˚.`;
-//                 DOMManipulation.append(innerWrapperMain, dewPoint);
-//
-//                 let uvIndex = DOMManipulation.createNode('div');
-//                 uvIndex.innerHTML = `UV Index: ${element.uvIndex}.`;
-//                 DOMManipulation.append(innerWrapperMain, uvIndex);
-//
-//                 let pressure = DOMManipulation.createNode('div');
-//                 pressure.innerHTML = `Pressure: ${element.pressure} hPa.`;
-//                 DOMManipulation.append(innerWrapperMain, pressure);
-//                 innerWrapper.append(innerWrapperMain);
-//                 wrapper.append(innerWrapper);
-//             });
-//             appSettings.container.append(wrapper);
-//         })
-//         .catch(function (error) {
-//             console.log(error);
-//         });
-// };
+getWeekForecast = () => {
+    let latitude = currentUserPosition.get('latitude');
+    let longitude = currentUserPosition.get('longitude');
+    let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${appSettings.units}`;
+    fetch(url, appSettings.init)
+        .then((response) => response.json())
+        .then(function (data) {
+            console.log(data);
+
+            let dailyData = data.daily.data;
+            console.log(dailyData);
+
+            const wrapper = document.createElement('div');
+            wrapper.className = "wrapper";
+
+            dailyData.forEach(function (element) {
+
+                let dayNumber = new Date(element.time * 1000);
+                let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                let day = days[dayNumber.getDay()];
+
+                const headerWrapperMain = document.createElement('div');
+                headerWrapperMain.className = "header-wrapper accordion";
+
+                let icon = DOMManipulation.createNode('img');
+                icon.src = `img/${element.icon}.svg`;
+                DOMManipulation.append(headerWrapperMain, icon);
+
+                let header = DOMManipulation.createNode('h1');
+                header.innerHTML = `${day}`;
+                DOMManipulation.append(headerWrapperMain, header);
+
+                wrapper.append(headerWrapperMain);
+
+                const innerWrapper = document.createElement('div');
+                innerWrapper.className = "panel";
+
+                let summary = DOMManipulation.createNode('h2');
+                summary.innerHTML = `${element.summary}`;
+                DOMManipulation.append(innerWrapper, summary);
+
+                let temperature = DOMManipulation.createNode('h1');
+                temperature.innerHTML = `${element.temperatureMin} &#10141; ${element.temperatureMax} ${appSettings.defaultUnit}.`;
+                DOMManipulation.append(innerWrapper, temperature);
+
+                const innerWrapperMain = document.createElement('div');
+                innerWrapperMain.className = "inner-wrapper";
+
+                let windSpeed = DOMManipulation.createNode('div');
+                windSpeed.innerHTML = `Wind: ${element.windSpeed} m/s.`;
+                DOMManipulation.append(innerWrapperMain, windSpeed);
+
+                let humidity = DOMManipulation.createNode('div');
+                humidity.innerHTML = `Humidity: ${element.humidity} %.`;
+                DOMManipulation.append(innerWrapperMain, humidity);
+
+                let dewPoint = DOMManipulation.createNode('div');
+                dewPoint.innerHTML = `Dew Pt: ${element.dewPoint}˚.`;
+                DOMManipulation.append(innerWrapperMain, dewPoint);
+
+                let uvIndex = DOMManipulation.createNode('div');
+                uvIndex.innerHTML = `UV Index: ${element.uvIndex}.`;
+                DOMManipulation.append(innerWrapperMain, uvIndex);
+
+                let pressure = DOMManipulation.createNode('div');
+                pressure.innerHTML = `Pressure: ${element.pressure} hPa.`;
+                DOMManipulation.append(innerWrapperMain, pressure);
+                innerWrapper.append(innerWrapperMain);
+                wrapper.append(innerWrapper);
+            });
+            appSettings.container.append(wrapper);
+
+            let acc = document.getElementsByClassName("accordion");
+            let i;
+
+            for (i = 0; i < acc.length; i++) {
+                acc[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    let panel = this.nextElementSibling;
+                    if (panel.style.maxHeight){
+                        panel.style.maxHeight = null;
+                    } else {
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                    }
+                });
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+};
 
 let promise = new Promise(function (resolve, reject) {
     navigator.geolocation.getCurrentPosition(pos => {
@@ -237,7 +261,8 @@ promise
         }
     ).then(
     result => {
-        // getWeekForecast();
+        getWeekForecast();
+
     },
     error => {
         error();
