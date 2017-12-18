@@ -8,9 +8,13 @@
 <body>
 <header>
     <form>
-        <input type="text" placeholder="City">
+        <input id="address" type="textbox" value="New York">
+        <input id="submit" type="button" value="Show me">
     </form>
-
+    <select>
+        <option>C</option>
+        <option>F</option>
+    </select>
 </header>
 <main>
     <div id="container"></div>
@@ -19,9 +23,11 @@
     <p>
         2017 - iammiro
     </p>
-
-    <script src="js/index.js" type="text/javascript"></script>
-
 </footer>
+
+<script src="js/index.js" type="text/javascript"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAh_XQ81L-28bp1dy60eKIL5txR-CjPxC0">
+</script>
 </body>
 </html>
