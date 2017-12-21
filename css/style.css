@@ -91,11 +91,7 @@ form {
 }
 
 #week-forecast-wrapper img {
-    width: 30px;
-    height: 30px;
-    background-color: white;
-    padding: 7px;
-    border-radius: 3px 0 3px 0;
+    height: 40px;
 }
 
 .header-wrapper h1 {
@@ -162,10 +158,6 @@ footer {
     justify-content: center;
 }
 
-.today-forecast-body-wrapper img {
-    width: 70px;
-}
-
 .today-forecast-header-wrapper {
     display: flex;
     flex-direction: row;
@@ -188,8 +180,8 @@ footer {
 
 .today-forecast-body-wrapper img {
     background-color: white;
-    width: 70px;
-    height: 70px;
+    width: 120px;
+    /*height: 70px;*/
 }
 
 #favorite-cities-block {
