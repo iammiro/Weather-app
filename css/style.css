@@ -53,8 +53,14 @@ form {
     text-align: center;
 }
 
-main {
+article {
+    width: 60vw;
+    float: left;
+}
 
+aside {
+    width: 30vw;
+    float: right;
 }
 
 img {
@@ -132,17 +138,32 @@ footer {
     background-color: rgba(238, 238, 238, .35);
 }
 
-.today-forecast-wrapper {
+.today-forecast-body-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-
-.today-forecast-wrapper img {
+#us-unit, #si-unit {
+    width: 30px;
+    cursor: pointer;
+    margin: 1px;
+}
+.today-forecast-body-wrapper img {
     background-color: white;
     width: 70px;
     height: 70px;
+}
+
+#favorite-cities-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#favorite-cities-block div {
+    margin: 0 10px;
 }
 
 .inner-wrapper {
