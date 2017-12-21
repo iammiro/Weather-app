@@ -3,7 +3,7 @@ const appSettings = {
     apiUrl: 'https://api.darksky.net/forecast/',
     proxy: 'https://cors-anywhere.herokuapp.com/',
     apiKey: 'c0edd7e111d453106e09ff75c17397b8',
-    appURL: 'https://5c749cb1.ngrok.io',
+    appURL: 'https://iammiro.github.io/Weather-app/',
     init: {
         method: 'GET',
         mode: 'cors',
@@ -11,8 +11,12 @@ const appSettings = {
     }
 };
 
+let currentUserPosition = new Map();
+
+let favoriteCities = new Map();
+
 let units = new Map();
-units.set('units', 'auto');
+units.set('units', 'si');
 units.set('temperature', 'C');
 units.set('speed', 'm/s');
 units.set('visibility', 'km');
@@ -34,15 +38,6 @@ document.getElementById('si-unit').addEventListener("click", function () {
     getTodayForecast();
     getWeekForecast();
 });
-
-//TODO:
-//1. Get city name from input, convert to latitude/longitude and send it to API. Done!
-//2. URL API, put coordinates in url. Done!
-//2. Save list of visited cities, save list of favorite cities, using browser history.
-
-const currentUserPosition = new Map();
-const favoriteCities = new Map();
-
 
 document.getElementById('submit').addEventListener('click', function () {
 
@@ -68,10 +63,8 @@ document.getElementById('submit').addEventListener('click', function () {
             console.log(favoriteCities.get(`${address}`));
 
             let favoriteCitiesBlockItem = DOMManipulation.createNode('div');
-            favoriteCitiesBlockItem.class = 'favorite-cities-block-item';
             favoriteCitiesBlockItem.innerHTML = `${address}`;
             DOMManipulation.append(document.getElementById('favorite-cities-block'), favoriteCitiesBlockItem);
-
 
             getTodayForecast();
             getWeekForecast();
@@ -276,7 +269,7 @@ getTodayForecast = () => {
             let icon = document.getElementById('icon');
             icon.src = `/img/${data.currently.icon}.svg`;
             let summary = document.getElementById('summary');
-            summary.innerHTML = `Today in: ${data.currently.temperature} ${units.get('temperature')}. ${data.currently.summary}`;
+            summary.innerHTML = `Today: ${data.currently.temperature} ${units.get('temperature')}. ${data.currently.summary}`;
             let hourlySummary = document.getElementById('hourlySummary');
             hourlySummary.innerHTML = `${data.hourly.summary}`;
 

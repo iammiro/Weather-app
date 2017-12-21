@@ -7,8 +7,8 @@ body {
 }
 
 header {
-    background-color: #eee;
-    height: 70px;
+    background-color: #333;
+    height: 60px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -25,12 +25,22 @@ header {
 
 .option {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: left;
     align-items: left;
     font-size: 12px;
     line-height: 30px;
     color: #111;
+}
+
+#us-unit, #si-unit {
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    margin: 5px;
+    width: 40px;
+    height: 35px;
+    border-radius: 5px;
 }
 
 form {
@@ -43,30 +53,47 @@ form {
     border-radius: 20px;
     border: none;
     text-align: center;
+    margin-right: 10px;
+    font-size: 18px;
 }
 
 #submit {
-    width: 100px;
+    cursor: pointer;
+    width: 50px;
     height: 35px;
+    padding: 2px;
     border-radius: 20px;
     border: none;
     text-align: center;
+    background-color: white;
 }
 
-article {
-    width: 60vw;
-    float: left;
+#submit img {
+    width: 33px;
+    height: 31px;
+    padding: 0;
 }
 
-aside {
-    width: 30vw;
-    float: right;
+#favorite-cities-block{
+    height: 60px;
+    width: 100%;
+    background-color: white;
+    color: black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    font-size: 16px;
+    font-weight: 300;
+    margin: 10px 0;
 }
 
-img {
+#week-forecast-wrapper {
+
+}
+
+#week-forecast-wrapper img {
     width: 30px;
     height: 30px;
-    background-color: aliceblue;
+    background-color: white;
     padding: 7px;
     border-radius: 3px 0 3px 0;
 }
@@ -83,9 +110,11 @@ img {
     background-color: white;
     color: black;
 }
-
-.header-wrapper h1:hover {
-    background-color: #80a5d6;
+.header-wrapper {
+    border-bottom: 1px solid white;
+}
+.header-wrapper:hover {
+    border-bottom: 1px solid black;
     transition: 0.5s;
 }
 
@@ -105,8 +134,8 @@ footer {
     margin: 60px 0 0;
     padding: 30px 0;
     font-size: 14px;
-    color: #aaa;
-    background-color: #eee;
+    color: white;
+    background-color: #111111;
     font-weight: 300;
 }
 
@@ -117,12 +146,24 @@ footer {
     justify-content: center;
 }
 
+#content-wrapper {
+    width: 100%;
+}
+
+.accordion, .panel {
+    max-width: 800px;
+}
+
 .header-wrapper {
     width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
+
+.today-forecast-body-wrapper img {
+    width: 70px;
 }
 
 .today-forecast-header-wrapper {
@@ -144,11 +185,7 @@ footer {
     align-items: center;
     justify-content: center;
 }
-#us-unit, #si-unit {
-    width: 30px;
-    cursor: pointer;
-    margin: 1px;
-}
+
 .today-forecast-body-wrapper img {
     background-color: white;
     width: 70px;
@@ -181,7 +218,6 @@ footer {
 
 .accordion {
     cursor: pointer;
-    border: none;
     outline: none;
     transition: 0.4s;
 }
@@ -190,6 +226,13 @@ footer {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
+}
+
+#week-forecast-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .accordion:after {
