@@ -57,8 +57,8 @@ document.getElementById('submit').addEventListener('click', function () {
             history.pushState('data to be passed', 'Weather App', `${appSettings.appURL}?lat=${currentUserPosition.get('latitude')}&lang=${currentUserPosition.get('longitude')}`);
 
             favoriteCities.set(`${address}`, [results[0].geometry.location.lat(), results[0].geometry.location.lng()]);
-            console.log(favoriteCities);
-            console.log(favoriteCities.get(`${address}`));
+            // console.log(favoriteCities);
+            // console.log(favoriteCities.get(`${address}`));
             let coordinates = favoriteCities.get(`${address}`);
             let lat = coordinates[0];
             let lang = coordinates[1];
@@ -70,7 +70,7 @@ document.getElementById('submit').addEventListener('click', function () {
             DOMManipulation.append(document.getElementById('recently-viewed-cities-block'), favoriteCitiesBlockItem);
 
             document.getElementById(`${address}`).addEventListener('click', function () {
-                console.log(`lat - ${lat}; lang = ${lang}`);
+                // console.log(`lat - ${lat}; lang = ${lang}`);
                 currentUserPosition.set('latitude', lat);
                 currentUserPosition.set('longitude', lang);
                 history.pushState('data to be passed', 'Weather App', `${appSettings.appURL}?lat=${lat}&lang=${lang}`);
@@ -376,19 +376,16 @@ error = () => {
     console.log(error);
 };
 
-promise
-    .then(
-        result => {
-            // первая функция-обработчик - запустится при вызове resolve
-            renderTemplate();
-            getTodayForecast(); // result - аргумент resolve
-            url();
-        },
-        error => {
-            // вторая функция - запустится при вызове reject
-            error(); // error - аргумент reject
-        }
-    ).then(
+promise.then(
+    result => {
+        renderTemplate();
+        getTodayForecast();
+        url();
+    },
+    error => {
+        error();
+    }
+).then(
     result => {
         getWeekForecast();
 
