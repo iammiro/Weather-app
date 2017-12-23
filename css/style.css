@@ -1,3 +1,4 @@
+/*common styles*/
 body {
     font-size: 1em;
     margin: 0;
@@ -6,6 +7,29 @@ body {
     background-color: #fcfcfc;
 }
 
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+    font-weight: 100;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#content-wrapper {
+    width: 100%;
+}
+
+/*//common styles*/
+
+/*header styles*/
 header {
     background-color: #333;
     height: 60px;
@@ -43,10 +67,6 @@ header {
     border-radius: 5px;
 }
 
-form {
-    margin: 0;
-}
-
 #address {
     width: 300px;
     height: 35px;
@@ -68,32 +88,24 @@ form {
     background-color: white;
 }
 
+#submit:hover {
+    background-color: lightgrey;
+    transition: .3s;
+}
+
+input, button {
+    outline: none;
+}
+
 #submit img {
     width: 33px;
     height: 31px;
     padding: 0;
 }
 
-#favorite-cities-block{
-    height: 60px;
-    width: 100%;
-    background-color: white;
-    color: black;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    font-size: 16px;
-    font-weight: 300;
-    margin: 10px 0;
-}
+/*//header styles*/
 
-#week-forecast-wrapper {
-
-}
-
-#week-forecast-wrapper img {
-    height: 40px;
-}
-
+/*today forecast wrapper styles*/
 .header-wrapper h1 {
     width: 100%;
     font-size: 22px;
@@ -106,44 +118,14 @@ form {
     background-color: white;
     color: black;
 }
+
 .header-wrapper {
     border-bottom: 1px solid white;
 }
+
 .header-wrapper:hover {
     border-bottom: 1px solid black;
     transition: 0.5s;
-}
-
-h1 {
-    text-align: center;
-}
-
-h2 {
-    text-align: center;
-    font-weight: 100;
-}
-
-footer {
-    text-align: center;
-    clear: both;
-    width: 100%;
-    margin: 60px 0 0;
-    padding: 30px 0;
-    font-size: 14px;
-    color: white;
-    background-color: #111111;
-    font-weight: 300;
-}
-
-#container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-#content-wrapper {
-    width: 100%;
 }
 
 .accordion, .panel {
@@ -184,7 +166,19 @@ footer {
     /*height: 70px;*/
 }
 
+/*//today forecast wrapper styles*/
+
+/*favorite cities block styles*/
 #favorite-cities-block {
+    height: 60px;
+    width: 100%;
+    background-color: white;
+    color: black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    font-size: 16px;
+    font-weight: 300;
+    margin: 10px 0;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -193,6 +187,13 @@ footer {
 
 #favorite-cities-block div {
     margin: 0 10px;
+}
+
+/*//favorite cities block styles*/
+
+/*week forecast wrapper styles*/
+#week-forecast-wrapper img {
+    height: 40px;
 }
 
 .inner-wrapper {
@@ -242,3 +243,35 @@ footer {
 .active:after {
     content: "\2796";
 }
+
+/*//week forecast wrapper styles*/
+
+/*footer styles*/
+footer {
+    text-align: center;
+    clear: both;
+    width: 100%;
+    margin: 60px 0 0;
+    padding: 30px 0;
+    font-size: 14px;
+    color: white;
+    background-color: #111111;
+    font-weight: 300;
+}
+/*//footer styles*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
