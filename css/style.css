@@ -119,10 +119,6 @@ input, button {
     color: black;
 }
 
-.header-wrapper {
-    border-bottom: 1px solid white;
-}
-
 .header-wrapper:hover {
     border-bottom: 1px solid black;
     transition: 0.5s;
@@ -133,6 +129,7 @@ input, button {
 }
 
 .header-wrapper {
+    border-bottom: 1px solid white;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -168,8 +165,8 @@ input, button {
 
 /*//today forecast wrapper styles*/
 
-/*favorite cities block styles*/
-#favorite-cities-block {
+/*recently viewed cities block styles*/
+#recently-viewed-cities-block {
     height: 60px;
     width: 100%;
     background-color: white;
@@ -185,15 +182,27 @@ input, button {
     align-items: center;
 }
 
-#favorite-cities-block div {
-    margin: 0 10px;
+#recently-viewed-cities-block-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 100;
+    width: 100%;
 }
 
-/*//favorite cities block styles*/
+#recently-viewed-cities-block div {
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+/*//recently viewed cities block styles*/
 
 /*week forecast wrapper styles*/
 #week-forecast-wrapper img {
-    height: 40px;
+    height: 50px;
+    padding: 0;
 }
 
 .inner-wrapper {
@@ -258,20 +267,5 @@ footer {
     background-color: #111111;
     font-weight: 300;
 }
+
 /*//footer styles*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

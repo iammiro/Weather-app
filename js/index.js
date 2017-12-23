@@ -56,15 +56,27 @@ document.getElementById('submit').addEventListener('click', function () {
             params.set('lang', results[0].geometry.location.lng());
             history.pushState('data to be passed', 'Weather App', `${appSettings.appURL}?lat=${currentUserPosition.get('latitude')}&lang=${currentUserPosition.get('longitude')}`);
 
-            favoriteCities.set(`${address}`, {
-                lat: results[0].geometry.location.lat(),
-                lang: results[0].geometry.location.lng()
-            });
+            favoriteCities.set(`${address}`, [results[0].geometry.location.lat(), results[0].geometry.location.lng()]);
+            console.log(favoriteCities);
             console.log(favoriteCities.get(`${address}`));
+            let coordinates = favoriteCities.get(`${address}`);
+            let lat = coordinates[0];
+            let lang = coordinates[1];
+
 
             let favoriteCitiesBlockItem = DOMManipulation.createNode('div');
             favoriteCitiesBlockItem.innerHTML = `${address}`;
-            DOMManipulation.append(document.getElementById('favorite-cities-block'), favoriteCitiesBlockItem);
+            favoriteCitiesBlockItem.id = `${address}`;
+            DOMManipulation.append(document.getElementById('recently-viewed-cities-block'), favoriteCitiesBlockItem);
+
+            document.getElementById(`${address}`).addEventListener('click', function () {
+                console.log(`lat - ${lat}; lang = ${lang}`);
+                currentUserPosition.set('latitude', lat);
+                currentUserPosition.set('longitude', lang);
+                history.pushState('data to be passed', 'Weather App', `${appSettings.appURL}?lat=${lat}&lang=${lang}`);
+                getTodayForecast();
+                getWeekForecast();
+            });
 
             getTodayForecast();
             getWeekForecast();
@@ -164,12 +176,15 @@ renderTemplate = () => {
     DOMManipulation.append(contentWrapper, todayForecastWrapper);
 
     //block with recently viewed and favorite cities
-    let favoriteCitiesBlock = DOMManipulation.createNode('div');
-    favoriteCitiesBlock.id = 'favorite-cities-block';
+    let recentlyViewedCitiesBlock = DOMManipulation.createNode('div');
+    recentlyViewedCitiesBlock.id = 'recently-viewed-cities-block';
 
+    let recentlyViewedCitiesBlockHeader = DOMManipulation.createNode('h3');
+    recentlyViewedCitiesBlockHeader.id = 'recently-viewed-cities-block-header';
+    recentlyViewedCitiesBlockHeader.textContent = 'Recently viewed cities:';
+    DOMManipulation.append(contentWrapper, recentlyViewedCitiesBlockHeader);
 
-
-    DOMManipulation.append(contentWrapper, favoriteCitiesBlock);
+    DOMManipulation.append(contentWrapper, recentlyViewedCitiesBlock);
 
     //week forecast wrapper
     const WeekForecastWrapper = document.createElement('div');
