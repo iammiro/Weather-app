@@ -3,250 +3,238 @@ const appSettings = {
     apiUrl: 'https://api.darksky.net/forecast/',
     proxy: 'https://cors-anywhere.herokuapp.com/',
     apiKey: 'c0edd7e111d453106e09ff75c17397b8',
-    appURL: 'https://iammiro.github.io/Weather-app',
+    appURL: 'https://1193143d.ngrok.io',
     init: {
         method: 'GET',
         mode: 'cors',
         cache: 'default'
     }
 };
-
 let currentUserPosition = new Map();
-
 let favoriteCities = new Map();
-
 let units = new Map();
 units.set('units', 'si');
 units.set('temperature', 'C');
 units.set('speed', 'm/s');
 units.set('visibility', 'km');
 
-document.getElementById('us-unit').addEventListener("click", function () {
-    units.set('units', 'us');
-    units.set('temperature', 'F');
-    units.set('speed', 'mph');
-    units.set('visibility', 'mi');
-    getTodayForecast();
-    getWeekForecast();
-});
-
-document.getElementById('si-unit').addEventListener("click", function () {
+setSiUnits = () => {
     units.set('units', 'si');
     units.set('temperature', 'C');
     units.set('speed', 'm/s');
     units.set('visibility', 'km');
-    getTodayForecast();
-    getWeekForecast();
+};
+
+setUsUnits = () => {
+    units.set('units', 'us');
+    units.set('temperature', 'F');
+    units.set('speed', 'mph');
+    units.set('visibility', 'mi');
+};
+
+document.getElementById('us-unit').addEventListener("click", () => {
+    setUsUnits();
+    getTodayForecastFromApi();
+    getWeekForecastFromApi();
 });
 
-document.getElementById('submit').addEventListener('click', function () {
+document.getElementById('si-unit').addEventListener("click", () => {
+    setSiUnits();
+    getTodayForecastFromApi();
+    getWeekForecastFromApi();
+});
 
+let getCurrentUserPosition = () => {
+    navigator.geolocation.getCurrentPosition(pos => {
+            let crd = pos.coords;
+            setCoordinatesToMapStorage(crd.latitude, crd.longitude);
+            setCoordinatesToUrl(crd.latitude, crd.longitude);
+        }, err => console.warn(`ERROR(${err.code}): ${err.message}`),
+        {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+        });
+};
+
+let getAndGeocodUserInput = () => {
     const geocoder = new google.maps.Geocoder();
-
     let address = document.getElementById('address').value;
-
     geocoder.geocode({'address': address}, function (results, status) {
         if (status === 'OK') {
-            currentUserPosition.set('latitude', results[0].geometry.location.lat());
-            currentUserPosition.set('longitude', results[0].geometry.location.lng());
-
-            let parsedUrl = new URL(window.location.href);
-            let params = new URLSearchParams(parsedUrl.search.slice(1));
-            params.set('lat', results[0].geometry.location.lat());
-            params.set('lang', results[0].geometry.location.lng());
-            history.pushState('data to be passed', 'Weather App', `${appSettings.appURL}?lat=${currentUserPosition.get('latitude')}&lang=${currentUserPosition.get('longitude')}`);
-
-            favoriteCities.set(`${address}`, [results[0].geometry.location.lat(), results[0].geometry.location.lng()]);
-            // console.log(favoriteCities);
-            // console.log(favoriteCities.get(`${address}`));
-            let coordinates = favoriteCities.get(`${address}`);
-            let lat = coordinates[0];
-            let lang = coordinates[1];
-
-
-            let favoriteCitiesBlockItem = DOMManipulation.createNode('div');
-            favoriteCitiesBlockItem.innerHTML = `${address}`;
-            favoriteCitiesBlockItem.id = `${address}`;
-            DOMManipulation.append(document.getElementById('recently-viewed-cities-block'), favoriteCitiesBlockItem);
-
-            document.getElementById(`${address}`).addEventListener('click', function () {
-                // console.log(`lat - ${lat}; lang = ${lang}`);
-                currentUserPosition.set('latitude', lat);
-                currentUserPosition.set('longitude', lang);
-                history.pushState('data to be passed', 'Weather App', `${appSettings.appURL}?lat=${lat}&lang=${lang}`);
-                getTodayForecast();
-                getWeekForecast();
-            });
-
-            getTodayForecast();
-            getWeekForecast();
-            url();
-
+            setCoordinatesToMapStorage(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+            getCoordinatesFromUrl();
+            setCityToFavorite();
+            getTodayForecastFromApi();
+            getWeekForecastFromApi();
+            urlParamHandler();
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
         }
     });
-});
+};
 
-url = () => {
+let getCoordinatesFromUrl = () => {
     let parsedUrl = new URL(window.location.href);
-    // console.log(parsedUrl.searchParams.get("lat"));
-    // console.log(parsedUrl.searchParams.get("lang"));
+    let params = new URLSearchParams(parsedUrl.search.slice(1));
+    params.set('lat', currentUserPosition.get('latitude'));
+    params.set('lang', currentUserPosition.get('longitude'));
+    setCoordinatesToUrl(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
+};
+
+let setCoordinatesToUrl = (latitude, longitude) => {
+    history.pushState(
+        'data to be passed',
+        'Weather App',
+        `${appSettings.appURL}?lat=${latitude}&lang=${longitude}`);
+};
+
+let setCoordinatesToMapStorage = (latitude, longitude) => {
+    currentUserPosition.set('latitude', latitude);
+    currentUserPosition.set('longitude', longitude);
+};
+
+let setCityToFavorite = () => {
+    let address = document.getElementById('address').value;
+    favoriteCities.set(`${address}`, [currentUserPosition.get('latitude'), currentUserPosition.get('longitude')]);
+    let coordinates = favoriteCities.get(`${address}`);
+    let lat = coordinates[0];
+    let lang = coordinates[1];
+
+    renderRecentlyViewedCitiesBlockItem(address);
+
+    document.getElementById(`${address}`).addEventListener('click', () => {
+        setCoordinatesToMapStorage(lat, lang);
+        setCoordinatesToUrl(lat, lang);
+        getTodayForecastFromApi();
+        getWeekForecastFromApi();
+    });
+};
+
+document.getElementById('submit').addEventListener('click', getAndGeocodUserInput);
+
+let urlParamHandler = () => {
+    let parsedUrl = new URL(window.location.href);
     let lat = (parsedUrl.searchParams.get("lat"));
     let lang = (parsedUrl.searchParams.get("lang"));
     if (lat && lang) {
-        currentUserPosition.set('latitude', lat);
-        currentUserPosition.set('longitude', lang);
-        history.pushState('data to be passed', 'Weather App', `${appSettings.appURL}?lat=${currentUserPosition.get('latitude')}&lang=${currentUserPosition.get('longitude')}`);
+        setCoordinatesToMapStorage(lat, lang);
     } else {
-        history.pushState('data to be passed', 'Weather App', `${appSettings.appURL}?lat=${currentUserPosition.get('latitude')}&lang=${currentUserPosition.get('longitude')}`);
+        getCurrentUserPosition();
+        setCoordinatesToUrl(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
     }
 };
 
-const DOMManipulation = {
-    // Create the type of element you pass in the parameters
-    createNode: function (element) {
-        return document.createElement(element);
-    },
-    // Append the second parameter(element) to the first one
-    append: function (parent, el) {
-        return parent.appendChild(el);
-    }
-};
-
-renderTemplate = () => {
-
-    //main content wrapper
-    const contentWrapper = DOMManipulation.createNode('div');
+let createContentWrapper = () => {
+    const contentWrapper = document.createElement('div');
     contentWrapper.id = 'content-wrapper';
+    appSettings.container.appendChild(contentWrapper);
+};
 
-    //today forecast wrapper
-    const todayForecastWrapper = DOMManipulation.createNode('div');
+let createWrapper =(element, wrapperId, WrapperClass) => {
+    let wrapper = document.createElement(element);
+    wrapper.id = wrapperId;
+    wrapper.class = WrapperClass;
+};
+
+let createForecastItem = (parentElement, createdElement, createdElementId) => {
+    let item = document.createElement(createdElement);
+    item.id = createdElementId;
+    parentElement.appendChild(item);
+};
+
+let renderForecastItem = (parentElementId, content) => {
+    let parentElement = document.getElementById(parentElementId);
+    parentElement.innerHTML = content;
+};
+
+let renderForecastImgItem = (elementId, src) => {
+    let icon = document.getElementById(elementId);
+    icon.src = src;
+};
+
+let renderTodayForecastTemplate = () => {
+    const contentWrapper = document.getElementById('content-wrapper');
+
+    const todayForecastWrapper = document.createElement('div');
     todayForecastWrapper.id = "today-forecast-wrapper";
 
-    //today forecast header wrapper
     const todayForecastHeaderWrapper = document.createElement('div');
     todayForecastHeaderWrapper.className = "today-forecast-header-wrapper";
 
-    //today forecast body wrapper
-    const todayForecastBodyWrapper = DOMManipulation.createNode('div');
+    const todayForecastBodyWrapper = document.createElement('div');
     todayForecastBodyWrapper.className = "today-forecast-body-wrapper";
 
-    let windSpeed = DOMManipulation.createNode('div');
-    windSpeed.id = 'windSpeed';
-    DOMManipulation.append(todayForecastHeaderWrapper, windSpeed);
+    createForecastItem(todayForecastHeaderWrapper, 'div', 'windSpeed');
+    createForecastItem(todayForecastHeaderWrapper, 'div', 'humidity');
+    createForecastItem(todayForecastHeaderWrapper, 'div', 'dewPoint');
+    createForecastItem(todayForecastHeaderWrapper, 'div', 'uvIndex');
+    createForecastItem(todayForecastHeaderWrapper, 'div', 'visibility');
+    createForecastItem(todayForecastHeaderWrapper, 'div', 'pressure');
+    createForecastItem(todayForecastBodyWrapper, 'img', 'icon');
+    createForecastItem(todayForecastBodyWrapper, 'h1', 'summary');
+    createForecastItem(todayForecastBodyWrapper, 'h2', 'hourlySummary');
 
-    let humidity = DOMManipulation.createNode('div');
-    humidity.id = 'humidity';
-    DOMManipulation.append(todayForecastHeaderWrapper, humidity);
+    todayForecastWrapper.appendChild(todayForecastHeaderWrapper);
 
-    let dewPoint = DOMManipulation.createNode('div');
-    dewPoint.id = 'dewPoint';
-    DOMManipulation.append(todayForecastHeaderWrapper, dewPoint);
+    todayForecastWrapper.appendChild(todayForecastBodyWrapper);
 
-    let uvIndex = DOMManipulation.createNode('div');
-    uvIndex.id = 'uvIndex';
-    DOMManipulation.append(todayForecastHeaderWrapper, uvIndex);
+    contentWrapper.appendChild(todayForecastWrapper);
+    renderRecentlyViewedCitiesBlock(contentWrapper);
+};
 
-    let visibility = DOMManipulation.createNode('div');
-    visibility.id = 'visibility';
-    DOMManipulation.append(todayForecastHeaderWrapper, visibility);
+let renderRecentlyViewedCitiesBlock = (parentElement) => {
+    createForecastItem(parentElement, 'div', 'recently-viewed-cities-block');
+    createForecastItem(parentElement, 'h3', 'recently-viewed-cities-block-header');
+    renderForecastItem('recently-viewed-cities-block-header', 'Recently viewed cities:');
+};
 
-    let pressure = DOMManipulation.createNode('div');
-    pressure.id = 'pressure';
-    DOMManipulation.append(todayForecastHeaderWrapper, pressure);
+let renderRecentlyViewedCitiesBlockItem = (address) => {
+    createForecastItem(document.getElementById('recently-viewed-cities-block'), 'div', `${address}`);
+    renderForecastItem(`${address}`, `${address}`)
+};
 
-    let icon = DOMManipulation.createNode('img');
-    icon.id = 'icon';
-    DOMManipulation.append(todayForecastBodyWrapper, icon);
-
-    let summary = DOMManipulation.createNode('h1');
-    summary.id = 'summary';
-    DOMManipulation.append(todayForecastBodyWrapper, summary);
-
-    let hourlySummary = DOMManipulation.createNode('h2');
-    hourlySummary.id = 'hourlySummary';
-    DOMManipulation.append(todayForecastBodyWrapper, hourlySummary);
-
-    DOMManipulation.append(todayForecastWrapper, todayForecastHeaderWrapper);
-
-    DOMManipulation.append(todayForecastWrapper, todayForecastBodyWrapper);
-
-    //append today forecast to main wrapper
-    DOMManipulation.append(contentWrapper, todayForecastWrapper);
-
-    //block with recently viewed and favorite cities
-    let recentlyViewedCitiesBlock = DOMManipulation.createNode('div');
-    recentlyViewedCitiesBlock.id = 'recently-viewed-cities-block';
-
-    let recentlyViewedCitiesBlockHeader = DOMManipulation.createNode('h3');
-    recentlyViewedCitiesBlockHeader.id = 'recently-viewed-cities-block-header';
-    recentlyViewedCitiesBlockHeader.textContent = 'Recently viewed cities:';
-    DOMManipulation.append(contentWrapper, recentlyViewedCitiesBlockHeader);
-
-    DOMManipulation.append(contentWrapper, recentlyViewedCitiesBlock);
-
-    //week forecast wrapper
+let renderWeekForecastTemplate = () => {
     const WeekForecastWrapper = document.createElement('div');
     WeekForecastWrapper.id = "week-forecast-wrapper";
 
     for (let i = 1; i < 8; i++) {
         const headerWrapperMain = document.createElement('div');
-
         headerWrapperMain.className = "header-wrapper accordion";
 
-        let icon = DOMManipulation.createNode('img');
-        icon.id = `icon-${i}`;
-        DOMManipulation.append(headerWrapperMain, icon);
+        createForecastItem(headerWrapperMain, 'img', `icon-${i}`);
+        createForecastItem(headerWrapperMain, 'h1', `header-${i}`);
 
-        let header = DOMManipulation.createNode('h1');
-        header.id = `header-${i}`;
-        DOMManipulation.append(headerWrapperMain, header);
-
-        WeekForecastWrapper.append(headerWrapperMain);
+        WeekForecastWrapper.appendChild(headerWrapperMain);
 
         const innerWrapper = document.createElement('div');
         innerWrapper.className = "panel";
 
-        let summary = DOMManipulation.createNode('h2');
-        summary.id = `summary-${i}`;
-        DOMManipulation.append(innerWrapper, summary);
-
-        let temperature = DOMManipulation.createNode('h1');
-        temperature.id = `temperature-${i}`;
-        DOMManipulation.append(innerWrapper, temperature);
+        createForecastItem(innerWrapper, 'h2', `summary-${i}`);
+        createForecastItem(innerWrapper, 'h1', `temperature-${i}`);
 
         const innerWrapperMain = document.createElement('div');
         innerWrapperMain.className = "inner-wrapper";
 
-        let windSpeed = DOMManipulation.createNode('div');
-        windSpeed.id = `windSpeed-${i}`;
-        DOMManipulation.append(innerWrapperMain, windSpeed);
+        createForecastItem(innerWrapperMain, 'div', `windSpeed-${i}`);
+        createForecastItem(innerWrapperMain, 'div', `humidity-${i}`);
+        createForecastItem(innerWrapperMain, 'div', `dewPoint-${i}`);
+        createForecastItem(innerWrapperMain, 'div', `uvIndex-${i}`);
+        createForecastItem(innerWrapperMain, 'div', `pressure-${i}`);
 
-        let humidity = DOMManipulation.createNode('div');
-        humidity.id = `humidity-${i}`;
-        DOMManipulation.append(innerWrapperMain, humidity);
+        innerWrapper.appendChild(innerWrapperMain);
 
-        let dewPoint = DOMManipulation.createNode('div');
-        dewPoint.id = `dewPoint-${i}`;
-        DOMManipulation.append(innerWrapperMain, dewPoint);
-
-        let uvIndex = DOMManipulation.createNode('div');
-        uvIndex.id = `uvIndex-${i}`;
-        DOMManipulation.append(innerWrapperMain, uvIndex);
-
-        let pressure = DOMManipulation.createNode('div');
-        pressure.id = `pressure-${i}`;
-        DOMManipulation.append(innerWrapperMain, pressure);
-
-        innerWrapper.append(innerWrapperMain);
-
-        WeekForecastWrapper.append(innerWrapper);
+        WeekForecastWrapper.appendChild(innerWrapper);
     }
-    contentWrapper.append(WeekForecastWrapper);
+    let contentWrapper = document.getElementById('content-wrapper');
+    contentWrapper.appendChild(WeekForecastWrapper);
 
-    DOMManipulation.append(appSettings.container, contentWrapper);
+    appSettings.container.appendChild(contentWrapper);
 
+    accordionForWeekForecast();
+};
+
+let accordionForWeekForecast = () => {
     let acc = document.getElementsByClassName("accordion");
     let i;
 
@@ -263,132 +251,93 @@ renderTemplate = () => {
     }
 };
 
-getTodayForecast = () => {
+let getTodayForecastFromApi = () => {
     let latitude = currentUserPosition.get('latitude');
     let longitude = currentUserPosition.get('longitude');
     let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
     fetch(url, appSettings.init)
         .then((response) => response.json())
         .then(data => {
-            // console.log(data);
-            let windSpeed = document.getElementById('windSpeed');
-            windSpeed.innerHTML = `Wind: ${data.currently.windSpeed} ${units.get('speed')}.`;
-            let humidity = document.getElementById('humidity');
-            humidity.innerHTML = `Humidity: ${data.currently.humidity} %.`;
-            let dewPoint = document.getElementById('dewPoint');
-            dewPoint.innerHTML = `Dew Pt: ${data.currently.dewPoint}˚.`;
-            let uvIndex = document.getElementById('uvIndex');
-            uvIndex.innerHTML = `UV Index: ${data.currently.uvIndex}.`;
-            let visibility = document.getElementById('visibility');
-            visibility.innerHTML = `Visibility: ${data.currently.visibility}+ ${units.get('visibility')}.`;
-            let pressure = document.getElementById('pressure');
-            pressure.innerHTML = `Pressure: ${data.currently.pressure} hPa.`;
-            let icon = document.getElementById('icon');
-            icon.src = `${appSettings.appURL}/img/${data.currently.icon}.svg`;
-            let summary = document.getElementById('summary');
-            summary.innerHTML = `Today: ${data.currently.temperature} ${units.get('temperature')}. ${data.currently.summary}`;
-            let hourlySummary = document.getElementById('hourlySummary');
-            hourlySummary.innerHTML = `${data.hourly.summary}`;
-
+            renderTodayForecast(data);
         })
         .catch(function (error) {
             console.log(error);
         });
 };
 
-getWeekForecast = () => {
+let renderTodayForecast = (data) => {
+    renderForecastItem('windSpeed', `Wind: ${Math.round(data.currently.windSpeed)} ${units.get('speed')}.`)
+    renderForecastItem('humidity', `Humidity: ${Math.round(data.currently.humidity)} %.`);
+    renderForecastItem('dewPoint', `Dew Pt: ${Math.round(data.currently.dewPoint)}˚.`);
+    renderForecastItem('uvIndex', `UV Index: ${Math.round(data.currently.uvIndex)}.`);
+    renderForecastItem('visibility', `Visibility: ${Math.round(data.currently.visibility)}+ ${units.get('visibility')}.`);
+    renderForecastItem('pressure', `Pressure: ${Math.round(data.currently.pressure)} hPa.`);
+    renderForecastImgItem('icon', `${appSettings.appURL}/img/${data.currently.icon}.svg`);
+    renderForecastItem('summary', `Today: ${Math.round(data.currently.temperature)} ${units.get('temperature')}. ${data.currently.summary}`);
+    renderForecastItem('hourlySummary', `${data.hourly.summary}`);
+};
+
+let getWeekForecastFromApi = () => {
     let latitude = currentUserPosition.get('latitude');
     let longitude = currentUserPosition.get('longitude');
     let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
     fetch(url, appSettings.init)
         .then((response) => response.json())
         .then(function (data) {
-
-            let dailyData = data.daily.data;
-            // console.log(dailyData);
-
-            const wrapper = document.createElement('div');
-            wrapper.className = "wrapper";
-
-            let k = 1;
-
-            dailyData.forEach(function (element) {
-                k++;
-                let dayNumber = new Date(element.time * 1000);
-                let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-                let day = days[dayNumber.getDay()];
-                let icon = document.getElementById(`icon-${k - 1}`);
-                icon.src = `${appSettings.appURL}/img/${element.icon}.svg`;
-                let header = document.getElementById(`header-${k - 1}`);
-                header.innerHTML = `${day}`;
-                let summary = document.getElementById(`summary-${k - 1}`);
-                summary.innerHTML = `${element.summary}`;
-                let temperature = document.getElementById(`temperature-${k - 1}`);
-                temperature.innerHTML = `${element.temperatureMin} &#10141; ${element.temperatureMax} ${units.get('temperature')}.`;
-                let windSpeed = document.getElementById(`windSpeed-${k - 1}`);
-                windSpeed.innerHTML = `Wind: ${element.windSpeed} ${units.get('speed')}.`;
-                let humidity = document.getElementById(`humidity-${k - 1}`);
-                humidity.innerHTML = `Humidity: ${element.humidity} %.`;
-                let dewPoint = document.getElementById(`dewPoint-${k - 1}`);
-                dewPoint.innerHTML = `Dew Pt: ${element.dewPoint}˚.`;
-                let uvIndex = document.getElementById(`uvIndex-${k - 1}`);
-                uvIndex.innerHTML = `UV Index: ${element.uvIndex}.`;
-                let pressure = document.getElementById(`pressure-${k - 1}`);
-                pressure.innerHTML = `Pressure: ${element.pressure} hPa.`;
-            });
-
+            renderWeekForecast(data);
         })
         .catch(function (error) {
             console.log(error);
         });
 };
 
-let promise = new Promise(function (resolve, reject) {
-    navigator.geolocation.getCurrentPosition(pos => {
-            let parsedUrl = new URL(window.location.href);
-            // console.log(parsedUrl.searchParams.get("lat"));
-            // console.log(parsedUrl.searchParams.get("lang"));
-            let lat = (parsedUrl.searchParams.get("lat"));
-            let lang = (parsedUrl.searchParams.get("lang"));
-            if (lat && lang) {
-                currentUserPosition.set('latitude', lat);
-                currentUserPosition.set('longitude', lang);
-                history.pushState('data to be passed', 'Weather App', `${appSettings.appURL}?lat=${currentUserPosition.get('latitude')}&lang=${currentUserPosition.get('longitude')}`);
-            } else {
-                let crd = pos.coords;
-                currentUserPosition.set('latitude', crd.latitude);
-                currentUserPosition.set('longitude', crd.longitude);
-                history.pushState('data to be passed', 'Weather App', `${appSettings.appURL}?lat=${currentUserPosition.get('latitude')}&lang=${currentUserPosition.get('longitude')}`);
-            }
-            resolve("result");
-        }, err => console.warn(`ERROR(${err.code}): ${err.message}`),
-        {
-            enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 0
-        });
+let renderWeekForecast = (data) => {
+    let dailyData = data.daily.data;
 
-});
+    const wrapper = document.createElement('div');
+    wrapper.className = "wrapper";
 
-reject = () => console.log('Error');
+    let k = 1;
 
-error = () => {
-    console.log(error);
+    dailyData.forEach(function (element) {
+        k++;
+        let dayNumber = new Date(element.time * 1000);
+        let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        let day = days[dayNumber.getDay()];
+
+        renderForecastImgItem(`icon-${k - 1}`, `${appSettings.appURL}/img/${element.icon}.svg`);
+        renderForecastItem(`header-${k - 1}`, `${day}`);
+        renderForecastItem(`summary-${k - 1}`, `${element.summary}`);
+        renderForecastItem(`temperature-${k - 1}`, `${Math.round(element.temperatureMin)} &#10141; ${Math.round(element.temperatureMax)} ${units.get('temperature')}.`);
+        renderForecastItem(`windSpeed-${k - 1}`, `Wind: ${Math.round(element.windSpeed)} ${units.get('speed')}.`);
+        renderForecastItem(`humidity-${k - 1}`, `Humidity: ${Math.round(element.humidity)} %.`);
+        renderForecastItem(`dewPoint-${k - 1}`, `Dew Pt: ${Math.round(element.dewPoint)}˚.`);
+        renderForecastItem(`uvIndex-${k - 1}`, `UV Index: ${Math.round(element.uvIndex)}.`);
+        renderForecastItem(`pressure-${k - 1}`, `Pressure: ${Math.round(element.pressure)} hPa.`);
+
+    });
 };
 
-promise.then(
-    result => {
-        renderTemplate();
-        getTodayForecast();
-        url();
+let initApp = new Promise(function (resolve, reject) {
+    urlParamHandler();
+    resolve("result");
+    reject("error");
+});
+
+initApp.then(
+    () => {
+        createContentWrapper();
+        renderTodayForecastTemplate();
+        renderWeekForecastTemplate();
+        getTodayForecastFromApi();
+        urlParamHandler();
     },
     error => {
-        error();
+        console.log(error);
     }
 ).then(
-    result => {
-        getWeekForecast();
-
+    () => {
+        getWeekForecastFromApi();
     },
     error => {
         console.log(error);

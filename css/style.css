@@ -195,6 +195,13 @@ input, button {
 #recently-viewed-cities-block div {
     margin: 0 10px;
     cursor: pointer;
+    border-bottom: 1px solid white;
+    transition: 0.5s;
+}
+
+#recently-viewed-cities-block div:hover {
+    border-bottom: 1px solid black;
+    transition: 0.5s;
 }
 
 /*//recently viewed cities block styles*/
