@@ -3,7 +3,7 @@ const appSettings = {
     apiUrl: 'https://api.darksky.net/forecast/',
     proxy: 'https://cors-anywhere.herokuapp.com/',
     apiKey: 'c0edd7e111d453106e09ff75c17397b8',
-    appURL: 'https://iammiro.github.io/Weather-app',
+    appURL: 'https://b426b180.ngrok.io',
     init: {
         method: 'GET',
         mode: 'cors',
@@ -131,7 +131,7 @@ let createContentWrapper = () => {
     appSettings.container.appendChild(contentWrapper);
 };
 
-let createWrapper =(element, wrapperId, WrapperClass) => {
+let createWrapper = (element, wrapperId, WrapperClass) => {
     let wrapper = document.createElement(element);
     wrapper.id = wrapperId;
     wrapper.class = WrapperClass;
@@ -198,7 +198,7 @@ let renderWeekForecastTemplate = () => {
     const WeekForecastWrapper = document.createElement('div');
     WeekForecastWrapper.id = "week-forecast-wrapper";
 
-    for (let i = 1; i < 8; i++) {
+    for (let i = 0; i < 8; i++) {
         const headerWrapperMain = document.createElement('div');
         headerWrapperMain.className = "header-wrapper accordion";
 
@@ -297,23 +297,20 @@ let renderWeekForecast = (data) => {
     const wrapper = document.createElement('div');
     wrapper.className = "wrapper";
 
-    let k = 1;
-
-    dailyData.forEach(function (element) {
-        k++;
+    dailyData.forEach(function (element, i) {
         let dayNumber = new Date(element.time * 1000);
         let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         let day = days[dayNumber.getDay()];
 
-        renderForecastImgItem(`icon-${k - 1}`, `${appSettings.appURL}/img/${element.icon}.svg`);
-        renderForecastItem(`header-${k - 1}`, `${day}`);
-        renderForecastItem(`summary-${k - 1}`, `${element.summary}`);
-        renderForecastItem(`temperature-${k - 1}`, `${Math.round(element.temperatureMin)} &#10141; ${Math.round(element.temperatureMax)} ${units.get('temperature')}.`);
-        renderForecastItem(`windSpeed-${k - 1}`, `Wind: ${Math.round(element.windSpeed)} ${units.get('speed')}.`);
-        renderForecastItem(`humidity-${k - 1}`, `Humidity: ${Math.round(element.humidity)} %.`);
-        renderForecastItem(`dewPoint-${k - 1}`, `Dew Pt: ${Math.round(element.dewPoint)}˚.`);
-        renderForecastItem(`uvIndex-${k - 1}`, `UV Index: ${Math.round(element.uvIndex)}.`);
-        renderForecastItem(`pressure-${k - 1}`, `Pressure: ${Math.round(element.pressure)} hPa.`);
+        renderForecastImgItem(`icon-${i}`, `${appSettings.appURL}/img/${element.icon}.svg`);
+        renderForecastItem(`header-${i}`, `${day}`);
+        renderForecastItem(`summary-${i}`, `${element.summary}`);
+        renderForecastItem(`temperature-${i}`, `${Math.round(element.temperatureMin)} &#10141; ${Math.round(element.temperatureMax)} ${units.get('temperature')}.`);
+        renderForecastItem(`windSpeed-${i}`, `Wind: ${Math.round(element.windSpeed)} ${units.get('speed')}.`);
+        renderForecastItem(`humidity-${i}`, `Humidity: ${Math.round(element.humidity)} %.`);
+        renderForecastItem(`dewPoint-${i}`, `Dew Pt: ${Math.round(element.dewPoint)}˚.`);
+        renderForecastItem(`uvIndex-${i}`, `UV Index: ${Math.round(element.uvIndex)}.`);
+        renderForecastItem(`pressure-${i}`, `Pressure: ${Math.round(element.pressure)} hPa.`);
 
     });
 };
