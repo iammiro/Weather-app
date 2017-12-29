@@ -6,7 +6,7 @@ const appSettings = {
     appURL: 'https://iammiro.github.io/Weather-app',
     init: {
         method: 'GET',
-        mode: 'no-cors',
+        mode: 'cors',
         cache: 'default'
     }
 };
