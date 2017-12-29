@@ -1,12 +1,12 @@
 const appSettings = {
     container: document.getElementById('container'),
     apiUrl: 'https://api.darksky.net/forecast/',
-    proxy: 'https://cors-anywhere.herokuapp.com/',
+    // proxy: 'https://cors-anywhere.herokuapp.com/',
     apiKey: 'c0edd7e111d453106e09ff75c17397b8',
-    appURL: 'https://60c8c52f.ngrok.io',
+    appURL: 'https://iammiro.github.io/Weather-app',
     init: {
         method: 'GET',
-        mode: 'cors',
+        mode: 'no-cors',
         cache: 'default'
     }
 };
@@ -14,6 +14,34 @@ const appSettings = {
 let currentUserPosition = new Map();
 let favoriteCities = new Map();
 let units = new Map();
+
+let urlParamHandler = () => {
+    let parsedUrl = new URL(window.location.href);
+    let lat = (parsedUrl.searchParams.get("lat"));
+    let lang = (parsedUrl.searchParams.get("lang"));
+    if (lat && lang) {
+        console.log(lat + lang);
+        setCoordinatesToMapStorage(lat, lang);
+    } else {
+        // getCurrentUserPosition();
+        //set temporary default coordinates - Kiev
+        setCoordinatesToMapStorage(50.4501, 30.5241);
+        setCoordinatesToUrl(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
+    }
+};
+
+// let getCurrentUserPosition = () => {
+//     navigator.geolocation.getCurrentPosition(pos => {
+//             let crd = pos.coords;
+//             setCoordinatesToMapStorage(crd.latitude, crd.longitude);
+//             setCoordinatesToUrl(crd.latitude, crd.longitude);
+//         }, err => console.warn(`ERROR(${err.code}): ${err.message}`),
+//         {
+//             enableHighAccuracy: true,
+//             timeout: 5000,
+//             maximumAge: 0
+//         });
+// };
 
 let setUnits = (type) => {
     if (type === 'si') {
@@ -40,19 +68,6 @@ document.getElementById('si-unit').addEventListener("click", () => {
     getTodayForecastFromApi();
     getWeekForecastFromApi();
 });
-
-let getCurrentUserPosition = () => {
-    navigator.geolocation.getCurrentPosition(pos => {
-            let crd = pos.coords;
-            setCoordinatesToMapStorage(crd.latitude, crd.longitude);
-            setCoordinatesToUrl(crd.latitude, crd.longitude);
-        }, err => console.warn(`ERROR(${err.code}): ${err.message}`),
-        {
-            enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 0
-        });
-};
 
 let getAndGeocodUserInput = () => {
     const geocoder = new google.maps.Geocoder();
@@ -110,28 +125,10 @@ let setCityToFavorite = () => {
 
 document.getElementById('submit').addEventListener('click', getAndGeocodUserInput);
 
-let urlParamHandler = () => {
-    let parsedUrl = new URL(window.location.href);
-    let lat = (parsedUrl.searchParams.get("lat"));
-    let lang = (parsedUrl.searchParams.get("lang"));
-    if (lat && lang) {
-        setCoordinatesToMapStorage(lat, lang);
-    } else {
-        getCurrentUserPosition();
-        setCoordinatesToUrl(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
-    }
-};
-
 let createContentWrapper = () => {
     const contentWrapper = document.createElement('div');
     contentWrapper.id = 'content-wrapper';
     appSettings.container.appendChild(contentWrapper);
-};
-
-let createWrapper = (element, wrapperId, WrapperClass) => {
-    let wrapper = document.createElement(element);
-    wrapper.id = wrapperId;
-    wrapper.class = WrapperClass;
 };
 
 let createForecastItem = (parentElement, createdElement, createdElementId, itemClass) => {
@@ -231,12 +228,13 @@ let renderWeekForecastTemplate = () => {
 
     accordionForWeekForecast();
 };
-
+//TODO: fix bug in accordion!
 let accordionForWeekForecast = () => {
     const el = document.getElementById('week-forecast-wrapper');
     el.addEventListener("click", function (event) {
         if (event.target.classList.contains('accordion')) {
             event.target.classList.toggle("active");
+            // let panel = event.target.nextElementSibling;
             let panel = el.querySelector('.panel');
             if (panel.style.maxHeight) {
                 panel.style.maxHeight = null;
@@ -289,9 +287,6 @@ let getWeekForecastFromApi = () => {
 
 let renderWeekForecast = (data) => {
     let dailyData = data.daily.data;
-
-    const wrapper = document.createElement('div');
-    wrapper.className = "wrapper";
 
     dailyData.forEach(function (element, i) {
         let dayNumber = new Date(element.time * 1000);
