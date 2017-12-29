@@ -1,7 +1,7 @@
 const appSettings = {
     container: document.getElementById('container'),
     apiUrl: 'https://api.darksky.net/forecast/',
-    // proxy: 'https://cors-anywhere.herokuapp.com/',
+    proxy: 'https://cors-anywhere.herokuapp.com/',
     apiKey: 'c0edd7e111d453106e09ff75c17397b8',
     appURL: 'https://iammiro.github.io/Weather-app',
     init: {
@@ -248,7 +248,7 @@ let accordionForWeekForecast = () => {
 let getTodayForecastFromApi = () => {
     let latitude = currentUserPosition.get('latitude');
     let longitude = currentUserPosition.get('longitude');
-    let url = `${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
+    let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
     fetch(url, appSettings.init)
         .then((response) => response.json())
         .then(data => {
@@ -274,7 +274,7 @@ let renderTodayForecast = (data) => {
 let getWeekForecastFromApi = () => {
     let latitude = currentUserPosition.get('latitude');
     let longitude = currentUserPosition.get('longitude');
-    let url = `${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
+    let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
     fetch(url, appSettings.init)
         .then((response) => response.json())
         .then(function (data) {
