@@ -3,43 +3,40 @@ const appSettings = {
     apiUrl: 'https://api.darksky.net/forecast/',
     proxy: 'https://cors-anywhere.herokuapp.com/',
     apiKey: 'c0edd7e111d453106e09ff75c17397b8',
-    appURL: 'https://b426b180.ngrok.io',
+    appURL: 'https://60c8c52f.ngrok.io',
     init: {
         method: 'GET',
         mode: 'cors',
         cache: 'default'
     }
 };
+
 let currentUserPosition = new Map();
 let favoriteCities = new Map();
 let units = new Map();
-units.set('units', 'si');
-units.set('temperature', 'C');
-units.set('speed', 'm/s');
-units.set('visibility', 'km');
 
-setSiUnits = () => {
-    units.set('units', 'si');
-    units.set('temperature', 'C');
-    units.set('speed', 'm/s');
-    units.set('visibility', 'km');
-};
-
-setUsUnits = () => {
-    units.set('units', 'us');
-    units.set('temperature', 'F');
-    units.set('speed', 'mph');
-    units.set('visibility', 'mi');
+let setUnits = (type) => {
+    if (type === 'si') {
+        units.set('units', 'si');
+        units.set('temperature', 'C');
+        units.set('speed', 'm/s');
+        units.set('visibility', 'km');
+    } else if (type === 'us') {
+        units.set('units', 'us');
+        units.set('temperature', 'F');
+        units.set('speed', 'mph');
+        units.set('visibility', 'mi');
+    }
 };
 
 document.getElementById('us-unit').addEventListener("click", () => {
-    setUsUnits();
+    setUnits('us');
     getTodayForecastFromApi();
     getWeekForecastFromApi();
 });
 
 document.getElementById('si-unit').addEventListener("click", () => {
-    setSiUnits();
+    setUnits('si');
     getTodayForecastFromApi();
     getWeekForecastFromApi();
 });
@@ -137,9 +134,10 @@ let createWrapper = (element, wrapperId, WrapperClass) => {
     wrapper.class = WrapperClass;
 };
 
-let createForecastItem = (parentElement, createdElement, createdElementId) => {
+let createForecastItem = (parentElement, createdElement, createdElementId, itemClass) => {
     let item = document.createElement(createdElement);
     item.id = createdElementId;
+    item.classList = itemClass;
     parentElement.appendChild(item);
 };
 
@@ -203,7 +201,7 @@ let renderWeekForecastTemplate = () => {
         headerWrapperMain.className = "header-wrapper accordion";
 
         createForecastItem(headerWrapperMain, 'img', `icon-${i}`);
-        createForecastItem(headerWrapperMain, 'h1', `header-${i}`);
+        createForecastItem(headerWrapperMain, 'h1', `header-${i}`, 'accordion');
 
         WeekForecastWrapper.appendChild(headerWrapperMain);
 
@@ -235,20 +233,18 @@ let renderWeekForecastTemplate = () => {
 };
 
 let accordionForWeekForecast = () => {
-    let acc = document.getElementsByClassName("accordion");
-    let i;
-
-    for (i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function () {
-            this.classList.toggle("active");
-            let panel = this.nextElementSibling;
+    const el = document.getElementById('week-forecast-wrapper');
+    el.addEventListener("click", function (event) {
+        if (event.target.classList.contains('accordion')) {
+            event.target.classList.toggle("active");
+            let panel = el.querySelector('.panel');
             if (panel.style.maxHeight) {
                 panel.style.maxHeight = null;
             } else {
                 panel.style.maxHeight = panel.scrollHeight + "px";
             }
-        });
-    }
+        }
+    })
 };
 
 let getTodayForecastFromApi = () => {
@@ -316,6 +312,7 @@ let renderWeekForecast = (data) => {
 };
 
 let initApp = new Promise(function (resolve, reject) {
+    setUnits('si');
     urlParamHandler();
     resolve("result");
     reject("error");
