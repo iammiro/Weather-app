@@ -248,7 +248,7 @@ let accordionForWeekForecast = () => {
 let getTodayForecastFromApi = () => {
     let latitude = currentUserPosition.get('latitude');
     let longitude = currentUserPosition.get('longitude');
-    let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
+    let url = `${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
     fetch(url, appSettings.init)
         .then((response) => response.json())
         .then(data => {
@@ -274,7 +274,7 @@ let renderTodayForecast = (data) => {
 let getWeekForecastFromApi = () => {
     let latitude = currentUserPosition.get('latitude');
     let longitude = currentUserPosition.get('longitude');
-    let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
+    let url = `${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
     fetch(url, appSettings.init)
         .then((response) => response.json())
         .then(function (data) {
