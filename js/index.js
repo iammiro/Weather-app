@@ -198,7 +198,8 @@ let renderWeekForecastTemplate = () => {
         headerWrapperMain.className = "header-wrapper accordion";
 
         createForecastItem(headerWrapperMain, 'img', `icon-${i}`);
-        createForecastItem(headerWrapperMain, 'h1', `header-${i}`, 'accordion');
+        createForecastItem(headerWrapperMain, 'h1', `header-${i}`, 'week-forecast-header');
+        createForecastItem(headerWrapperMain, 'h3', `under-header-${i}`, 'week-forecast-day-temperature');
 
         WeekForecastWrapper.appendChild(headerWrapperMain);
 
@@ -228,14 +229,14 @@ let renderWeekForecastTemplate = () => {
 
     accordionForWeekForecast();
 };
-//TODO: fix bug in accordion!
+
 let accordionForWeekForecast = () => {
     const el = document.getElementById('week-forecast-wrapper');
     el.addEventListener("click", function (event) {
         if (event.target.classList.contains('accordion')) {
             event.target.classList.toggle("active");
-            // let panel = event.target.nextElementSibling;
-            let panel = el.querySelector('.panel');
+            let panel = event.target.nextElementSibling;
+            // let panel = el.querySelector('.panel');
             if (panel.style.maxHeight) {
                 panel.style.maxHeight = null;
             } else {
@@ -267,7 +268,7 @@ let renderTodayForecast = (data) => {
     renderForecastItem('visibility', `Visibility: ${Math.round(data.currently.visibility)}+ ${units.get('visibility')}.`);
     renderForecastItem('pressure', `Pressure: ${Math.round(data.currently.pressure)} hPa.`);
     renderForecastImgItem('icon', `${appSettings.appURL}/img/${data.currently.icon}.svg`);
-    renderForecastItem('summary', `Today: ${Math.round(data.currently.temperature)} ${units.get('temperature')}. ${data.currently.summary}`);
+    renderForecastItem('summary', `Today: ${Math.round(data.currently.temperature)}˚ ${units.get('temperature')}. ${data.currently.summary}`);
     renderForecastItem('hourlySummary', `${data.hourly.summary}`);
 };
 
@@ -295,8 +296,9 @@ let renderWeekForecast = (data) => {
 
         renderForecastImgItem(`icon-${i}`, `${appSettings.appURL}/img/${element.icon}.svg`);
         renderForecastItem(`header-${i}`, `${day}`);
+        renderForecastItem(`under-header-${i}`, `&#9790; ${Math.round(element.temperatureMin)}˚ &#8594; &#9788; ${Math.round(element.temperatureMax)}˚ ${units.get('temperature')}.`);
         renderForecastItem(`summary-${i}`, `${element.summary}`);
-        renderForecastItem(`temperature-${i}`, `${Math.round(element.temperatureMin)} &#10141; ${Math.round(element.temperatureMax)} ${units.get('temperature')}.`);
+        renderForecastItem(`temperature-${i}`, `${Math.round(element.temperatureMin)}˚ &#10141; ${Math.round(element.temperatureMax)}˚ ${units.get('temperature')}.`);
         renderForecastItem(`windSpeed-${i}`, `Wind: ${Math.round(element.windSpeed)} ${units.get('speed')}.`);
         renderForecastItem(`humidity-${i}`, `Humidity: ${Math.round(element.humidity)} %.`);
         renderForecastItem(`dewPoint-${i}`, `Dew Pt: ${Math.round(element.dewPoint)}˚.`);
