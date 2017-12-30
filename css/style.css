@@ -77,6 +77,23 @@ header {
     font-size: 18px;
 }
 
+#currentPos {
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    padding: 2px;
+    border-radius: 20px;
+    border: none;
+    text-align: center;
+    background-color: white;
+    margin-right: 10px;
+}
+
+#currentPos:hover {
+    background-color: lightgrey;
+    transition: .3s;
+}
+
 #submit {
     cursor: pointer;
     width: 50px;
@@ -263,8 +280,8 @@ input, button {
 
 .accordion:after {
     cursor: pointer;
-    content: '\02795';
-    font-size: 13px;
+    content: '\002b';
+    font-size: 33px;
     color: #777;
     float: right;
     margin-left: 5px;
@@ -275,7 +292,7 @@ input, button {
 }
 
 .active:after {
-    content: "\2796";
+    content: "\02212";
 }
 
 /*//week forecast wrapper styles*/

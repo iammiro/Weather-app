@@ -3,7 +3,7 @@ const appSettings = {
     apiUrl: 'https://api.darksky.net/forecast/',
     proxy: 'https://cors-anywhere.herokuapp.com/',
     apiKey: 'c0edd7e111d453106e09ff75c17397b8',
-    appURL: 'https://iammiro.github.io/Weather-app',
+    appURL: 'iammiro.github.io/Weather-app',
     init: {
         method: 'GET',
         mode: 'cors',
@@ -20,28 +20,35 @@ let urlParamHandler = () => {
     let lat = (parsedUrl.searchParams.get("lat"));
     let lang = (parsedUrl.searchParams.get("lang"));
     if (lat && lang) {
-        console.log(lat + lang);
         setCoordinatesToMapStorage(lat, lang);
     } else {
-        // getCurrentUserPosition();
-        //set temporary default coordinates - Kiev
+        //set default coordinates - Kiev
         setCoordinatesToMapStorage(50.4501, 30.5241);
         setCoordinatesToUrl(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
     }
 };
 
-// let getCurrentUserPosition = () => {
-//     navigator.geolocation.getCurrentPosition(pos => {
-//             let crd = pos.coords;
-//             setCoordinatesToMapStorage(crd.latitude, crd.longitude);
-//             setCoordinatesToUrl(crd.latitude, crd.longitude);
-//         }, err => console.warn(`ERROR(${err.code}): ${err.message}`),
-//         {
-//             enableHighAccuracy: true,
-//             timeout: 5000,
-//             maximumAge: 0
-//         });
-// };
+let getCurrentUserPosition = () => {
+    navigator.geolocation.getCurrentPosition(pos => {
+            let crd = pos.coords;
+            setCoordinatesToMapStorage(crd.latitude, crd.longitude);
+            console.log(currentUserPosition);
+            setCoordinatesToUrl(crd.latitude, crd.longitude);
+        }, err => console.warn(`ERROR(${err.code}): ${err.message}`),
+        {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+        });
+};
+
+document.getElementById('currentPos').addEventListener("click", () => {
+    getCurrentUserPosition();
+    setTimeout(() => {
+        getTodayForecastFromApi();
+        getWeekForecastFromApi();
+    }, 1000);
+});
 
 let setUnits = (type) => {
     if (type === 'si') {
@@ -99,6 +106,12 @@ let setCoordinatesToUrl = (latitude, longitude) => {
         'data to be passed',
         'Weather App',
         `${appSettings.appURL}?lat=${latitude}&lang=${longitude}`);
+};
+
+window.onpopstate = () => {
+    urlParamHandler();
+    getTodayForecastFromApi();
+    getWeekForecastFromApi();
 };
 
 let setCoordinatesToMapStorage = (latitude, longitude) => {
@@ -236,7 +249,6 @@ let accordionForWeekForecast = () => {
         if (event.target.classList.contains('accordion')) {
             event.target.classList.toggle("active");
             let panel = event.target.nextElementSibling;
-            // let panel = el.querySelector('.panel');
             if (panel.style.maxHeight) {
                 panel.style.maxHeight = null;
             } else {
@@ -290,6 +302,7 @@ let renderWeekForecast = (data) => {
     let dailyData = data.daily.data;
 
     dailyData.forEach(function (element, i) {
+
         let dayNumber = new Date(element.time * 1000);
         let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         let day = days[dayNumber.getDay()];
