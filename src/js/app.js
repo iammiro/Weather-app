@@ -1,45 +1,61 @@
-const appSettings = {
-    container: document.getElementById('container'),
-    apiUrl: 'https://api.darksky.net/forecast/',
-    proxy: 'https://cors-anywhere.herokuapp.com/',
-    apiKey: 'c0edd7e111d453106e09ff75c17397b8',
-    appURL: 'https://iammiro.github.io/Weather-app',
-    init: {
-        method: 'GET',
-        mode: 'cors',
-        cache: 'default'
-    }
-};
+import style from '../css/style.css';
+import img0 from '../img/animated/cloudy.svg';
+import img2 from '../img/animated/cloudy-day-1.svg';
+import img3 from '../img/animated/cloudy-day-2.svg';
+import img4 from '../img/animated/cloudy-day-3.svg';
+import img5 from '../img/animated/cloudy-night-1.svg';
+import img6 from '../img/animated/cloudy-night-2.svg';
+import img7 from '../img/animated/cloudy-night-3.svg';
+import img8 from '../img/animated/day.svg';
+import img9 from '../img/animated/night.svg';
+import img10 from '../img/animated/rainy-1.svg';
+import img11 from '../img/animated/rainy-2.svg';
+import img13 from '../img/animated/rainy-3.svg';
+import img14 from '../img/animated/rainy-4.svg';
+import img15 from '../img/animated/rainy-5.svg';
+import img16 from '../img/animated/rainy-6.svg';
+import img17 from '../img/animated/rainy-7.svg';
+import img18 from '../img/animated/snowy-1.svg';
+import img19 from '../img/animated/snowy-2.svg';
+import img20 from '../img/animated/snowy-3.svg';
+import img21 from '../img/animated/snowy-4.svg';
+import img22 from '../img/animated/snowy-5.svg';
+import img23 from '../img/animated/snowy-6.svg';
+import img24 from '../img/animated/thunder.svg';
+import img25 from '../img/animated/weather.svg';
+import img26 from '../img/animated/weather-sprite.svg';
+import img27 from '../img/animated/weather_sagittarius.svg';
+import img28 from '../img/animated/weather_sunset.svg';
+import img29 from '../img/clear-day.svg';
+import img30 from '../img/clear-night.svg';
+import img31 from '../img/cloudy.svg';
+import img32 from '../img/cross-shaped-target.svg';
+import img33 from '../img/fog.svg';
+import img34 from '../img/magnifier.svg';
+import img35 from '../img/partly-cloudy-day.svg';
+import img36 from '../img/partly-cloudy-night.svg';
+import img37 from '../img/rain.svg';
+import img38 from '../img/sleet.svg';
+import img39 from '../img/snow.svg';
+import img40 from '../img/wind.svg';
 
-let currentUserPosition = new Map();
-let favoriteCities = new Map();
-let units = new Map();
+import { appSettings, defaultCoordinates, currentUserPosition, favoriteCities, units } from './settings.js';
+import { getTodayForecastFromApi, getWeekForecastFromApi } from "./api";
+import { renderTodayForecast, renderWeekForecast } from "./render";
+import { renderForecastItem, renderForecastImgItem } from "./renderTemplate";
+import { getCurrentUserPosition } from "./geolocation";
+import { setUnits } from "./setUnits";
 
-let urlParamHandler = () => {
+let getParamFromUrl = () => {
     let parsedUrl = new URL(window.location.href);
     let lat = (parsedUrl.searchParams.get("lat"));
     let lang = (parsedUrl.searchParams.get("lang"));
     if (lat && lang) {
         setCoordinatesToMapStorage(lat, lang);
     } else {
-        //set default coordinates - Kiev
-        setCoordinatesToMapStorage(50.4501, 30.5241);
-        setCoordinatesToUrl(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
+        setCoordinatesToMapStorage(defaultCoordinates[0], defaultCoordinates[1]);
+        addHistoryState(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
     }
-};
-
-let getCurrentUserPosition = () => {
-    navigator.geolocation.getCurrentPosition(pos => {
-            let crd = pos.coords;
-            setCoordinatesToMapStorage(crd.latitude, crd.longitude);
-            console.log(currentUserPosition);
-            setCoordinatesToUrl(crd.latitude, crd.longitude);
-        }, err => console.warn(`ERROR(${err.code}): ${err.message}`),
-        {
-            enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 0
-        });
 };
 
 document.getElementById('currentPos').addEventListener("click", () => {
@@ -50,33 +66,7 @@ document.getElementById('currentPos').addEventListener("click", () => {
     }, 1000);
 });
 
-let setUnits = (type) => {
-    if (type === 'si') {
-        units.set('units', 'si');
-        units.set('temperature', 'C');
-        units.set('speed', 'm/s');
-        units.set('visibility', 'km');
-    } else if (type === 'us') {
-        units.set('units', 'us');
-        units.set('temperature', 'F');
-        units.set('speed', 'mph');
-        units.set('visibility', 'mi');
-    }
-};
-
-document.getElementById('us-unit').addEventListener("click", () => {
-    setUnits('us');
-    getTodayForecastFromApi();
-    getWeekForecastFromApi();
-});
-
-document.getElementById('si-unit').addEventListener("click", () => {
-    setUnits('si');
-    getTodayForecastFromApi();
-    getWeekForecastFromApi();
-});
-
-let getAndGeocodUserInput = () => {
+let getAndGeocodingUserInput = () => {
     const geocoder = new google.maps.Geocoder();
     let address = document.getElementById('address').value;
     geocoder.geocode({'address': address}, function (results, status) {
@@ -86,7 +76,7 @@ let getAndGeocodUserInput = () => {
             setCityToFavorite();
             getTodayForecastFromApi();
             getWeekForecastFromApi();
-            urlParamHandler();
+            getParamFromUrl();
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
         }
@@ -98,10 +88,10 @@ let getCoordinatesFromUrl = () => {
     let params = new URLSearchParams(parsedUrl.search.slice(1));
     params.set('lat', currentUserPosition.get('latitude'));
     params.set('lang', currentUserPosition.get('longitude'));
-    setCoordinatesToUrl(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
+    addHistoryState(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
 };
 
-let setCoordinatesToUrl = (latitude, longitude) => {
+let addHistoryState = (latitude, longitude) => {
     history.pushState(
         'data to be passed',
         'Weather App',
@@ -109,7 +99,7 @@ let setCoordinatesToUrl = (latitude, longitude) => {
 };
 
 window.onpopstate = () => {
-    urlParamHandler();
+    getParamFromUrl();
     getTodayForecastFromApi();
     getWeekForecastFromApi();
 };
@@ -130,13 +120,13 @@ let setCityToFavorite = () => {
 
     document.getElementById(`${address}`).addEventListener('click', () => {
         setCoordinatesToMapStorage(lat, lang);
-        setCoordinatesToUrl(lat, lang);
+        addHistoryState(lat, lang);
         getTodayForecastFromApi();
         getWeekForecastFromApi();
     });
 };
 
-document.getElementById('submit').addEventListener('click', getAndGeocodUserInput);
+document.getElementById('submit').addEventListener('click', getAndGeocodingUserInput);
 
 let createContentWrapper = () => {
     const contentWrapper = document.createElement('div');
@@ -149,16 +139,6 @@ let createForecastItem = (parentElement, createdElement, createdElementId, itemC
     item.id = createdElementId;
     item.classList = itemClass;
     parentElement.appendChild(item);
-};
-
-let renderForecastItem = (parentElementId, content) => {
-    let parentElement = document.getElementById(parentElementId);
-    parentElement.innerHTML = content;
-};
-
-let renderForecastImgItem = (elementId, src) => {
-    let icon = document.getElementById(elementId);
-    icon.src = src;
 };
 
 let renderTodayForecastTemplate = () => {
@@ -203,8 +183,8 @@ let renderRecentlyViewedCitiesBlockItem = (address) => {
 };
 
 let renderWeekForecastTemplate = () => {
-    const WeekForecastWrapper = document.createElement('div');
-    WeekForecastWrapper.id = "week-forecast-wrapper";
+    const weekForecastWrapper = document.createElement('div');
+    weekForecastWrapper.id = "week-forecast-wrapper";
 
     for (let i = 0; i < 8; i++) {
         const headerWrapperMain = document.createElement('div');
@@ -214,7 +194,7 @@ let renderWeekForecastTemplate = () => {
         createForecastItem(headerWrapperMain, 'h1', `header-${i}`, 'week-forecast-header');
         createForecastItem(headerWrapperMain, 'h3', `under-header-${i}`, 'week-forecast-day-temperature');
 
-        WeekForecastWrapper.appendChild(headerWrapperMain);
+        weekForecastWrapper.appendChild(headerWrapperMain);
 
         const innerWrapper = document.createElement('div');
         innerWrapper.className = "panel";
@@ -233,10 +213,10 @@ let renderWeekForecastTemplate = () => {
 
         innerWrapper.appendChild(innerWrapperMain);
 
-        WeekForecastWrapper.appendChild(innerWrapper);
+        weekForecastWrapper.appendChild(innerWrapper);
     }
     let contentWrapper = document.getElementById('content-wrapper');
-    contentWrapper.appendChild(WeekForecastWrapper);
+    contentWrapper.appendChild(weekForecastWrapper);
 
     appSettings.container.appendChild(contentWrapper);
 
@@ -258,72 +238,9 @@ let accordionForWeekForecast = () => {
     })
 };
 
-let getTodayForecastFromApi = () => {
-    let latitude = currentUserPosition.get('latitude');
-    let longitude = currentUserPosition.get('longitude');
-    let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
-    fetch(url, appSettings.init)
-        .then((response) => response.json())
-        .then(data => {
-            renderTodayForecast(data);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-};
-
-let renderTodayForecast = (data) => {
-    renderForecastItem('windSpeed', `Wind: ${Math.round(data.currently.windSpeed)} ${units.get('speed')}.`)
-    renderForecastItem('humidity', `Humidity: ${Math.round(data.currently.humidity)} %.`);
-    renderForecastItem('dewPoint', `Dew Pt: ${Math.round(data.currently.dewPoint)}˚.`);
-    renderForecastItem('uvIndex', `UV Index: ${Math.round(data.currently.uvIndex)}.`);
-    renderForecastItem('visibility', `Visibility: ${Math.round(data.currently.visibility)}+ ${units.get('visibility')}.`);
-    renderForecastItem('pressure', `Pressure: ${Math.round(data.currently.pressure)} hPa.`);
-    renderForecastImgItem('icon', `${appSettings.appURL}/img/${data.currently.icon}.svg`);
-    renderForecastItem('summary', `Today: ${Math.round(data.currently.temperature)}˚ ${units.get('temperature')}. ${data.currently.summary}`);
-    renderForecastItem('hourlySummary', `${data.hourly.summary}`);
-};
-
-let getWeekForecastFromApi = () => {
-    let latitude = currentUserPosition.get('latitude');
-    let longitude = currentUserPosition.get('longitude');
-    let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
-    fetch(url, appSettings.init)
-        .then((response) => response.json())
-        .then(function (data) {
-            renderWeekForecast(data);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-};
-
-let renderWeekForecast = (data) => {
-    let dailyData = data.daily.data;
-
-    dailyData.forEach(function (element, i) {
-
-        let dayNumber = new Date(element.time * 1000);
-        let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        let day = days[dayNumber.getDay()];
-
-        renderForecastImgItem(`icon-${i}`, `${appSettings.appURL}/img/${element.icon}.svg`);
-        renderForecastItem(`header-${i}`, `${day}`);
-        renderForecastItem(`under-header-${i}`, `&#9790; ${Math.round(element.temperatureMin)}˚ &#8594; &#9788; ${Math.round(element.temperatureMax)}˚ ${units.get('temperature')}.`);
-        renderForecastItem(`summary-${i}`, `${element.summary}`);
-        renderForecastItem(`temperature-${i}`, `${Math.round(element.temperatureMin)}˚ &#10141; ${Math.round(element.temperatureMax)}˚ ${units.get('temperature')}.`);
-        renderForecastItem(`windSpeed-${i}`, `Wind: ${Math.round(element.windSpeed)} ${units.get('speed')}.`);
-        renderForecastItem(`humidity-${i}`, `Humidity: ${Math.round(element.humidity)} %.`);
-        renderForecastItem(`dewPoint-${i}`, `Dew Pt: ${Math.round(element.dewPoint)}˚.`);
-        renderForecastItem(`uvIndex-${i}`, `UV Index: ${Math.round(element.uvIndex)}.`);
-        renderForecastItem(`pressure-${i}`, `Pressure: ${Math.round(element.pressure)} hPa.`);
-
-    });
-};
-
 let initApp = new Promise(function (resolve, reject) {
     setUnits('si');
-    urlParamHandler();
+    getParamFromUrl();
     resolve("result");
     reject("error");
 });
@@ -334,7 +251,7 @@ initApp.then(
         renderTodayForecastTemplate();
         renderWeekForecastTemplate();
         getTodayForecastFromApi();
-        urlParamHandler();
+        getParamFromUrl();
     },
     error => {
         console.log(error);
