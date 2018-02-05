@@ -1,7 +1,7 @@
-import { appSettings, defaultCoordinates, currentUserPosition, favoriteCities, units } from './settings.js';
-import { renderTodayForecast, renderWeekForecast } from "./render";
+import {appSettings, defaultCoordinates, currentUserPosition, favoriteCities, units} from './settings.js';
+import {renderTodayForecast, renderWeekForecast} from "./render";
 
-let getTodayForecastFromApi = () => {
+const getTodayForecastFromApi = () => {
     let latitude = currentUserPosition.get('latitude');
     let longitude = currentUserPosition.get('longitude');
     let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
@@ -15,7 +15,7 @@ let getTodayForecastFromApi = () => {
         });
 };
 
-let getWeekForecastFromApi = () => {
+const getWeekForecastFromApi = () => {
     let latitude = currentUserPosition.get('latitude');
     let longitude = currentUserPosition.get('longitude');
     let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
@@ -29,4 +29,4 @@ let getWeekForecastFromApi = () => {
         });
 };
 
-export { getTodayForecastFromApi, getWeekForecastFromApi };
+export {getTodayForecastFromApi, getWeekForecastFromApi};

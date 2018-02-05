@@ -39,6 +39,7 @@ const config = {
             {
                 test : /\.(png|jpe?g|svg)$/,
                 loader : 'file-loader',
+                exclude: /(animated)/,
                 options: {
                     outputPath: 'img/',
                     name: '[name].[ext]',

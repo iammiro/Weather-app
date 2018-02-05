@@ -1,7 +1,7 @@
 import {appSettings, units} from "./settings";
 import {renderForecastItem, renderForecastImgItem} from "./renderTemplate";
 
-let renderTodayForecast = (data) => {
+const renderTodayForecast = (data) => {
     renderForecastItem('windSpeed', `Wind: ${Math.round(data.currently.windSpeed)} ${units.get('speed')}.`);
     renderForecastItem('humidity', `Humidity: ${Math.round(data.currently.humidity)} %.`);
     renderForecastItem('dewPoint', `Dew Pt: ${Math.round(data.currently.dewPoint)}˚.`);
@@ -13,7 +13,7 @@ let renderTodayForecast = (data) => {
     renderForecastItem('hourlySummary', `${data.hourly.summary}`);
 };
 
-let renderWeekForecast = (data) => {
+const renderWeekForecast = (data) => {
     let dailyData = data.daily.data;
 
     dailyData.forEach(function (element, i) {
@@ -36,4 +36,4 @@ let renderWeekForecast = (data) => {
     });
 };
 
-export { renderTodayForecast, renderWeekForecast };
+export {renderTodayForecast, renderWeekForecast};

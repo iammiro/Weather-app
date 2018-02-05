@@ -1,6 +1,8 @@
 import {currentUserPosition} from "./settings";
+import {setCoordinatesToMapStorage} from "./setCoordinates";
+import {addHistoryState} from "./historyState";
 
-let getCurrentUserPosition = () => {
+const getCurrentUserPosition = () => {
     navigator.geolocation.getCurrentPosition(pos => {
             let crd = pos.coords;
             setCoordinatesToMapStorage(crd.latitude, crd.longitude);
@@ -14,4 +16,4 @@ let getCurrentUserPosition = () => {
         });
 };
 
-export { getCurrentUserPosition };
+export {getCurrentUserPosition};

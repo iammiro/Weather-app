@@ -18,4 +18,4 @@ let units = new Map();
 
 const defaultCoordinates = [50.4501, 30.5241];
 
-export { appSettings, defaultCoordinates, currentUserPosition, favoriteCities, units };
+export {appSettings, defaultCoordinates, currentUserPosition, favoriteCities, units};

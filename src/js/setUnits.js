@@ -27,4 +27,4 @@ document.getElementById('si-unit').addEventListener("click", () => {
     getWeekForecastFromApi();
 });
 
-export { setUnits };
+export {setUnits};
