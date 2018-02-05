@@ -1,29 +1,21 @@
 import {appSettings, defaultCoordinates, currentUserPosition, favoriteCities, units} from './settings.js';
 import {renderTodayForecast, renderWeekForecast} from "./render";
 
-const getTodayForecastFromApi = () => {
-    let latitude = currentUserPosition.get('latitude');
-    let longitude = currentUserPosition.get('longitude');
+const getTodayForecastFromApi = (latitude, longitude) => {
     let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
     fetch(url, appSettings.init)
         .then((response) => response.json())
-        .then(data => {
-            renderTodayForecast(data);
-        })
+        .then(renderTodayForecast)
         .catch(function (error) {
             console.log(error);
         });
 };
 
-const getWeekForecastFromApi = () => {
-    let latitude = currentUserPosition.get('latitude');
-    let longitude = currentUserPosition.get('longitude');
+const getWeekForecastFromApi = (latitude, longitude) => {
     let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
     fetch(url, appSettings.init)
         .then((response) => response.json())
-        .then(function (data) {
-            renderWeekForecast(data);
-        })
+        .then(renderWeekForecast)
         .catch(function (error) {
             console.log(error);
         });

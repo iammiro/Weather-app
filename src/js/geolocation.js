@@ -1,4 +1,3 @@
-import {currentUserPosition} from "./settings";
 import {setCoordinatesToMapStorage} from "./setCoordinates";
 import {addHistoryState} from "./historyState";
 
@@ -6,7 +5,7 @@ const getCurrentUserPosition = () => {
     navigator.geolocation.getCurrentPosition(pos => {
             let crd = pos.coords;
             setCoordinatesToMapStorage(crd.latitude, crd.longitude);
-            console.log(currentUserPosition);
+
             addHistoryState(crd.latitude, crd.longitude);
         }, err => console.warn(`ERROR(${err.code}): ${err.message}`),
         {
