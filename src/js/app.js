@@ -1,56 +1,45 @@
 import style from '../css/style.css';
 import images from '../img';
 
-import {getTodayForecastFromApi, getWeekForecastFromApi} from "./api";
-import {renderTodayForecastTemplate, renderWeekForecastTemplate} from "./renderTemplate";
 import {getCurrentUserPosition} from "./geolocation";
-import {setUnits} from "./setUnits";
+import {getForecastFromApi} from "./api";
 import {handlingUserInput} from "./userInput";
 import {getParamFromUrl} from "./url";
-import {createContentWrapper} from "./renderTemplate";
-import {appSettings, defaultCoordinates, currentUserPosition, favoriteCities, units} from "./settings";
+import {currentUserPosition} from "./settings";
+import {initApp} from "./init";
 
-const handlingUserPosition = () => {
-    getCurrentUserPosition();
-    setTimeout(() => {
-        getTodayForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
-        getWeekForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
-    }, 1000);
-};
+// const temp = true;
 
-document.getElementById('currentPos').addEventListener("click", handlingUserPosition);
+// const geocoding = new Promise(
+//     (resolve, reject) => {
+//         getCurrentUserPosition();
+//         if (temp) {
+//             resolve(temp)
+//         } else {
+//             let error = new Error('Error.');
+//             reject(error)
+//         }
+//     }
+// );
+
+// const getPos = (getTodayForecastFromApi, getWeekForecastFromApi) => {
+//     console.log('test');
+//     geocoding
+//         .then(getTodayForecastFromApi)
+//         .then(getWeekForecastFromApi)
+//         .catch(error => console.log(error));
+// };
+
+// document.getElementById('currentPos').addEventListener("click", getPos(
+//     getTodayForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude')),
+//     getWeekForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'))
+// ));
 
 window.onpopstate = () => {
     getParamFromUrl();
-    getTodayForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
-    getWeekForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
+    getForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
 };
 
 document.getElementById('submit').addEventListener('click', handlingUserInput);
 
-const initApp = new Promise(function (resolve, reject) {
-    setUnits('si');
-    getParamFromUrl();
-    resolve("result");
-    reject("error");
-});
-
-initApp.then(
-    () => {
-        createContentWrapper();
-        renderTodayForecastTemplate();
-        renderWeekForecastTemplate();
-        getTodayForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
-        getParamFromUrl();
-    },
-    error => {
-        console.log(error);
-    }
-).then(
-    () => {
-        getWeekForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
-    },
-    error => {
-        console.log(error);
-    }
-);
+initApp();

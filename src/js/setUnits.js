@@ -1,4 +1,4 @@
-import {getTodayForecastFromApi, getWeekForecastFromApi} from "./api";
+import {getForecastFromApi} from "./api";
 import {units} from "./settings";
 
 const setUnits = (type) => {
@@ -17,14 +17,12 @@ const setUnits = (type) => {
 
 document.getElementById('us-unit').addEventListener("click", () => {
     setUnits('us');
-    getTodayForecastFromApi();
-    getWeekForecastFromApi();
+    getForecastFromApi();
 });
 
 document.getElementById('si-unit').addEventListener("click", () => {
     setUnits('si');
-    getTodayForecastFromApi();
-    getWeekForecastFromApi();
+    getForecastFromApi();
 });
 
 export {setUnits};
