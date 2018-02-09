@@ -33,4 +33,5 @@ const renderForecast = (data) => {
     });
 };
 
+
 export {renderForecastImgItem, renderForecastItem, renderForecast};
