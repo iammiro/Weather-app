@@ -11,6 +11,7 @@ import {createForecastTemplate} from "./createTemplate";
 
 const currentUserPositionButton = document.getElementById('currentPos');
 const submitButton = document.getElementById('submit');
+const inputField = document.getElementById('address');
 
 window.onpopstate = () => {
     getParamFromUrl();
@@ -19,6 +20,12 @@ window.onpopstate = () => {
 
 currentUserPositionButton.addEventListener("click", getCurrentUserPosition);
 submitButton.addEventListener('click', handlingUserInput);
+
+inputField.addEventListener('keyup', function (event) {
+    if (event.which === 13) {
+        handlingUserInput();
+    }
+});
 
 const initApp = () => {
     setUnits('si');
