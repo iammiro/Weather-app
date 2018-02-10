@@ -4,27 +4,36 @@
     <title>Weather App</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" rel="stylesheet">
 <link href="styles.css" rel="stylesheet"></head>
 <body>
 <header>
     <div class="options">
         <div class="option">
-            <button id="currentPos"><img src="img/cross-shaped-target.svg"></button>
-            <input id="address" type="textbox" value="New York">
-            <button id="submit"><img src="img/magnifier.svg"></button>
+            <button id="currentPos" class="btn-small"></button>
+            <label for="address">
+                <input id="address" type="text" value="" class="address-input" placeholder="TYPE CITY NAME">
+            </label>
+            <button id="submit" class="btn-small">?</button>
         </div>
         <div class="option">
-            <button id="us-unit">˚F, mph</button>
-            <button id="si-unit">˚C, m/s</button>
+            <div id="current-city" class="current-city-name"></div>
+            <button id="addToFav" class="btn-small">+</button>
+        </div>
+        <div class="option">
+            <button id="us-unit" class="unit-button">˚F, mph</button>
+            <button id="si-unit" class="unit-button">˚C, m/s</button>
         </div>
     </div>
 </header>
-<section id="container">
+<main id="container">
+    <div id="recently-viewed-cities-block">
 
-</section>
+    </div>
+</main>
 <footer>
     <p>
-        2017 - iammiro
+        2018 - <a href="https://github.com/iammiro">iammiro</a>
     </p>
 </footer>
 

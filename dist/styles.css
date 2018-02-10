@@ -1,314 +1,306 @@
-/*common styles*/
 body {
-    font-size: 1em;
-    margin: 0;
-    padding: 0;
-    font-family: Lato, sans-serif;
-    background-color: #fcfcfc;
-}
-
-h1 {
-    text-align: center;
-}
-
-h2 {
-    text-align: center;
-    font-weight: 100;
-}
-
-#container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    background-color: #333A48;
 }
 
-#content-wrapper {
-    width: 100%;
-}
-
-/*//common styles*/
-
-/*header styles*/
 header {
-    background-color: #333;
-    height: 60px;
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+    background-color: #e7ebf4;
+    width: 100%;
+    height: 50px;
+    position: sticky;
+    top: 0;
 }
 
 .options {
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
 }
 
 .option {
+    width: 33%;
     display: flex;
     flex-direction: row;
-    justify-content: left;
-    align-items: left;
-    font-size: 12px;
-    line-height: 30px;
-    color: #111;
+    justify-content: center;
+    align-items: center;
 }
 
-#us-unit, #si-unit {
-    background-color: white;
+.current-city-name {
+    color: #354b5a;
+    font-family: "Avenir Next", sans-serif;
+    font-size: 32px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.btn-small {
     border: none;
-    cursor: pointer;
-    margin: 5px;
     width: 40px;
-    height: 35px;
-    border-radius: 5px;
-}
-
-#address {
-    width: 300px;
-    height: 35px;
-    border-radius: 20px;
-    border: none;
-    text-align: center;
-    margin-right: 10px;
-    font-size: 18px;
-}
-
-#currentPos {
-    cursor: pointer;
-    width: 35px;
-    height: 35px;
-    padding: 2px;
-    border-radius: 20px;
-    border: none;
-    text-align: center;
-    background-color: white;
-    margin-right: 10px;
-}
-
-#currentPos:hover {
-    background-color: lightgrey;
-    transition: .3s;
-}
-
-#submit {
-    cursor: pointer;
-    width: 50px;
-    height: 35px;
-    padding: 2px;
-    border-radius: 20px;
-    border: none;
-    text-align: center;
-    background-color: white;
-}
-
-#submit:hover {
-    background-color: lightgrey;
-    transition: .3s;
-}
-
-input, button {
-    outline: none;
-}
-
-#submit img {
-    width: 33px;
-    height: 31px;
-    padding: 0;
-}
-
-/*//header styles*/
-
-/*today forecast wrapper styles*/
-.header-wrapper h1 {
-    width: 100%;
-    font-size: 22px;
-    font-weight: 100;
-    text-align: left;
-    margin: 5px 0;
-    padding: 5px 10px;
-    border-radius: 0 3px 3px 0;
-    line-height: 1.5em;
-    background-color: white;
-    color: black;
-}
-
-.header-wrapper:hover {
-    border-bottom: 1px solid black;
-    transition: 0.5s;
-}
-
-.accordion, .panel {
-    max-width: 800px;
-}
-
-.header-wrapper {
-    border-bottom: 1px solid white;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-.today-forecast-header-wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    border-bottom: 1px solid #e5e5e5;
-    margin-bottom: 15px;
-    width: 100%;
     height: 40px;
-    line-height: 40px;
-    background-color: rgba(238, 238, 238, .35);
+    background-color: #424b5a;
+    color: #e7ebf4;
+    margin: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: .3s;
 }
 
-.today-forecast-body-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.btn-small:hover {
+    transition: .3s;
+    background-color: #354b5a;
+    color: #ffffff;
 }
 
-.today-forecast-body-wrapper img {
-    background-color: white;
-    width: 120px;
-    /*height: 70px;*/
+.address-input {
+    border-radius: 4px;
+    border: 1px solid #424b5a;
+    width: 237px;
+    text-align: center;
+    height: 36px;
+    background-color: #424b5a;
+    color: #ffffff;
 }
 
-/*//today forecast wrapper styles*/
+.address-input::placeholder {
+    color: #ffffff;
+    text-align: center;
+    font-size: 18px;
 
-/*recently viewed cities block styles*/
+}
+
+.unit-button {
+    margin: 5px;
+    border: none;
+    background-color: #424b5a;
+    color: #e7ebf4;
+    width: 160px;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: .3s;
+}
+
+.unit-button:hover {
+    transition: .3s;
+    background-color: #354b5a;
+    color: #ffffff;
+}
+
 #recently-viewed-cities-block {
-    height: 60px;
-    width: 100%;
-    background-color: white;
-    color: black;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    font-size: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: #E6EDF4;
+    font-family: "Avenir Next", sans-serif;
     font-weight: 300;
-    margin: 10px 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-#recently-viewed-cities-block-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    font-weight: 100;
-    width: 100%;
+    font-size: 12px;
 }
 
 #recently-viewed-cities-block div {
-    margin: 0 10px;
-    cursor: pointer;
-    border-bottom: 1px solid white;
-    transition: 0.5s;
+    margin: 10px;
 }
 
-#recently-viewed-cities-block div:hover {
-    border-bottom: 1px solid black;
-    transition: 0.5s;
-}
-
-/*//recently viewed cities block styles*/
-
-/*week forecast wrapper styles*/
-#week-forecast-wrapper img {
-    height: 50px;
-    padding: 0;
-}
-
-.week-forecast-day-temperature {
-    width: 50%;
-    font-size: 17px;
-}
-
-.week-forecast-header {
-    width: 50%;
-    font-size: 22px;
-    font-weight: 100;
-    text-align: left;
-    margin: 5px 0;
-    padding: 5px 10px;
-    border-radius: 0 3px 3px 0;
-    line-height: 1.5em;
-    background-color: white;
-    color: black;
-}
-
-.inner-wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    border-bottom: 1px solid #e5e5e5;
-    margin-bottom: 15px;
-    width: 100%;
-    height: 40px;
-    line-height: 40px;
-    background-color: rgba(238, 238, 238, .35);
-}
-
-.accordion {
-    outline: none;
-    transition: 0.4s;
-}
-
-.panel {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.2s ease-out;
-}
-
-#week-forecast-wrapper {
+.individual-day-forecast-wrapper {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: space-around;
+    margin-bottom: 50px;
 }
 
-.accordion:after {
-    cursor: pointer;
-    content: '+';
-    font-size: 33px;
-    color: #777;
-    float: right;
-    margin-left: 5px;
+.individual-day-forecast-footer-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
 }
 
-.active {
-
-}
-
-.active:after {
-    content: "\2212";
-}
-
-/*//week forecast wrapper styles*/
-
-/*footer styles*/
-footer {
-    text-align: center;
-    clear: both;
-    width: 100%;
-    margin: 60px 0 0;
-    padding: 30px 0;
-    font-size: 14px;
-    color: white;
-    background-color: #111111;
+.forecast-item {
+    width: 70px;
+    color: #E6EDF4;
+    font-family: "Avenir Next", sans-serif;
     font-weight: 300;
+    font-size: 12px;
 }
 
-/*//footer styles*/
+.forecast-icon {
+    width: 100px;
+    height: 100px;
+}
+
+.forecast-header {
+    color: #E6EDF4;
+    font-family: "Avenir Next", sans-serif;
+    font-size: 32px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.forecast-day-temperature {
+    color: #E6EDF4;
+    font-family: "Avenir Next - Ultra Light", sans-serif;
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.forecast-summary {
+    color: #E6EDF4;
+    font-family: "Avenir Next", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    margin: 20px 0;
+}
+
+.forecast-temperature {
+    color: #E6EDF4;
+    font-family: "Avenir Next", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.forecast-wind-speed {
+
+}
+
+.forecast-humidity {
+
+}
+
+.forecast-dew-point {
+
+}
+
+.forecast-uv-index {
+
+}
+
+.forecast-pressure {
+
+}
+
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #e7ebf4;
+    width: 100%;
+    height: 50px;
+    color: #424b5a;
+    font-family: "Avenir Next", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+footer a {
+    color: #424b5a;
+}
+
+@media (max-width: 1000px) {
+    header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 50px;
+        background-color: #e7ebf4;
+        width: 100%;
+        height: 100%;
+        position: sticky;
+        top: 0;
+    }
+
+    .options {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .options label {
+        width: 70%;
+    }
+
+    .option {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .current-city-name {
+        color: #354b5a;
+        font-family: "Avenir Next", sans-serif;
+        font-size: 32px;
+        text-align: center;
+        font-weight: 500;
+    }
+
+    .btn-small {
+        border: none;
+        width: 15%;
+        height: 40px;
+        background-color: #424b5a;
+        color: #e7ebf4;
+        margin: 5px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: .3s;
+    }
+
+    .btn-small:hover {
+        transition: .3s;
+        background-color: #354b5a;
+        color: #ffffff;
+    }
+
+    .address-input {
+        border-radius: 4px;
+        border: 1px solid #424b5a;
+        width: 100%;
+        text-align: center;
+        height: 36px;
+        background-color: #424b5a;
+        color: #ffffff;
+    }
+
+    .address-input::placeholder {
+        color: #ffffff;
+        text-align: center;
+        font-size: 18px;
+
+    }
+
+    .unit-button {
+        margin: 5px;
+        border: none;
+        background-color: #424b5a;
+        color: #e7ebf4;
+        width: 160px;
+        height: 40px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: .3s;
+    }
+
+    .unit-button:hover {
+        transition: .3s;
+        background-color: #354b5a;
+        color: #ffffff;
+    }
+}
 /*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzdHlsZXMuY3NzIiwic291cmNlUm9vdCI6IiJ9*/
