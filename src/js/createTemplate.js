@@ -21,16 +21,22 @@ const createForecastTemplate = () => {
         const dayForecastWrapper = document.createElement('section');
         dayForecastWrapper.className = "individual-day-forecast-wrapper";
 
-        createForecastItem(dayForecastWrapper, 'img', `icon-${i}`);
-        createForecastItem(dayForecastWrapper, 'div', `header-${i}`, 'week-forecast-header');
-        createForecastItem(dayForecastWrapper, 'div', `under-header-${i}`, 'week-forecast-day-temperature');
-        createForecastItem(dayForecastWrapper, 'div', `summary-${i}`);
-        createForecastItem(dayForecastWrapper, 'div', `temperature-${i}`);
-        createForecastItem(dayForecastWrapper, 'div', `windSpeed-${i}`);
-        createForecastItem(dayForecastWrapper, 'div', `humidity-${i}`);
-        createForecastItem(dayForecastWrapper, 'div', `dewPoint-${i}`);
-        createForecastItem(dayForecastWrapper, 'div', `uvIndex-${i}`);
-        createForecastItem(dayForecastWrapper, 'div', `pressure-${i}`);
+        const dayForecastFooterWrapper = document.createElement('section');
+        dayForecastFooterWrapper.className = "individual-day-forecast-footer-wrapper";
+
+        createForecastItem(dayForecastWrapper, 'div', `header-${i}`, 'forecast-header');
+        createForecastItem(dayForecastWrapper, 'img', `icon-${i}`, 'forecast-icon');
+        createForecastItem(dayForecastWrapper, 'div', `under-header-${i}`, 'forecast-day-temperature');
+        createForecastItem(dayForecastWrapper, 'div', `summary-${i}`, 'forecast-summary');
+        createForecastItem(dayForecastWrapper, 'div', `temperature-${i}`, 'forecast-temperature');
+
+            createForecastItem(dayForecastFooterWrapper, 'div', `windSpeed-${i}`, 'forecast-wind-speed forecast-item');
+            createForecastItem(dayForecastFooterWrapper, 'div', `humidity-${i}`, 'forecast-humidity forecast-item');
+            createForecastItem(dayForecastFooterWrapper, 'div', `dewPoint-${i}`, 'forecast-dew-point forecast-item');
+            createForecastItem(dayForecastFooterWrapper, 'div', `uvIndex-${i}`, 'forecast-uv-index forecast-item');
+            createForecastItem(dayForecastFooterWrapper, 'div', `pressure-${i}`, 'forecast-pressure forecast-item');
+
+            dayForecastWrapper.appendChild(dayForecastFooterWrapper);
 
         forecastWrapper.appendChild(dayForecastWrapper);
     }

@@ -13,6 +13,8 @@ const setCityToRecentlyViewedCities = (latitude, longitude) => {
 
     createRecentlyViewedCitiesBlockItem(address);
 
+    document.getElementById('current-city').innerText = address;
+
     document.getElementById(`${address}`).addEventListener('click', () => {
         setCoordinatesToMapStorage(lat, lang);
         addHistoryState(lat, lang);

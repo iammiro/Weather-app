@@ -1,0 +1,305 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #333A48;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+    background-color: #e7ebf4;
+    width: 100%;
+    height: 50px;
+    position: sticky;
+    top: 0;
+}
+
+.options {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.option {
+    width: 33%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.current-city-name {
+    color: #354b5a;
+    font-family: "Avenir Next", sans-serif;
+    font-size: 32px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.btn-small {
+    border: none;
+    width: 40px;
+    height: 40px;
+    background-color: #424b5a;
+    color: #e7ebf4;
+    margin: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.btn-small:hover {
+    transition: .3s;
+    background-color: #354b5a;
+    color: #ffffff;
+}
+
+.address-input {
+    border-radius: 4px;
+    border: 1px solid #424b5a;
+    width: 237px;
+    text-align: center;
+    height: 36px;
+    background-color: #424b5a;
+    color: #ffffff;
+}
+
+.address-input::placeholder {
+    color: #ffffff;
+    text-align: center;
+    font-size: 18px;
+
+}
+
+.unit-button {
+    margin: 5px;
+    border: none;
+    background-color: #424b5a;
+    color: #e7ebf4;
+    width: 160px;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: .3s;
+}
+
+.unit-button:hover {
+    transition: .3s;
+    background-color: #354b5a;
+    color: #ffffff;
+}
+
+#recently-viewed-cities-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: #E6EDF4;
+    font-family: "Avenir Next", sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+}
+
+#recently-viewed-cities-block div {
+    margin: 10px;
+}
+
+.individual-day-forecast-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.individual-day-forecast-footer-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.forecast-item {
+    width: 70px;
+    color: #E6EDF4;
+    font-family: "Avenir Next", sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+}
+
+.forecast-icon {
+    width: 100px;
+    height: 100px;
+}
+
+.forecast-header {
+    color: #E6EDF4;
+    font-family: "Avenir Next", sans-serif;
+    font-size: 32px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.forecast-day-temperature {
+    color: #E6EDF4;
+    font-family: "Avenir Next - Ultra Light", sans-serif;
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.forecast-summary {
+    color: #E6EDF4;
+    font-family: "Avenir Next", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    margin: 20px 0;
+}
+
+.forecast-temperature {
+    color: #E6EDF4;
+    font-family: "Avenir Next", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.forecast-wind-speed {
+
+}
+
+.forecast-humidity {
+
+}
+
+.forecast-dew-point {
+
+}
+
+.forecast-uv-index {
+
+}
+
+.forecast-pressure {
+
+}
+
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #e7ebf4;
+    width: 100%;
+    height: 50px;
+    color: #424b5a;
+    font-family: "Avenir Next", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+footer a {
+    color: #424b5a;
+}
+
+@media (max-width: 1000px) {
+    header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 50px;
+        background-color: #e7ebf4;
+        width: 100%;
+        height: 100%;
+        position: sticky;
+        top: 0;
+    }
+
+    .options {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .options label {
+        width: 70%;
+    }
+
+    .option {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .current-city-name {
+        color: #354b5a;
+        font-family: "Avenir Next", sans-serif;
+        font-size: 32px;
+        text-align: center;
+        font-weight: 500;
+    }
+
+    .btn-small {
+        border: none;
+        width: 15%;
+        height: 40px;
+        background-color: #424b5a;
+        color: #e7ebf4;
+        margin: 5px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: .3s;
+    }
+
+    .btn-small:hover {
+        transition: .3s;
+        background-color: #354b5a;
+        color: #ffffff;
+    }
+
+    .address-input {
+        border-radius: 4px;
+        border: 1px solid #424b5a;
+        width: 100%;
+        text-align: center;
+        height: 36px;
+        background-color: #424b5a;
+        color: #ffffff;
+    }
+
+    .address-input::placeholder {
+        color: #ffffff;
+        text-align: center;
+        font-size: 18px;
+
+    }
+
+    .unit-button {
+        margin: 5px;
+        border: none;
+        background-color: #424b5a;
+        color: #e7ebf4;
+        width: 160px;
+        height: 40px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: .3s;
+    }
+
+    .unit-button:hover {
+        transition: .3s;
+        background-color: #354b5a;
+        color: #ffffff;
+    }
+}
