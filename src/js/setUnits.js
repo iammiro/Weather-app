@@ -1,5 +1,5 @@
-import {getTodayForecastFromApi, getWeekForecastFromApi} from "./api";
-import {units} from "./settings";
+import {getForecastFromApi} from "./api";
+import {currentUserPosition, units} from "./settings";
 
 const setUnits = (type) => {
     if (type === 'si') {
@@ -17,14 +17,12 @@ const setUnits = (type) => {
 
 document.getElementById('us-unit').addEventListener("click", () => {
     setUnits('us');
-    getTodayForecastFromApi();
-    getWeekForecastFromApi();
+    getForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
 });
 
 document.getElementById('si-unit').addEventListener("click", () => {
     setUnits('si');
-    getTodayForecastFromApi();
-    getWeekForecastFromApi();
+    getForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
 });
 
 export {setUnits};

@@ -1,53 +1,31 @@
 import style from '../css/style.css';
 import images from '../img';
 
-import {getTodayForecastFromApi, getWeekForecastFromApi} from "./api";
-import {renderTodayForecastTemplate, renderWeekForecastTemplate} from "./renderTemplate";
-import {getCurrentUserPosition} from "./geolocation";
-import {setUnits} from "./setUnits";
+import {getCurrentUserPosition} from "./currentUserGeolocation";
+import {getForecastFromApi} from "./api";
 import {handlingUserInput} from "./userInput";
 import {getParamFromUrl} from "./url";
-import {createContentWrapper} from "./renderTemplate";
+import {currentUserPosition} from "./settings";
+import {setUnits} from "./setUnits";
+import {createForecastTemplate} from "./createTemplate";
 
-document.getElementById('currentPos').addEventListener("click", () => {
-    getCurrentUserPosition();
-    setTimeout(() => {
-        getTodayForecastFromApi();
-        getWeekForecastFromApi();
-    }, 1000);
-});
+const currentUserPositionButton = document.getElementById('currentPos');
+const submitButton = document.getElementById('submit');
 
 window.onpopstate = () => {
     getParamFromUrl();
-    getTodayForecastFromApi();
-    getWeekForecastFromApi();
+    getForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
 };
 
-document.getElementById('submit').addEventListener('click', handlingUserInput);
+currentUserPositionButton.addEventListener("click", getCurrentUserPosition);
+submitButton.addEventListener('click', handlingUserInput);
 
-const initApp = new Promise(function (resolve, reject) {
+const initApp = () => {
     setUnits('si');
     getParamFromUrl();
-    resolve("result");
-    reject("error");
-});
+    createForecastTemplate();
+    getForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
+    getParamFromUrl();
+};
 
-initApp.then(
-    () => {
-        createContentWrapper();
-        renderTodayForecastTemplate();
-        renderWeekForecastTemplate();
-        getTodayForecastFromApi();
-        getParamFromUrl();
-    },
-    error => {
-        console.log(error);
-    }
-).then(
-    () => {
-        getWeekForecastFromApi();
-    },
-    error => {
-        console.log(error);
-    }
-);
+initApp();
