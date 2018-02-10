@@ -9,7 +9,7 @@ body {
 header {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 50px;
     background-color: #e7ebf4;
@@ -23,12 +23,12 @@ header {
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 
 .option {
-    width: 33%;
+    width: 33.3%;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -36,21 +36,31 @@ header {
 }
 
 .current-city-name {
-    color: #354b5a;
+    color: #e7ebf4;
     font-family: "Avenir Next", sans-serif;
     font-size: 32px;
     text-align: center;
     font-weight: 500;
 }
 
-.btn-small {
-    border: none;
-    width: 40px;
-    height: 40px;
+.current {
     background-color: #424b5a;
     color: #e7ebf4;
-    margin: 5px;
-    border-radius: 4px;
+    height: 50px;
+}
+
+.option label {
+    width: 70%;
+}
+
+.btn-small {
+    border: none;
+    /*border-left: 1px solid lightslategray;*/
+    border-right: 1px solid lightslategray;
+    width: 10%;
+    height: 50px;
+    background-color: #424b5a;
+    color: #e7ebf4;
     cursor: pointer;
     transition: .3s;
 }
@@ -62,12 +72,11 @@ header {
 }
 
 .address-input {
-    border-radius: 4px;
     border: 1px solid #424b5a;
-    width: 237px;
+    width: 100%;
     text-align: center;
-    height: 36px;
-    background-color: #424b5a;
+    height: 46px;
+    background-color: lightslategray;
     color: #ffffff;
 }
 
@@ -75,18 +84,17 @@ header {
     color: #ffffff;
     text-align: center;
     font-size: 18px;
-
 }
 
 .unit-button {
-    margin: 5px;
     border: none;
+    border-left: 1px solid lightslategray;
+    /*border-right: 1px solid lightslategray;*/
     background-color: #424b5a;
     color: #e7ebf4;
-    width: 160px;
-    height: 40px;
+    width: 50%;
+    height: 50px;
     cursor: pointer;
-    border-radius: 4px;
     transition: .3s;
 }
 
@@ -195,37 +203,41 @@ footer {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: #e7ebf4;
+    background-color: black;
     width: 100%;
     height: 50px;
-    color: #424b5a;
+    color: #E6EDF4;
     font-family: "Avenir Next", sans-serif;
     font-size: 20px;
     font-weight: 400;
 }
 
 footer a {
-    color: #424b5a;
+    font-family: "Avenir Next", sans-serif;
+    color: #E6EDF4;
+    text-decoration: none;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 900px) {
     header {
+        display: flex;
         flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 50px;
+        background-color: #e7ebf4;
         width: 100%;
         height: 100%;
-        position: relative;
+        position: sticky;
+        top: 0;
     }
 
     .options {
         width: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
-    }
-
-    .options label {
-        width: 70%;
     }
 
     .option {
@@ -236,34 +248,30 @@ footer a {
         align-items: center;
     }
 
-    .current {
-        order: 2;
-    }
-
-    .units {
-        order: 1;
-    }
-
-    .address {
-        order: 1;
-    }
-
     .current-city-name {
-        color: #354b5a;
+        color: #e7ebf4;
         font-family: "Avenir Next", sans-serif;
         font-size: 32px;
         text-align: center;
         font-weight: 500;
     }
 
-    .btn-small {
-        border: none;
-        width: 15%;
-        height: 40px;
+    .current {
         background-color: #424b5a;
         color: #e7ebf4;
-        margin: 5px;
-        border-radius: 4px;
+        height: 50px;
+    }
+
+    .option label {
+        width: 70%;
+    }
+
+    .btn-small {
+        border: none;
+        width: 10%;
+        height: 50px;
+        background-color: #424b5a;
+        color: #e7ebf4;
         cursor: pointer;
         transition: .3s;
     }
@@ -275,12 +283,11 @@ footer a {
     }
 
     .address-input {
-        border-radius: 4px;
         border: 1px solid #424b5a;
         width: 100%;
         text-align: center;
-        height: 36px;
-        background-color: #424b5a;
+        height: 46px;
+        background-color: lightslategray;
         color: #ffffff;
     }
 
@@ -288,18 +295,15 @@ footer a {
         color: #ffffff;
         text-align: center;
         font-size: 18px;
-
     }
 
     .unit-button {
-        margin: 5px;
         border: none;
         background-color: #424b5a;
         color: #e7ebf4;
-        width: 160px;
+        width: 50%;
         height: 40px;
         cursor: pointer;
-        border-radius: 4px;
         transition: .3s;
     }
 
