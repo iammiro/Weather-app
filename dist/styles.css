@@ -210,16 +210,10 @@ footer a {
 
 @media (max-width: 1000px) {
     header {
-        display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 50px;
-        background-color: #e7ebf4;
         width: 100%;
         height: 100%;
-        position: sticky;
-        top: 0;
+        position: relative;
     }
 
     .options {
@@ -240,6 +234,18 @@ footer a {
         flex-direction: row;
         justify-content: center;
         align-items: center;
+    }
+
+    .current {
+        order: 2;
+    }
+
+    .units {
+        order: 1;
+    }
+
+    .address {
+        order: 1;
     }
 
     .current-city-name {
