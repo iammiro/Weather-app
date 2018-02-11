@@ -10,29 +10,29 @@
 <header>
     <div class="options">
         <div class="option address">
-            <button id="currentPos" class="btn-small"></button>
+            <button id="currentPos" class="btn-small"><img src="img/target.svg"></button>
             <label for="address">
                 <input id="address" type="text" value="" class="address-input" placeholder="TYPE CITY NAME">
             </label>
-            <button id="submit" class="btn-small">?</button>
-            <button id="addToFav" class="btn-small">+</button>
-        </div>
-        <div class="option current">
-            <div id="current-city" class="current-city-name"></div>
-
+            <button id="submit" class="btn-small"><img src="img/search.svg"></button>
+            <button id="addToFav" class="btn-small"><img src="img/add.svg"></button>
         </div>
         <div class="option units">
             <button id="us-unit" class="unit-button">˚F, mph</button>
             <button id="si-unit" class="unit-button">˚C, m/s</button>
+            <select id="favorite-cities-block"></select>
         </div>
     </div>
+
 </header>
 <main id="container">
-    <div id="recently-viewed-cities-block">
 
-    </div>
 </main>
+<aside>
+    <ul id="recently-viewed-cities-block"></ul>
+</aside>
 <footer>
+
     <p>
         2018 - <a href="https://github.com/iammiro">iammiro</a>
     </p>

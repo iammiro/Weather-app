@@ -8,10 +8,12 @@ import {getParamFromUrl} from "./url";
 import {currentUserPosition} from "./settings";
 import {setUnits} from "./setUnits";
 import {createForecastTemplate} from "./createTemplate";
+import {setCityToRecentlyFavoriteCities} from "./recentlyViewedCities";
 
 const currentUserPositionButton = document.getElementById('currentPos');
 const submitButton = document.getElementById('submit');
 const inputField = document.getElementById('address');
+const addToFavorite = document.getElementById('addToFav');
 
 window.onpopstate = () => {
     getParamFromUrl();
@@ -20,7 +22,7 @@ window.onpopstate = () => {
 
 currentUserPositionButton.addEventListener("click", getCurrentUserPosition);
 submitButton.addEventListener('click', handlingUserInput);
-
+addToFavorite.addEventListener('click', setCityToRecentlyFavoriteCities);
 inputField.addEventListener('keyup', function (event) {
     if (event.which === 13) {
         handlingUserInput();
