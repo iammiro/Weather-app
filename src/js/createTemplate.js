@@ -2,8 +2,13 @@ import {appSettings} from "./settings";
 import {renderForecastItem} from "./renderTemplate";
 
 const createRecentlyViewedCitiesBlockItem = (address) => {
-    createForecastItem(document.getElementById('recently-viewed-cities-block'), 'div', `${address}`);
-    renderForecastItem(`${address}`, `${address}`)
+    createForecastItem(document.getElementById('recently-viewed-cities-block'), 'li', `${address}`);
+    renderForecastItem(`${address}`, `${address}`);
+};
+
+const createFavoriteCitiesBlockItem = (address) => {
+    createForecastItem(document.getElementById('favorite-cities-block'), 'option', `${address}-favorite-city`);
+    renderForecastItem(`${address}-favorite-city`, `${address}`);
 };
 
 const createForecastItem = (parentElement, createdElement, createdElementId, itemClass) => {
@@ -28,7 +33,6 @@ const createForecastTemplate = () => {
         createForecastItem(dayForecastWrapper, 'img', `icon-${i}`, 'forecast-icon');
         createForecastItem(dayForecastWrapper, 'div', `under-header-${i}`, 'forecast-day-temperature');
         createForecastItem(dayForecastWrapper, 'div', `summary-${i}`, 'forecast-summary');
-        createForecastItem(dayForecastWrapper, 'div', `temperature-${i}`, 'forecast-temperature');
 
             createForecastItem(dayForecastFooterWrapper, 'div', `windSpeed-${i}`, 'forecast-wind-speed forecast-item');
             createForecastItem(dayForecastFooterWrapper, 'div', `humidity-${i}`, 'forecast-humidity forecast-item');
@@ -47,4 +51,5 @@ const createForecastTemplate = () => {
 export {
     createRecentlyViewedCitiesBlockItem,
     createForecastTemplate,
+    createFavoriteCitiesBlockItem
 };

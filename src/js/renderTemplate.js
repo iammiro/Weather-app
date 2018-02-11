@@ -23,7 +23,6 @@ const renderForecast = (data) => {
         renderForecastItem(`header-${i}`, `${day}`);
         renderForecastItem(`under-header-${i}`, `&#9790; ${Math.round(element.temperatureMin)}˚ &#8594; &#9788; ${Math.round(element.temperatureMax)}˚ ${units.get('temperature')}.`);
         renderForecastItem(`summary-${i}`, `${element.summary}`);
-        renderForecastItem(`temperature-${i}`, `${Math.round(element.temperatureMin)}˚ &#10141; ${Math.round(element.temperatureMax)}˚ ${units.get('temperature')}.`);
         renderForecastItem(`windSpeed-${i}`, `Wind:<br><br> ${Math.round(element.windSpeed)} ${units.get('speed')}`);
         renderForecastItem(`humidity-${i}`, `Humidity:<br><br> ${Math.round(element.humidity)} %`);
         renderForecastItem(`dewPoint-${i}`, `Dew Pt:<br><br> ${Math.round(element.dewPoint)}˚`);
