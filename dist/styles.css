@@ -35,12 +35,8 @@ header {
     align-items: center;
 }
 
-.current-city-name {
-    color: #e7ebf4;
-    font-family: "Avenir Next", sans-serif;
-    font-size: 32px;
-    text-align: center;
-    font-weight: 500;
+.address {
+    width: 70%;
 }
 
 .current {
@@ -49,13 +45,16 @@ header {
     height: 50px;
 }
 
+.units {
+    width: 30%;
+}
+
 .option label {
     width: 70%;
 }
 
 .btn-small {
     border: none;
-    /*border-left: 1px solid lightslategray;*/
     border-right: 1px solid lightslategray;
     width: 10%;
     height: 50px;
@@ -63,6 +62,11 @@ header {
     color: #e7ebf4;
     cursor: pointer;
     transition: .3s;
+}
+
+.btn-small img {
+    width: 30px;
+    height: 30px;
 }
 
 .btn-small:hover {
@@ -78,23 +82,38 @@ header {
     height: 46px;
     background-color: lightslategray;
     color: #ffffff;
+    font-size: 45px;
+    letter-spacing: 3px;
 }
 
 .address-input::placeholder {
     color: #ffffff;
     text-align: center;
-    font-size: 18px;
+    font-size: 45px;
+    letter-spacing: 3px;
+    font-weight: 300;
 }
 
 .unit-button {
     border: none;
     border-left: 1px solid lightslategray;
-    /*border-right: 1px solid lightslategray;*/
+    background-color: #424b5a;
+    color: #e7ebf4;
+    width: 25%;
+    height: 50px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+#favorite-cities-block {
+    border: none;
+    border-left: 1px solid lightslategray;
     background-color: #424b5a;
     color: #e7ebf4;
     width: 50%;
     height: 50px;
     cursor: pointer;
+    padding: 0 10px;
     transition: .3s;
 }
 
@@ -106,13 +125,17 @@ header {
 
 #recently-viewed-cities-block {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     color: #E6EDF4;
     font-family: "Avenir Next", sans-serif;
     font-weight: 300;
     font-size: 12px;
+}
+
+#recently-viewed-cities-block li {
+    margin: 10px 0;
 }
 
 #recently-viewed-cities-block div {
@@ -256,12 +279,6 @@ footer a {
         font-weight: 500;
     }
 
-    .current {
-        background-color: #424b5a;
-        color: #e7ebf4;
-        height: 50px;
-    }
-
     .option label {
         width: 70%;
     }
@@ -269,7 +286,7 @@ footer a {
     .btn-small {
         border: none;
         width: 10%;
-        height: 50px;
+        height: 40px;
         background-color: #424b5a;
         color: #e7ebf4;
         cursor: pointer;
@@ -286,7 +303,7 @@ footer a {
         border: 1px solid #424b5a;
         width: 100%;
         text-align: center;
-        height: 46px;
+        height: 36px;
         background-color: lightslategray;
         color: #ffffff;
     }
@@ -294,15 +311,15 @@ footer a {
     .address-input::placeholder {
         color: #ffffff;
         text-align: center;
-        font-size: 18px;
+        font-size: 25px;
     }
 
     .unit-button {
         border: none;
         background-color: #424b5a;
         color: #e7ebf4;
-        width: 50%;
-        height: 40px;
+        width: 20%;
+        height: 35px;
         cursor: pointer;
         transition: .3s;
     }
@@ -311,6 +328,18 @@ footer a {
         transition: .3s;
         background-color: #354b5a;
         color: #ffffff;
+    }
+
+    #favorite-cities-block {
+        border: none;
+        border-left: 1px solid lightslategray;
+        background-color: #424b5a;
+        color: #e7ebf4;
+        width: 60%;
+        height: 35px;
+        cursor: pointer;
+        padding: 0 10px;
+        transition: .3s;
     }
 }
 /*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzdHlsZXMuY3NzIiwic291cmNlUm9vdCI6IiJ9*/
