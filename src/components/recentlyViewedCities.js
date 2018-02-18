@@ -1,6 +1,6 @@
 import {currentUserPosition, recentlyViewedCities, favoriteCities} from "./settings";
 import {addHistoryState} from "./historyState";
-import {getForecastFromApi} from "./api";
+import {getForecastFromApi} from "../utils/api";
 import {createRecentlyViewedCitiesBlockItem, createFavoriteCitiesBlockItem} from "./createTemplate";
 import {setCoordinatesToMapStorage} from "./setCoordinates";
 

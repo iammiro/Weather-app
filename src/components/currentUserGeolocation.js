@@ -1,6 +1,6 @@
 import {setCoordinatesToMapStorage} from "./setCoordinates";
 import {addHistoryState} from "./historyState";
-import {getForecastFromApi} from "./api";
+import {getForecastFromApi} from "../utils/api";
 
 const getCurrentUserPosition = () => {
     navigator.geolocation.getCurrentPosition(pos => {

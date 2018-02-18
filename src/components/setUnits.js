@@ -1,4 +1,4 @@
-import {getForecastFromApi} from "./api";
+import {getForecastFromApi} from "../utils/api";
 import {currentUserPosition, units} from "./settings";
 
 const setUnits = (type) => {

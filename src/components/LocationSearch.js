@@ -1,4 +1,4 @@
-import {getForecastFromApi} from "./api";
+import {getForecastFromApi} from "../utils/api";
 import {setCityToRecentlyViewedCities} from "./recentlyViewedCities";
 import {setCoordinatesToMapStorage} from "./setCoordinates";
 import {getParamFromUrl, getCoordinatesFromUrl} from "./url";

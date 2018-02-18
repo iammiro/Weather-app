@@ -2,7 +2,7 @@ import style from './src/css/style.css';
 import images from './src/img/index';
 
 import {getCurrentUserPosition} from "./src/components/currentUserGeolocation";
-import {getForecastFromApi} from "./src/components/api";
+import {getForecastFromApi} from "./src/utils/api";
 import {LocationSearch} from "./src/components/LocationSearch";
 import {getParamFromUrl} from "./src/components/url";
 import {currentUserPosition} from "./src/components/settings";
@@ -40,12 +40,13 @@ initApp();
 
 class App {
     constructor() {
-        this.host = document.getElementById('root');
+        // this.host = document.getElementById('root');
         this.form = new LocationSearch();
     }
 
     render() {
-        this.host.appendChild(this.form.render());
+        this.form.render();
+        // this.host.appendChild(this.form.render());
     }
 }
 

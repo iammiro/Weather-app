@@ -1,5 +1,5 @@
-import {appSettings, units} from './settings.js';
-import {renderForecast} from "./renderTemplate";
+import {appSettings, units} from '../components/settings.js';
+import {renderForecast} from "../components/renderTemplate";
 
 const getForecastFromApi = (latitude, longitude) => {
     let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;

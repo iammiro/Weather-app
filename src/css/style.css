@@ -36,7 +36,7 @@ header {
 }
 
 .address {
-    width: 70%;
+    width: 100%;
 }
 
 .current {
@@ -279,8 +279,8 @@ footer a {
         font-weight: 500;
     }
 
-    .option label {
-        width: 70%;
+    .option form {
+        width: 100%;
     }
 
     .btn-small {
