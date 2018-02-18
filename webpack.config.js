@@ -5,7 +5,7 @@ const path = require('path');
 
 
 const config = {
-    entry: './src/js/app.js',
+    entry: './index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js'
@@ -49,7 +49,7 @@ const config = {
     },
     plugins: [
         new webpack.optimize.UglifyJsPlugin(),
-        new HtmlWebpackPlugin({template: './src/index.html'}),
+        new HtmlWebpackPlugin({template: './index.html'}),
         new ExtractTextPlugin("styles.css")
     ]
 };

@@ -7,8 +7,11 @@ const createRecentlyViewedCitiesBlockItem = (address) => {
 };
 
 const createFavoriteCitiesBlockItem = (address) => {
-    createForecastItem(document.getElementById('favorite-cities-block'), 'option', `${address}-favorite-city`);
-    renderForecastItem(`${address}-favorite-city`, `${address}`);
+    let item = document.createElement('option');
+    item.id = `${address}-favorite-city`;
+    item.value = address;
+    item.innerText = address;
+    document.getElementById('favorite-cities-block').appendChild(item);
 };
 
 const createForecastItem = (parentElement, createdElement, createdElementId, itemClass) => {
@@ -34,13 +37,13 @@ const createForecastTemplate = () => {
         createForecastItem(dayForecastWrapper, 'div', `under-header-${i}`, 'forecast-day-temperature');
         createForecastItem(dayForecastWrapper, 'div', `summary-${i}`, 'forecast-summary');
 
-            createForecastItem(dayForecastFooterWrapper, 'div', `windSpeed-${i}`, 'forecast-wind-speed forecast-item');
-            createForecastItem(dayForecastFooterWrapper, 'div', `humidity-${i}`, 'forecast-humidity forecast-item');
-            createForecastItem(dayForecastFooterWrapper, 'div', `dewPoint-${i}`, 'forecast-dew-point forecast-item');
-            createForecastItem(dayForecastFooterWrapper, 'div', `uvIndex-${i}`, 'forecast-uv-index forecast-item');
-            createForecastItem(dayForecastFooterWrapper, 'div', `pressure-${i}`, 'forecast-pressure forecast-item');
+        createForecastItem(dayForecastFooterWrapper, 'div', `windSpeed-${i}`, 'forecast-wind-speed forecast-item');
+        createForecastItem(dayForecastFooterWrapper, 'div', `humidity-${i}`, 'forecast-humidity forecast-item');
+        createForecastItem(dayForecastFooterWrapper, 'div', `dewPoint-${i}`, 'forecast-dew-point forecast-item');
+        createForecastItem(dayForecastFooterWrapper, 'div', `uvIndex-${i}`, 'forecast-uv-index forecast-item');
+        createForecastItem(dayForecastFooterWrapper, 'div', `pressure-${i}`, 'forecast-pressure forecast-item');
 
-            dayForecastWrapper.appendChild(dayForecastFooterWrapper);
+        dayForecastWrapper.appendChild(dayForecastFooterWrapper);
 
         forecastWrapper.appendChild(dayForecastWrapper);
     }

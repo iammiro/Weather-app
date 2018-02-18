@@ -22,17 +22,26 @@ const setCityToRecentlyViewedCities = (latitude, longitude) => {
 
 const setCityToRecentlyFavoriteCities = () => {
     let address = document.getElementById('address').value;
-    console.log(address);
-    favoriteCities.setItem(`${address}`, `${address}`);
+    favoriteCities.setItem(`${address}`, `${address};${currentUserPosition.get('latitude')};${currentUserPosition.get('longitude')}`);
     console.log(favoriteCities.getItem(`${address}`));
-
     createFavoriteCitiesBlockItem(address);
-
-    document.getElementById(`${address}-favorite-city`).addEventListener('click', () => {
-        // setCoordinatesToMapStorage(lat, lang);
-        // addHistoryState(lat, lang);
-        // getForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
-    });
 };
 
-export {setCityToRecentlyViewedCities, setCityToRecentlyFavoriteCities};
+const getListOfFavoriteCitiesFromLocalStorage = () => {
+    for (let i = 0, len = localStorage.length; i < len; ++i) {
+        createFavoriteCitiesBlockItem(localStorage.getItem(localStorage.key(i)));
+    }
+};
+
+const getFavoriteCityForecastFromApi = () => {
+    let selector = document.getElementById('favorite-cities-block');
+    let value = selector[selector.selectedIndex].value;
+    console.log(value);
+};
+
+export {
+    setCityToRecentlyViewedCities,
+    setCityToRecentlyFavoriteCities,
+    getListOfFavoriteCitiesFromLocalStorage,
+    getFavoriteCityForecastFromApi
+};
