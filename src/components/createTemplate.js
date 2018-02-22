@@ -1,5 +1,4 @@
 import {appSettings} from "./settings";
-import {renderForecastItem} from "./renderTemplate";
 
 const createRecentlyViewedCitiesBlockItem = (address) => {
     createForecastItem(document.getElementById('recently-viewed-cities-block'), 'li', `${address}`);

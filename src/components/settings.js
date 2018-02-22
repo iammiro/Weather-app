@@ -11,11 +11,11 @@ const appSettings = {
         cache: 'default'
     }
 };
-
+let forecast = new Map();
 let currentUserPosition = new Map();
 let recentlyViewedCities = new Map();
 let favoriteCities = window.localStorage;
 let units = new Map();
 const defaultCoordinates = [50.4501, 30.5241];
 
-export {appSettings, defaultCoordinates, currentUserPosition, recentlyViewedCities, units, favoriteCities};
+export {appSettings, defaultCoordinates, currentUserPosition, recentlyViewedCities, units, favoriteCities, forecast};

@@ -1,14 +1,46 @@
 import {appSettings, units} from '../components/settings.js';
-import {renderForecast} from "../components/renderTemplate";
+import {RenderTemplateClass} from "../components/RenderTemplateClass";
 
-const getForecastFromApi = (latitude, longitude) => {
-    let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
-    fetch(url, appSettings.init)
-        .then((response) => response.json())
-        .then(renderForecast)
-        .catch(function (error) {
-            console.log(error);
-        });
-};
+// let data = new RenderTemplateClass();
+//
+// const getForecastFromApi = (latitude, longitude) => {
+//     let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
+//     fetch(url, appSettings.init)
+//         .then(function (response) {
+//             return response.json();
+//         })
+//         .then(function (myBlob) {
+//             return myBlob.daily;
+//         })
+//         .then(function (temp) {
+//             data.render(temp);
+//         })
+//         .catch(function (error) {
+//             console.log(error);
+//         });
+// };
 
-export {getForecastFromApi};
+class GetForecastFromApiClass {
+    constructor() {
+        this.data = new RenderTemplateClass();
+    }
+
+    getForecastFromApi(latitude, longitude) {
+        let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
+        fetch(url, appSettings.init)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (myBlob) {
+                return myBlob.daily;
+            })
+            .then(function (temp) {
+                data.render(temp);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+}
+
+export {GetForecastFromApiClass};

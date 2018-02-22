@@ -4,21 +4,21 @@ import {getForecastFromApi} from "../utils/api";
 import {createRecentlyViewedCitiesBlockItem, createFavoriteCitiesBlockItem} from "./createTemplate";
 import {setCoordinatesToMapStorage} from "./setCoordinates";
 
-const setCityToRecentlyViewedCities = (latitude, longitude) => {
-    let address = document.getElementById('address').value;
-    recentlyViewedCities.set(`${address}`, [latitude, longitude]);
-    let coordinates = recentlyViewedCities.get(`${address}`);
-    let lat = coordinates[0];
-    let lang = coordinates[1];
-
-    createRecentlyViewedCitiesBlockItem(address);
-
-    document.getElementById(`${address}`).addEventListener('click', () => {
-        setCoordinatesToMapStorage(lat, lang);
-        addHistoryState(lat, lang);
-        getForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
-    });
-};
+// const setCityToRecentlyViewedCities = (latitude, longitude) => {
+//     let address = document.getElementById('address').value;
+//     recentlyViewedCities.set(`${address}`, [latitude, longitude]);
+//     let coordinates = recentlyViewedCities.get(`${address}`);
+//     let lat = coordinates[0];
+//     let lang = coordinates[1];
+//
+//     createRecentlyViewedCitiesBlockItem(address);
+//
+//     document.getElementById(`${address}`).addEventListener('click', () => {
+//         setCoordinatesToMapStorage(lat, lang);
+//         addHistoryState(lat, lang);
+//         getForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
+//     });
+// };
 
 const setCityToRecentlyFavoriteCities = () => {
     let address = document.getElementById('address').value;
@@ -40,7 +40,7 @@ const getFavoriteCityForecastFromApi = () => {
 };
 
 export {
-    setCityToRecentlyViewedCities,
+    // setCityToRecentlyViewedCities,
     setCityToRecentlyFavoriteCities,
     getListOfFavoriteCitiesFromLocalStorage,
     getFavoriteCityForecastFromApi
