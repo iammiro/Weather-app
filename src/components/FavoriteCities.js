@@ -1,4 +1,4 @@
-import {currentUserPosition, favoriteCities} from "./settings";
+import {currentUserPosition, favoriteCities} from "../utils/settings";
 import {createFavoriteCitiesBlockItem} from "./createTemplate";
 
 class FavoriteCities {

@@ -1,7 +1,7 @@
 import {getForecastFromApi} from "../utils/api";
-import {setCoordinatesToMapStorage} from "./setCoordinates";
-import {getParamFromUrl, getCoordinatesFromUrl} from "./url";
-import {currentUserPosition} from "./settings";
+import {setCoordinatesToMapStorage} from "../utils/setCoordinates";
+import {getParamFromUrl, getCoordinatesFromUrl} from "../utils/url";
+import {currentUserPosition} from "../utils/settings";
 import {RecentlyCities} from "./RecentlyCities";
 
 class LocationSearch {

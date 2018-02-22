@@ -1,4 +1,4 @@
-import {appSettings, units} from "./settings";
+import {appSettings, units} from "../utils/settings";
 
 class RenderTemplateClass {
     constructor() {
@@ -6,11 +6,13 @@ class RenderTemplateClass {
             isValid: true
         };
         this.host = document.getElementById('container');
+
     }
 
     render(temp) {
         const {isValid} = this.state;
         console.log(temp);
+        console.log('test');
         let dailyData = temp.data;
 
         console.log(dailyData.data);

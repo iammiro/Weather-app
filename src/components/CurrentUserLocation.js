@@ -1,6 +1,6 @@
 import {getForecastFromApi} from "../utils/api";
-import {setCoordinatesToMapStorage} from "./setCoordinates";
-import {addHistoryState} from "./historyState";
+import {setCoordinatesToMapStorage} from "../utils/setCoordinates";
+import {addHistoryState} from "../utils/historyState";
 
 
 class CurrentUserLocation {

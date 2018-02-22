@@ -1,5 +1,5 @@
 import {getForecastFromApi} from "../utils/api";
-import {currentUserPosition, units} from "./settings";
+import {currentUserPosition, units} from "../utils/settings";
 
 const setUnits = (type) => {
     if (type === 'si') {

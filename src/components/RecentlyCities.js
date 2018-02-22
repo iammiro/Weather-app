@@ -1,8 +1,8 @@
-import {currentUserPosition, recentlyViewedCities} from "./settings";
-import {addHistoryState} from "./historyState";
+import {currentUserPosition, recentlyViewedCities} from "../utils/settings";
+import {addHistoryState} from "../utils/historyState";
 import {getForecastFromApi} from "../utils/api";
 import {createRecentlyViewedCitiesBlockItem} from "./createTemplate";
-import {setCoordinatesToMapStorage} from "./setCoordinates";
+import {setCoordinatesToMapStorage} from "../utils/setCoordinates";
 
 class RecentlyCities {
     constructor() {

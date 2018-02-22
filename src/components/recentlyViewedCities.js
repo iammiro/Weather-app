@@ -1,8 +1,8 @@
-import {currentUserPosition, recentlyViewedCities, favoriteCities} from "./settings";
-import {addHistoryState} from "./historyState";
+import {currentUserPosition, recentlyViewedCities, favoriteCities} from "../utils/settings";
+import {addHistoryState} from "../utils/historyState";
 import {getForecastFromApi} from "../utils/api";
 import {createRecentlyViewedCitiesBlockItem, createFavoriteCitiesBlockItem} from "./createTemplate";
-import {setCoordinatesToMapStorage} from "./setCoordinates";
+import {setCoordinatesToMapStorage} from "../utils/setCoordinates";
 
 // const setCityToRecentlyViewedCities = (latitude, longitude) => {
 //     let address = document.getElementById('address').value;
