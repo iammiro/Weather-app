@@ -1,6 +1,6 @@
 import {getForecastFromApi} from "../utils/api";
 import {setCoordinatesToMapStorage} from "../utils/setCoordinates";
-import {addHistoryState} from "../utils/historyState";
+import {HandlingURL} from "../utils/Url";
 
 
 class CurrentUserLocation {
@@ -8,6 +8,7 @@ class CurrentUserLocation {
         this.state = {
             isValid: true
         };
+        this.url = new HandlingURL();
         this.getCurrentUserPosition = this.getCurrentUserPosition.bind(this);
         this.host = document.getElementById('input-search-container');
         this.currentUserPositionButton = document.getElementById('currentPos');
@@ -18,7 +19,7 @@ class CurrentUserLocation {
         navigator.geolocation.getCurrentPosition(pos => {
                 let crd = pos.coords;
                 setCoordinatesToMapStorage(crd.latitude, crd.longitude);
-                addHistoryState(crd.latitude, crd.longitude);
+                this.url.addHistoryState(crd.latitude, crd.longitude);
                 getForecastFromApi(crd.latitude, crd.longitude);
             }, err => console.warn(`ERROR(${err.code}): ${err.message}`),
             {

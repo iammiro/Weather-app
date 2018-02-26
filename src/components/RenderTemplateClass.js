@@ -10,9 +10,10 @@ class RenderTemplateClass {
     }
 
     render(temp) {
+        this.host.innerHTML = '';
         const {isValid} = this.state;
-        console.log(temp);
-        console.log('test');
+        // console.log(temp);
+        // console.log('test');
         let dailyData = temp.data;
 
         console.log(dailyData.data);

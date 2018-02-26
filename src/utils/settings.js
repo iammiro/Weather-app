@@ -16,6 +16,10 @@ let currentUserPosition = new Map();
 let recentlyViewedCities = new Map();
 let favoriteCities = window.localStorage;
 let units = new Map();
+units.set('units', 'si');
+units.set('temperature', 'C');
+units.set('speed', 'm/s');
+units.set('visibility', 'km');
 const defaultCoordinates = [50.4501, 30.5241];
 
 export {appSettings, defaultCoordinates, currentUserPosition, recentlyViewedCities, units, favoriteCities, forecast};

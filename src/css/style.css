@@ -105,7 +105,7 @@ header {
     transition: .3s;
 }
 
-#favorite-cities-block {
+#favorite-cities {
     border: none;
     border-left: 1px solid lightslategray;
     background-color: #424b5a;
@@ -259,16 +259,20 @@ footer a {
         width: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
     }
 
-    .option {
+    #input-search-container {
         width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
+    }
+
+    #units-container {
+        width: 100%;
+    }
+
+    #favorite-cities-container {
+        width: 100%;
     }
 
     .current-city-name {
@@ -277,10 +281,6 @@ footer a {
         font-size: 32px;
         text-align: center;
         font-weight: 500;
-    }
-
-    .option form {
-        width: 100%;
     }
 
     .btn-small {
@@ -330,7 +330,7 @@ footer a {
         color: #ffffff;
     }
 
-    #favorite-cities-block {
+    #favorite-cities {
         border: none;
         border-left: 1px solid lightslategray;
         background-color: #424b5a;

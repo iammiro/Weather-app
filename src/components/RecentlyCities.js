@@ -1,7 +1,6 @@
 import {currentUserPosition, recentlyViewedCities} from "../utils/settings";
-import {addHistoryState} from "../utils/historyState";
+import {HandlingURL} from "../utils/Url";
 import {getForecastFromApi} from "../utils/api";
-import {createRecentlyViewedCitiesBlockItem} from "./createTemplate";
 import {setCoordinatesToMapStorage} from "../utils/setCoordinates";
 
 class RecentlyCities {
@@ -11,6 +10,7 @@ class RecentlyCities {
         };
         // this.handleSubmit = this.handleSubmit.bind(this);
         this.host = document.getElementById('recently-viewed-cities-block');
+        this.url = new HandlingURL();
     }
 
     setCityToRecentlyViewedCities(latitude, longitude) {
@@ -20,18 +20,18 @@ class RecentlyCities {
         let lat = coordinates[0];
         let lang = coordinates[1];
 
-        createRecentlyViewedCitiesBlockItem(address);
+        this.render(address);
 
         document.getElementById(`${address}`).addEventListener('click', () => {
             setCoordinatesToMapStorage(lat, lang);
-            addHistoryState(lat, lang);
+            this.url.addHistoryState(lat, lang);
             getForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
         });
     }
 
-    render() {
+    render(address) {
         const {isValid} = this.state;
-        this.host.innerHTML = `<li id="kiev" class="${isValid ? 'recently' : 'recently-invalid'}">${address}</li>`;
+        this.host.innerHTML = `<li id="${address}" class="${isValid ? 'recently' : 'recently-invalid'}">${address}</li>`;
         return this.host;
     }
 
