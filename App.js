@@ -15,7 +15,6 @@ class App {
             city: 'Lviv',
             onSubmit: this.onSearchSubmit()
         };
-        // this.host = document.getElementById('root');
         this.form = new LocationSearch({
             city: this.state.city,
             onSubmit: this.onSearchSubmit()
@@ -26,34 +25,27 @@ class App {
         this.url = new HandlingURL();
         this.units = new SetUnits();
         this.onSearchSubmit = this.onSearchSubmit.bind(this);
-        // this.getForecast = new GetForecastFromApiClass();
     }
 
     onSearchSubmit(city) {
         this.updateState({city});
-        // console.log(this.state);
+        console.log(this.state);
     }
 
     updateState(nextState) {
         this.state = Object.assign({}, this.state, nextState);
-        // this.render();
     }
 
     render() {
         this.form.render();
         this.current.render();
         this.fav.render();
-        this.recent.render();
         this.units.render();
 
         this.url.getParamFromUrl();
         getForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
         // this.host.appendChild(this.form.render());
-
-        // window.onpopstate = () => {
-        //     this.url.getParamFromUrl();
-        //     getForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
-        // };
+        this.fav.getListOfFavoriteCitiesFromLocalStorage();
     }
 }
 

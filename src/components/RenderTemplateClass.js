@@ -6,18 +6,12 @@ class RenderTemplateClass {
             isValid: true
         };
         this.host = document.getElementById('container');
-
     }
 
     render(temp) {
         this.host.innerHTML = '';
         const {isValid} = this.state;
-        // console.log(temp);
-        // console.log('test');
         let dailyData = temp.data;
-
-        console.log(dailyData.data);
-
         dailyData.forEach(function (element, i) {
 
             let dayNumber = new Date(element.time * 1000);

@@ -27,52 +27,40 @@ header {
     align-items: center;
 }
 
-.option {
-    width: 33.3%;
+#input-search-container {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    width: 50%;
+}
+
+#units-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+}
+
+#favorite-cities-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
 }
 
 .address {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     width: 100%;
 }
 
-.current {
-    background-color: #424b5a;
-    color: #e7ebf4;
-    height: 50px;
-}
-
-.units {
-    width: 30%;
-}
-
-.option label {
-    width: 70%;
-}
-
-.btn-small {
-    border: none;
-    border-right: 1px solid lightslategray;
-    width: 10%;
-    height: 50px;
-    background-color: #424b5a;
-    color: #e7ebf4;
-    cursor: pointer;
-    transition: .3s;
-}
-
-.btn-small img {
-    width: 30px;
-    height: 30px;
-}
-
-.btn-small:hover {
-    transition: .3s;
-    background-color: #354b5a;
-    color: #ffffff;
+.address label {
+    width: 100%;
 }
 
 .address-input {
@@ -94,12 +82,40 @@ header {
     font-weight: 300;
 }
 
+.current {
+    background-color: #424b5a;
+    color: #e7ebf4;
+    height: 50px;
+}
+
+.btn-small {
+    border: none;
+    border-right: 1px solid lightslategray;
+    width: 25%;
+    height: 50px;
+    background-color: #424b5a;
+    color: #e7ebf4;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.btn-small img {
+    width: 30px;
+    height: 30px;
+}
+
+.btn-small:hover {
+    transition: .3s;
+    background-color: #354b5a;
+    color: #ffffff;
+}
+
 .unit-button {
     border: none;
     border-left: 1px solid lightslategray;
     background-color: #424b5a;
     color: #e7ebf4;
-    width: 25%;
+    width: 50%;
     height: 50px;
     cursor: pointer;
     transition: .3s;
@@ -110,11 +126,32 @@ header {
     border-left: 1px solid lightslategray;
     background-color: #424b5a;
     color: #e7ebf4;
-    width: 50%;
+    width: 75%;
     height: 50px;
     cursor: pointer;
     padding: 0 10px;
     transition: .3s;
+}
+
+#submit {
+    background-image: url("../img/search.svg");
+    background-size: 30px;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+#addToFav {
+    background-image: url("../img/add.svg");
+    background-size: 30px;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+#currentPos {
+    background-image: url("../img/target.svg");
+    background-size: 30px;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
 .unit-button:hover {
@@ -138,8 +175,8 @@ header {
     margin: 10px 0;
 }
 
-#recently-viewed-cities-block div {
-    margin: 10px;
+.recently {
+    cursor: pointer;
 }
 
 .individual-day-forecast-wrapper {
@@ -199,26 +236,6 @@ header {
     font-family: "Avenir Next", sans-serif;
     font-size: 20px;
     font-weight: 400;
-}
-
-.forecast-wind-speed {
-
-}
-
-.forecast-humidity {
-
-}
-
-.forecast-dew-point {
-
-}
-
-.forecast-uv-index {
-
-}
-
-.forecast-pressure {
-
 }
 
 footer {
@@ -318,7 +335,7 @@ footer a {
         border: none;
         background-color: #424b5a;
         color: #e7ebf4;
-        width: 20%;
+        width: 50%;
         height: 35px;
         cursor: pointer;
         transition: .3s;
@@ -335,8 +352,8 @@ footer a {
         border-left: 1px solid lightslategray;
         background-color: #424b5a;
         color: #e7ebf4;
-        width: 60%;
-        height: 35px;
+        width: 90%;
+        height: 40px;
         cursor: pointer;
         padding: 0 10px;
         transition: .3s;

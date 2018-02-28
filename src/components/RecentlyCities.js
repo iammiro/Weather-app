@@ -8,8 +8,9 @@ class RecentlyCities {
         this.state = {
             isValid: true
         };
-        // this.handleSubmit = this.handleSubmit.bind(this);
+        this.showRecentCityForecast = this.showRecentCityForecast.bind(this);
         this.host = document.getElementById('recently-viewed-cities-block');
+        this.host.addEventListener('click', this.showRecentCityForecast);
         this.url = new HandlingURL();
     }
 
@@ -29,9 +30,21 @@ class RecentlyCities {
         });
     }
 
+    showRecentCityForecast(e) {
+        console.log(e.target.id);
+        for (let i = 0; i++; i > recentlyViewedCities.length) {
+            if (e.target && e.target.matches(`#${address}`)) {
+                setCoordinatesToMapStorage(lat, lang);
+                this.url.addHistoryState(lat, lang);
+                getForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
+                console.log('test');
+            }
+        }
+    }
+
     render(address) {
         const {isValid} = this.state;
-        this.host.innerHTML = `<li id="${address}" class="${isValid ? 'recently' : 'recently-invalid'}">${address}</li>`;
+        this.host.innerHTML += `<li id="${address}" class="${isValid ? 'recently' : 'recently-invalid'}">${address}</li>`;
         return this.host;
     }
 

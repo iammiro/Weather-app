@@ -32,11 +32,11 @@ class LocationSearch {
         if (!city.length) {
             this.updateState({isValid: false});
         } else {
-            this.props.onSubmit(city);
-            this.url = new HandlingURL();
+            // this.props.onSubmit(city);
             // console.log(this.props);
             const geocoder = new google.maps.Geocoder();
             geocoder.geocode({'address': city}, function (results, status) {
+                this.url = new HandlingURL();
                 this.res = new RecentlyCities();
                 if (status === 'OK') {
                     setCoordinatesToMapStorage(results[0].geometry.location.lat(), results[0].geometry.location.lng());
@@ -56,10 +56,10 @@ class LocationSearch {
         const {city} = this.props;
         // console.log(this.props);
         this.host.innerHTML = `<form class="option ${isValid ? 'address' : 'address-invalid'}">
-                                    <label for="address" id="input-search-container">
+                                    <label for="address" id="">
                                         <input id="address" type="text" name="search" required class="address-input" placeholder="TYPE CITY NAME" value="${city}">
                                     </label>
-                                    <button id="submit" class="btn-small"><img src="img/search.svg"></button>
+                                    <button id="submit" class="btn-small"></button>
                                 </form>`;
         return this.host;
     }

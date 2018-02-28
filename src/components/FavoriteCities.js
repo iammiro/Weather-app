@@ -7,36 +7,40 @@ class FavoriteCities {
         };
         this.setCityToFavoriteCities = this.setCityToFavoriteCities.bind(this);
         this.host = document.getElementById('favorite-cities-container');
-        this.addToFav = document.getElementById('addToFav');
-        // this.addToFav.addEventListener('click', this.setCityToFavoriteCities);
-        this.favoriteCitiesSelect = document.getElementById('favorite-cities');
+        this.host.addEventListener('click', this.setCityToFavoriteCities);
+        this.host.addEventListener('click', this.getFavoriteCityForecastFromApi);
     }
 
-    setCityToFavoriteCities() {
-        console.log('sdsa');
-        let address = document.getElementById('address').value;
-        favoriteCities.setItem(`${address}`, `${address};${currentUserPosition.get('latitude')};${currentUserPosition.get('longitude')}`);
-        // console.log(favoriteCities.getItem(`${address}`));
-        // createFavoriteCitiesBlockItem(address);
-        const favoriteCitiesBlockItem = `<option>${address}</option>`;
-        this.favoriteCitiesSelect.append(favoriteCitiesBlockItem);
-    }
+    setCityToFavoriteCities(e) {
+        this.select = document.getElementById('favorite-cities');
+        if (e.target && e.target.matches("#addToFav")) {
 
-    getListOfFavoriteCitiesFromLocalStorage() {
-        for (let i = 0, len = localStorage.length; i < len; ++i) {
-            const favoriteCitiesBlockItem = `<option>${localStorage.getItem(localStorage.key(i))}</option>`;
-            this.favoriteCitiesSelect.append(favoriteCitiesBlockItem);
+            let address = document.getElementById('address').value;
+
+            favoriteCities.setItem(`${address}`, `${address}`);
+            this.select.innerHTML += `<option>${address}</option>`;
+
         }
     }
 
-    getFavoriteCityForecastFromApi() {
-        let selector = document.getElementById('favorite-cities-block');
-        let value = selector[selector.selectedIndex].value;
-        console.log(value);
+    getListOfFavoriteCitiesFromLocalStorage() {
+        this.select = document.getElementById('favorite-cities');
+        for (let i = 0, len = localStorage.length; i < len; ++i) {
+            this.select.innerHTML += `<option>${localStorage.getItem(localStorage.key(i))}</option>`;
+        }
+    }
+
+    getFavoriteCityForecastFromApi(e) {
+        if (e.target && e.target.matches("#favorite-cities")) {
+            let selector = document.getElementById('favorite-cities');
+            let value = selector[selector.selectedIndex].value;
+            console.log(value);
+        }
     }
 
     render() {
-        this.host.innerHTML = `<button id="addToFav" class="btn-small"><img src="img/add.svg"></button>
+        this.host.innerHTML = `<button id="addToFav" class="btn-small"></button>
+                                <label for="favorite-cities"></label>
                                 <select id="favorite-cities"></select>`;
         return this.host;
     }
