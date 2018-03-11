@@ -12,7 +12,7 @@ import {FavoriteCities} from "./src/components/FavoriteCities";
 class App {
     constructor() {
         this.state = {
-            city: 'Lviv',
+            city: `Kiev`,
             onSubmit: this.onSearchSubmit()
         };
         this.form = new LocationSearch({
@@ -41,10 +41,8 @@ class App {
         this.current.render();
         this.fav.render();
         this.units.render();
-
         this.url.getParamFromUrl();
         getForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
-        // this.host.appendChild(this.form.render());
         this.fav.getListOfFavoriteCitiesFromLocalStorage();
     }
 }

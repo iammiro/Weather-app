@@ -1,6 +1,6 @@
 import {appSettings, units} from "../utils/settings";
 
-class RenderTemplateClass {
+class RenderTemplate {
     constructor() {
         this.state = {
             isValid: true
@@ -37,4 +37,4 @@ class RenderTemplateClass {
     }
 }
 
-export {RenderTemplateClass};
+export {RenderTemplate};

@@ -4,13 +4,21 @@ const appSettings = {
     proxy: 'https://cors-anywhere.herokuapp.com/',
     apiKey: 'c0edd7e111d453106e09ff75c17397b8',
     // appURL: 'https://iammiro.github.io/Weather-app/dist/',
-    appURL: 'http://localhost:8080/',
     init: {
         method: 'GET',
         mode: 'cors',
         cache: 'default'
     }
 };
+
+let developmentURL = new URL(window.location.href);
+
+if (developmentURL === 'http://localhost:8080') {
+    appSettings.appURL = (developmentURL.origin + '/');
+} else {
+    appSettings.appURL = 'https://iammiro.github.io/Weather-app/dist/';
+}
+
 let forecast = new Map();
 let currentUserPosition = new Map();
 let recentlyViewedCities = new Map();

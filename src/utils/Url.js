@@ -11,8 +11,6 @@ class HandlingURL {
         params.set('lat', currentUserPosition.get('latitude'));
         params.set('lang', currentUserPosition.get('longitude'));
         this.addHistoryState(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
-        console.log(this.parsedUrl);
-        console.log('dsd' + params);
         return params;
     }
 
