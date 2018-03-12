@@ -1,8 +1,4 @@
-import {getForecastFromApi} from "../utils/api";
-import {setCoordinatesToMapStorage} from "../utils/setCoordinates";
-import {HandlingURL} from "../utils/Url";
-import {currentUserPosition} from "../utils/settings";
-import {RecentlyCities} from "./RecentlyCities";
+import {geocodCityName} from "../utils/geocoding";
 
 class LocationSearch {
     constructor(props) {
@@ -25,20 +21,7 @@ class LocationSearch {
         if (!city.length) {
             this.updateState({isValid: false});
         } else {
-            const geocoder = new google.maps.Geocoder();
-            geocoder.geocode({'address': city}, function (results, status) {
-                this.url = new HandlingURL();
-                this.res = new RecentlyCities();
-                if (status === 'OK') {
-                    setCoordinatesToMapStorage(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-                    this.url.getCoordinatesFromUrl();
-                    this.res.setCityToRecentlyViewedCities(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
-                    getForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
-                    this.url.getParamFromUrl();
-                } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
-                }
-            });
+            geocodCityName(city);
         }
     }
 
