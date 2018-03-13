@@ -3,11 +3,8 @@ import {geocodCityName} from "../utils/geocoding";
 
 class FavoriteCities {
     constructor() {
-        this.state = {};
         this.setCityToFavoriteCities = this.setCityToFavoriteCities.bind(this);
         this.host = document.getElementById('favorite-cities-container');
-        // this.host = document.createElement('div');
-        // this.host.id = 'favorite-cities-container';
         this.host.addEventListener('click', this.setCityToFavoriteCities);
         this.host.addEventListener('change', this.getFavoriteCityForecastFromApi);
 

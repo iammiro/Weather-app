@@ -1,18 +1,19 @@
 import {geocodCityName} from "../utils/geocoding";
+import Component from '../framework/Component';
+import {bindAll} from "../utils";
+import getCurrentUserPosition from '../utils/currentUserPosition';
 
-class LocationSearch {
+class LocationSearch extends Component {
     constructor(props) {
+        super();
         this.state = {
             isValid: true
         };
         this.props = props;
-        this.handleSubmit = this.handleSubmit.bind(this);
+        bindAll(this, 'handleSubmit');
         this.host = document.getElementById('input-search-container');
         this.host.addEventListener('submit', this.handleSubmit);
-    }
-
-    updateState(nextState) {
-        this.state = nextState;
+        this.host.addEventListener('click', getCurrentUserPosition);
     }
 
     handleSubmit(ev) {
@@ -33,9 +34,10 @@ class LocationSearch {
                                         <input id="address" type="text" name="search" required class="address-input" placeholder="TYPE CITY NAME" value="${city}">
                                     </label>
                                     <button id="submit" class="btn-small"></button>
+                                    <button id="currentPos" class="btn-small"></button>
                                 </form>`;
         return this.host;
     }
 }
 
-export {LocationSearch};
+export default LocationSearch;
