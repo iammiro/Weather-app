@@ -7,8 +7,6 @@ class FavoriteCities {
         this.host = document.getElementById('favorite-cities-container');
         this.host.addEventListener('click', this.setCityToFavoriteCities);
         this.host.addEventListener('change', this.getFavoriteCityForecastFromApi);
-
-
     }
 
     setCityToFavoriteCities(e) {
@@ -35,7 +33,7 @@ class FavoriteCities {
     }
 
     render() {
-        this.host.innerHTML = `<button id="addToFav" class="btn-small"></button>
+        this.host.innerHTML += `<button id="addToFav" class="btn-small"></button>
                                 <label for="favorite-cities"></label>
                                 <select id="favorite-cities"></select>`;
         return this.host;

@@ -11,7 +11,9 @@ class LocationSearch extends Component {
         };
         this.props = props;
         bindAll(this, 'handleSubmit');
-        this.host = document.getElementById('input-search-container');
+        // this.host = document.getElementById('input-search-container');
+        this.host = document.createElement('div');
+        this.host.id = 'input-search-container';
         this.host.addEventListener('submit', this.handleSubmit);
         this.host.addEventListener('click', getCurrentUserPosition);
     }
@@ -28,15 +30,15 @@ class LocationSearch extends Component {
 
     render() {
         const {isValid} = this.state;
-        const {city} = this.props;
-        this.host.innerHTML = `<form class="option ${isValid ? 'address' : 'address-invalid'}">
+        const {city} = 'dfd';
+        console.log(this.update);
+        return `<form class="option ${isValid ? 'address' : 'address-invalid'}">
                                     <label for="address" id="">
                                         <input id="address" type="text" name="search" required class="address-input" placeholder="TYPE CITY NAME" value="${city}">
                                     </label>
                                     <button id="submit" class="btn-small"></button>
                                     <button id="currentPos" class="btn-small"></button>
                                 </form>`;
-        return this.host;
     }
 }
 

@@ -10,6 +10,7 @@ class Component {
     }
 
     _render() {
+        // console.log('render');
         const html = this.render();
 
         if (!html && this.host) {
@@ -17,6 +18,7 @@ class Component {
         }
 
         if (typeof html === 'string') {
+            console.log(this.host);
             return append(clearChildren(this.host), toHtml(html));
         } else {
             return append(clearChildren(this.host), html);

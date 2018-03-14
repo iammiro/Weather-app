@@ -12,6 +12,9 @@ import Component from "./src/framework/Component"
 class App extends Component {
     constructor() {
         super();
+        this.host = document.createElement('div');
+        this.host.classList.add('application-container');
+
         this.state = {
             city: `Kiev`
         };
@@ -25,7 +28,7 @@ class App extends Component {
     }
 
     render() {
-        this.form.render();
+        this.form.update(this.state.city);
         this.fav.render();
         this.units.render();
         this.url.getParamFromUrl();
