@@ -1,10 +1,13 @@
 import {favoriteCities} from "../utils/settings";
 import {geocodCityName} from "../utils/geocoding";
+import Component from '../framework/Component';
 
-class FavoriteCities {
+class FavoriteCities extends Component{
     constructor() {
+        super();
         this.setCityToFavoriteCities = this.setCityToFavoriteCities.bind(this);
-        this.host = document.getElementById('favorite-cities-container');
+        this.host = document.createElement('div');
+        this.host.id = 'favorite-cities-container';
         this.host.addEventListener('click', this.setCityToFavoriteCities);
         this.host.addEventListener('change', this.getFavoriteCityForecastFromApi);
     }
@@ -33,10 +36,9 @@ class FavoriteCities {
     }
 
     render() {
-        this.host.innerHTML += `<button id="addToFav" class="btn-small"></button>
-                                <label for="favorite-cities"></label>
-                                <select id="favorite-cities"></select>`;
-        return this.host;
+        return `<button id="addToFav" class="btn-small"></button>
+                <label for="favorite-cities"></label>
+                <select id="favorite-cities"></select>`;
     }
 }
 

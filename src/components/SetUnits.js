@@ -1,10 +1,13 @@
 import {getForecastFromApi} from "../utils/api";
 import {currentUserPosition, units} from "../utils/settings";
+import Component from '../framework/Component';
 
-class SetUnits {
+class SetUnits extends Component{
     constructor() {
+        super();
         this.setUnits = this.setUnits.bind(this);
-        this.host = document.getElementById('units-container');
+        this.host = document.createElement('div');
+        this.host.id = ('units-container');
         this.host.addEventListener('click', this.setUnits);
     }
 
@@ -18,8 +21,7 @@ class SetUnits {
     }
 
     render() {
-        this.host.innerHTML = `<button id="us-unit" class="unit-button">˚F, mph</button><button id="si-unit" class="unit-button">˚C, m/s</button>`;
-        return this.host;
+        return `<button id="us-unit" class="unit-button">˚F, mph</button><button id="si-unit" class="unit-button">˚C, m/s</button>`;
     }
 
 }

@@ -1,17 +1,17 @@
 import {geocodCityName} from "../utils/geocoding";
 import Component from '../framework/Component';
-import {bindAll} from "../utils";
+import {bindAll, clearChildren} from "../utils";
 import getCurrentUserPosition from '../utils/currentUserPosition';
 
 class LocationSearch extends Component {
     constructor(props) {
         super();
         this.state = {
-            isValid: true
+            isValid: true,
+            city: 'Kiev'
         };
         this.props = props;
         bindAll(this, 'handleSubmit');
-        // this.host = document.getElementById('input-search-container');
         this.host = document.createElement('div');
         this.host.id = 'input-search-container';
         this.host.addEventListener('submit', this.handleSubmit);
@@ -30,8 +30,7 @@ class LocationSearch extends Component {
 
     render() {
         const {isValid} = this.state;
-        const {city} = 'dfd';
-        console.log(this.update);
+        const {city} = this.state.city;
         return `<form class="option ${isValid ? 'address' : 'address-invalid'}">
                                     <label for="address" id="">
                                         <input id="address" type="text" name="search" required class="address-input" placeholder="TYPE CITY NAME" value="${city}">

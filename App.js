@@ -28,12 +28,18 @@ class App extends Component {
     }
 
     render() {
-        this.form.update(this.state.city);
-        this.fav.render();
-        this.units.render();
+
+        const toRender = [
+            this.form.update(this.state.city),
+            this.fav.update(),
+            this.units.update()
+        ];
+
         this.url.getParamFromUrl();
         getForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
-        this.fav.getListOfFavoriteCitiesFromLocalStorage();
+        // this.fav.getListOfFavoriteCitiesFromLocalStorage();
+
+        return toRender
     }
 }
 
