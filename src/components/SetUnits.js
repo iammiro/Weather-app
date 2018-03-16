@@ -1,11 +1,12 @@
-import {getForecastFromApi} from "../utils/api";
+import getForecastFromApi from "../utils/api";
 import {currentUserPosition, units} from "../utils/settings";
+import {bindAll} from "../utils";
 import Component from '../framework/Component';
 
 class SetUnits extends Component{
     constructor() {
         super();
-        this.setUnits = this.setUnits.bind(this);
+        bindAll(this, 'setUnits');
         this.host = document.createElement('div');
         this.host.id = ('units-container');
         this.host.addEventListener('click', this.setUnits);
@@ -26,4 +27,4 @@ class SetUnits extends Component{
 
 }
 
-export {SetUnits};
+export default SetUnits;

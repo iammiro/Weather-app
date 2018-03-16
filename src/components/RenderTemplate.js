@@ -8,10 +8,10 @@ class RenderTemplate {
         this.host = document.getElementById('container');
     }
 
-    render(temp) {
+    render(res) {
         this.host.innerHTML = '';
         const {isValid} = this.state;
-        let dailyData = temp.data;
+        let dailyData = res.data;
         dailyData.forEach(function (element, i) {
 
             let dayNumber = new Date(element.time * 1000);
@@ -22,7 +22,7 @@ class RenderTemplate {
                 <div id="header-${i}" class="forecast-header">${day}</div>
                 <img id="icon-${i}" class="forecast-icon" src="${appSettings.appURL}/img/${element.icon}.svg">
                 <div id="under-header-${i}" class="forecast-day-temperature">&#9790; ${Math.round(element.temperatureMin)}˚ &#8594; &#9788; ${Math.round(element.temperatureMax)}˚ ${units.get('temperature')}.</div>
-                <div id="summary-${i}" class="forecast-summary">Mostly cloudy throughout the day.</div>
+                <div id="summary-${i}" class="forecast-summary">${element.summary}.</div>
                     <section class="individual-day-forecast-footer-wrapper">
                     <div id="windSpeed-${i}" class="forecast-wind-speed forecast-item">Wind:<br><br> ${Math.round(element.windSpeed)} ${units.get('speed')}</div>
                     <div id="humidity-${i}" class="forecast-humidity forecast-item">Humidity:<br><br> ${Math.round(element.humidity)} %</div>
@@ -37,4 +37,4 @@ class RenderTemplate {
     }
 }
 
-export {RenderTemplate};
+export default RenderTemplate;

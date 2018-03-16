@@ -1,7 +1,7 @@
 import {appSettings, units} from './settings.js';
-import {RenderTemplate} from "../components/RenderTemplate";
+import RenderTemplate from "../components/RenderTemplate";
 
-const data = new RenderTemplate();
+const _renderTemplate = new RenderTemplate();
 
 const getForecastFromApi = (latitude, longitude) => {
     let url = `${appSettings.proxy}${appSettings.apiUrl}${appSettings.apiKey}/${latitude},${longitude}?units=${units.get('units')}`;
@@ -12,12 +12,12 @@ const getForecastFromApi = (latitude, longitude) => {
         .then(function (myBlob) {
             return myBlob.daily;
         })
-        .then(function (temp) {
-            data.render(temp);
+        .then(function (res) {
+            _renderTemplate.render(res);
         })
         .catch(function (error) {
             console.log(error);
         });
 };
 
-export {getForecastFromApi};
+export default getForecastFromApi;

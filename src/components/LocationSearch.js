@@ -1,4 +1,4 @@
-import {geocodCityName} from "../utils/geocoding";
+import geocodCityName from "../utils/geocoding";
 import Component from '../framework/Component';
 import {bindAll, clearChildren} from "../utils";
 import getCurrentUserPosition from '../utils/currentUserPosition';
@@ -32,12 +32,12 @@ class LocationSearch extends Component {
         const {isValid} = this.state;
         const {city} = this.state.city;
         return `<form class="option ${isValid ? 'address' : 'address-invalid'}">
-                                    <label for="address" id="">
-                                        <input id="address" type="text" name="search" required class="address-input" placeholder="TYPE CITY NAME" value="${city}">
-                                    </label>
-                                    <button id="submit" class="btn-small"></button>
-                                    <button id="currentPos" class="btn-small"></button>
-                                </form>`;
+                    <label for="address" id="">
+                        <input id="address" type="text" name="search" required class="address-input" placeholder="TYPE CITY NAME" value="${city}">
+                    </label>
+                    <button id="submit" class="btn-small"></button>
+                    <button id="currentPos" class="btn-small"></button>
+                </form>`;
     }
 }
 

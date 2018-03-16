@@ -35,4 +35,4 @@ class HandlingURL {
 
 }
 
-export {HandlingURL};
+export default HandlingURL;

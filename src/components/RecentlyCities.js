@@ -1,15 +1,19 @@
 import {currentUserPosition, recentlyViewedCities} from "../utils/settings";
-import {HandlingURL} from "../utils/Url";
-import {getForecastFromApi} from "../utils/api";
+import HandlingURL from "../utils/Url";
+import {bindAll} from "../utils";
+import getForecastFromApi from "../utils/api";
 import {setCoordinatesToMapStorage} from "../utils/setCoordinates";
+import Component from "../framework/Component"
 
-class RecentlyCities {
+class RecentlyCities extends Component {
     constructor() {
+        super();
         this.state = {
             isValid: true
         };
-        this.showRecentCityForecast = this.showRecentCityForecast.bind(this);
-        this.host = document.getElementById('recently-viewed-cities-block');
+        bindAll(this, 'showRecentCityForecast');
+        this.host = document.createElement('div');
+        this.host.id = 'recently-viewed-cities-block';
         this.host.addEventListener('click', this.showRecentCityForecast);
         this.url = new HandlingURL();
     }
@@ -44,10 +48,9 @@ class RecentlyCities {
 
     render(address) {
         const {isValid} = this.state;
-        this.host.innerHTML += `<li id="${address}" class="${isValid ? 'recently' : 'recently-invalid'}">${address}</li>`;
-        return this.host;
+        return `<li id="${address}" class="${isValid ? 'recently' : 'recently-invalid'}">${address}</li>`;
     }
 
 }
 
-export {RecentlyCities};
+export default RecentlyCities;

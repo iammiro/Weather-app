@@ -1,6 +1,7 @@
 import {setCoordinatesToMapStorage} from "./setCoordinates";
-import {getForecastFromApi} from "./api";
-import {HandlingURL} from "./Url";
+import getForecastFromApi from "./api";
+import HandlingURL from "./Url";
+
 const url = new HandlingURL();
 
 const getCurrentUserPosition = (e) => {

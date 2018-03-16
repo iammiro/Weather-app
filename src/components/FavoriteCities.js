@@ -1,5 +1,5 @@
 import {favoriteCities} from "../utils/settings";
-import {geocodCityName} from "../utils/geocoding";
+import geocodCityName from "../utils/geocoding";
 import Component from '../framework/Component';
 
 class FavoriteCities extends Component{
@@ -42,4 +42,4 @@ class FavoriteCities extends Component{
     }
 }
 
-export {FavoriteCities};
+export default FavoriteCities;
