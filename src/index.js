@@ -1,5 +1,5 @@
-import {clearChildren} from "./src/utils";
-import App from './App';
+import {clearChildren} from "./utils";
+import App from '../App';
 
 const init = new App();
 

@@ -1,57 +1,92 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const webpack = require('webpack');
 const path = require('path');
+const webpack = require('webpack');
 
 
-const config = {
-    entry: './index.js',
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js'
-    },
-    devtool: 'inline-source-map',
-    devServer: {
-        contentBase: './dist'
-    },
-    module: {
-        rules: [
-            {
-                test: /\.txt$/, use: 'raw-loader'
-            },
-            {
-                test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env']
-                    }
-                }
-            },
-            {
-                test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: "css-loader"
-                })
-            },
-            {
-                test : /\.(png|jpe?g|svg)$/,
-                loader : 'file-loader',
-                exclude: /(temp)/,
-                options: {
-                    outputPath: 'img/',
-                    name: '[name].[ext]',
-                }
-            }
-        ]
-    },
-    plugins: [
-        new webpack.optimize.UglifyJsPlugin(),
-        new HtmlWebpackPlugin({template: './index.html'}),
-        new ExtractTextPlugin("styles.css")
-    ]
-};
 
-module.exports = config;
+
+/*
+ * SplitChunksPlugin is enabled by default and replaced
+ * deprecated CommonsChunkPlugin. It automatically identifies modules which
+ * should be splitted of chunk by heuristics using module duplication count and
+ * module category (i. e. node_modules). And splits the chunks…
+ *
+ * It is safe to remove "splitChunks" from the generated configuration
+ * and was added as an educational example.
+ *
+ * https://webpack.js.org/plugins/split-chunks-plugin/
+ *
+ */
+
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+
+
+
+/*
+ * We've enabled HtmlWebpackPlugin for you! This generates a html
+ * page for you when you compile webpack, which will make you start
+ * developing and prototyping faster.
+ *
+ * https://github.com/jantimon/html-webpack-plugin
+ *
+ */
+
+const workboxPlugin = require('workbox-webpack-plugin');
+
+
+
+
+/*
+ * We've enabled TerserPlugin for you! This minifies your app
+ * in order to load faster and run less javascript.
+ *
+ * https://github.com/webpack-contrib/terser-webpack-plugin
+ *
+ */
+
+const TerserPlugin = require('terser-webpack-plugin');
+
+
+
+
+module.exports = {
+  mode: 'production',
+
+  plugins: [new webpack.ProgressPlugin(), new HtmlWebpackPlugin({
+            template: 'index.html'
+          }), new workboxPlugin.GenerateSW({
+          swDest: 'sw.js',
+          clientsClaim: true,
+          skipWaiting: false,
+        })],
+
+  module: {
+      rules: [
+          {
+              test: /\.css$/i,
+              use: ['style-loader', 'css-loader'],
+          },
+          {
+              test : /\.(png|jpe?g|svg)$/,
+              loader : 'file-loader',
+              exclude: /(temp)/,
+              options: {
+                  outputPath: 'img/',
+                  name: '[name].[ext]',
+              }
+          }
+      ],
+  },
+
+  devServer: {
+    open: true
+  },
+
+  optimization: {
+    minimizer: [new TerserPlugin()],
+
+    splitChunks: {
+      chunks: 'all'
+    }
+  }
+}

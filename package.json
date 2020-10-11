@@ -1,38 +1,34 @@
 {
-  "name": "weather_app",
+  "name": "my-webpack-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "My webpack project",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "webpack --watch",
-    "start": "webpack-dev-server --open",
-    "build": "webpack"
+    "build": "webpack",
+    "start": "webpack serve"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iammiro/Weather-app.git"
+    "url": "git+https://github.com/miroslav-kolomiets/Weather-app.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/iammiro/Weather-app/issues"
+    "url": "https://github.com/miroslav-kolomiets/Weather-app/issues"
   },
-  "homepage": "https://github.com/iammiro/Weather-app#readme",
+  "homepage": "https://github.com/miroslav-kolomiets/Weather-app#readme",
   "devDependencies": {
-    "css-loader": "^0.28.9",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "file-loader": "^1.1.6",
-    "html-webpack-plugin": "^2.30.1",
-    "image-webpack-loader": "^4.0.0",
-    "style-loader": "^0.20.1",
-    "url-loader": "^0.6.2",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.11.1"
-  },
-  "dependencies": {
-    "@babel/core": "^7.0.0-beta.39",
-    "@babel/preset-env": "^7.0.0-beta.39",
-    "babel-loader": "^8.0.0-beta.0"
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "css-loader": "^4.3.0",
+    "file-loader": "^6.1.1",
+    "html-webpack-plugin": "^4.5.0",
+    "style-loader": "^2.0.0",
+    "svg-inline-loader": "^0.8.2",
+    "terser-webpack-plugin": "^4.2.3",
+    "webpack": "^5.0.0",
+    "webpack-cli": "^4.0.0",
+    "webpack-dev-server": "^3.11.0",
+    "workbox-webpack-plugin": "^5.1.4"
   }
 }
