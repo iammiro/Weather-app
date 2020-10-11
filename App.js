@@ -1,5 +1,5 @@
 import style from './src/css/style.css';
-import images from './src/img/index';
+// import images from './src/img/index';
 import getForecastFromApi from "./src/utils/api";
 import HandlingURL from "./src/utils/Url";
 import {currentUserPosition} from "./src/utils/settings";

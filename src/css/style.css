@@ -134,21 +134,21 @@ header {
 }
 
 #submit {
-    background-image: url("../img/search.svg");
+    /*background-image: url("../img/search.svg");*/
     background-size: 30px;
     background-repeat: no-repeat;
     background-position: center center;
 }
 
 #addToFav {
-    background-image: url("../img/add.svg");
+    /*background-image: url("../img/add.svg");*/
     background-size: 30px;
     background-repeat: no-repeat;
     background-position: center center;
 }
 
 #currentPos {
-    background-image: url("../img/target.svg");
+    /*background-image: url("../img/target.svg");*/
     background-size: 30px;
     background-repeat: no-repeat;
     background-position: center center;

@@ -1,17 +1,31 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Weather App</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" rel="stylesheet">
-</head>
-<body>
-<div id="root"></div>
-<div id="container"></div>
-<footer>
-    <p>2018 - <a href="https://github.com/iammiro">iammiro</a></p>
-</footer>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAh_XQ81L-28bp1dy60eKIL5txR-CjPxC0"></script>
-</body>
+<html lang="en">
+    <head>
+        <title>Weather App</title>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="root"></div>
+        <div id="container"></div>
+        <footer>
+            <p>2018 - <a href="https://github.com/miroslav-kolomiets">miroslav-kolomiets</a></p>
+        </footer>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAh_XQ81L-28bp1dy60eKIL5txR-CjPxC0"></script>
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker
+                        .register('/sw.js')
+                        .then((registration) => {
+                            console.log('SW registered: ', registration);
+                        })
+                        .catch((registrationError) => {
+                            console.log('SW registration failed: ', registrationError);
+                        });
+                });
+            }
+        </script>
+    </body>
 </html>
