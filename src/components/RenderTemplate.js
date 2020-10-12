@@ -1,26 +1,25 @@
-import {appSettings, units} from "../utils/settings";
+import { appSettings, units } from '../utils/settings';
 
 class RenderTemplate {
-    constructor() {
-        this.state = {
-            isValid: true
-        };
-        this.host = document.getElementById('container');
-    }
+  constructor() {
+    this.state = {
+      isValid: true,
+    };
+    this.host = document.getElementById('container');
+  }
 
-    render(res) {
-        this.host.innerHTML = '';
-        const {isValid} = this.state;
-        let dailyData = res.data;
-        dailyData.forEach(function (element, i) {
+  render(res) {
+    this.host.innerHTML = '';
+    const { isValid } = this.state;
+    const dailyData = res.data;
+    dailyData.forEach((element, i) => {
+      const dayNumber = new Date(element.time * 1000);
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const day = days[dayNumber.getDay()];
 
-            let dayNumber = new Date(element.time * 1000);
-            let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            let day = days[dayNumber.getDay()];
-
-            document.getElementById('container').innerHTML += `<section class="${isValid ? 'individual-day-forecast-wrapper' : 'individual-day-forecast-wrapper-invalid'}">
+      document.getElementById('container').innerHTML += `<section class="${isValid ? 'individual-day-forecast-wrapper' : 'individual-day-forecast-wrapper-invalid'}">
                 <div id="header-${i}" class="forecast-header">${day}</div>
-                <img id="icon-${i}" class="forecast-icon" src="${appSettings.appURL}/img/${element.icon}.svg">
+                <img id="icon-${i}" class="forecast-icon" src="${appSettings.appURL}/img/${element.icon}.svg" alt="forecast-icon">
                 <div id="under-header-${i}" class="forecast-day-temperature">&#9790; ${Math.round(element.temperatureMin)}˚ &#8594; &#9788; ${Math.round(element.temperatureMax)}˚ ${units.get('temperature')}.</div>
                 <div id="summary-${i}" class="forecast-summary">${element.summary}.</div>
                     <section class="individual-day-forecast-footer-wrapper">
@@ -32,9 +31,9 @@ class RenderTemplate {
                     </section>
                 </section>`;
 
-            return document.getElementById('container');
-        });
-    }
+      return document.getElementById('container');
+    });
+  }
 }
 
 export default RenderTemplate;

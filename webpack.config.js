@@ -1,9 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 
-
-
-
 /*
  * SplitChunksPlugin is enabled by default and replaced
  * deprecated CommonsChunkPlugin. It automatically identifies modules which
@@ -19,9 +16,6 @@ const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-
-
-
 /*
  * We've enabled HtmlWebpackPlugin for you! This generates a html
  * page for you when you compile webpack, which will make you start
@@ -33,9 +27,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const workboxPlugin = require('workbox-webpack-plugin');
 
-
-
-
 /*
  * We've enabled TerserPlugin for you! This minifies your app
  * in order to load faster and run less javascript.
@@ -46,47 +37,57 @@ const workboxPlugin = require('workbox-webpack-plugin');
 
 const TerserPlugin = require('terser-webpack-plugin');
 
-
-
-
 module.exports = {
-  mode: 'production',
+    mode: 'production',
 
-  plugins: [new webpack.ProgressPlugin(), new HtmlWebpackPlugin({
-            template: 'index.html'
-          }), new workboxPlugin.GenerateSW({
-          swDest: 'sw.js',
-          clientsClaim: true,
-          skipWaiting: false,
-        })],
+    experiments: {
+        asset: true
+    },
 
-  module: {
-      rules: [
-          {
-              test: /\.css$/i,
-              use: ['style-loader', 'css-loader'],
-          },
-          {
-              test : /\.(png|jpe?g|svg)$/,
-              loader : 'file-loader',
-              exclude: /(temp)/,
-              options: {
-                  outputPath: 'img/',
-                  name: '[name].[ext]',
-              }
-          }
-      ],
-  },
+    plugins: [new webpack.ProgressPlugin(), new HtmlWebpackPlugin({
+        template: 'index.html'
+    }), new workboxPlugin.GenerateSW({
+        swDest: 'sw.js',
+        clientsClaim: true,
+        skipWaiting: false,
+    })],
 
-  devServer: {
-    open: true
-  },
+    module: {
+        rules: [
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader'],
+            },
+            {
+                test: /\.(png|jpe?g|svg)$/,
+                loader: 'file-loader',
+                exclude: /(temp)/,
+                options: {
+                    outputPath: 'img/',
+                    name: '[name].[ext]',
+                }
+            },
+            {
+                test: /\.(js)$/,
+                exclude: /node_modules/,
+                loader: "eslint-loader",
+                enforce: 'pre',
+                options: {
+                    fix: true,
+                },
+            },
+        ],
+    },
 
-  optimization: {
-    minimizer: [new TerserPlugin()],
+    devServer: {
+        open: true
+    },
 
-    splitChunks: {
-      chunks: 'all'
+    optimization: {
+        minimizer: [new TerserPlugin()],
+
+        splitChunks: {
+            chunks: 'all'
+        }
     }
-  }
 }
