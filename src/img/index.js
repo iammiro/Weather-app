@@ -14,18 +14,18 @@ import Search from './search.svg';
 import Add from './add.svg';
 
 export {
-    Search,
-    Add,
-    ClearDay,
-    ClearNight,
-    Cloudy,
-    Target,
-    Fog,
-    Magnifier,
-    PartyCloudyDay,
-    PartyCloudyNight,
-    Rain,
-    Sleet,
-    Snow,
-    Wing
+  Search,
+  Add,
+  ClearDay,
+  ClearNight,
+  Cloudy,
+  Target,
+  Fog,
+  Magnifier,
+  PartyCloudyDay,
+  PartyCloudyNight,
+  Rain,
+  Sleet,
+  Snow,
+  Wing,
 };
