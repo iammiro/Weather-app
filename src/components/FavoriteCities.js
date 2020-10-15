@@ -7,7 +7,7 @@ class FavoriteCities extends Component {
     super();
     this.setCityToFavoriteCities = this.setCityToFavoriteCities.bind(this);
     this.host = document.createElement('div');
-    this.host.id = 'favorite-cities-container';
+    this.host.className = 'toolbar-row';
     this.host.addEventListener('click', this.setCityToFavoriteCities);
     this.host.addEventListener('change', this.getFavoriteCityForecastFromApi);
   }
@@ -36,9 +36,14 @@ class FavoriteCities extends Component {
   }
 
   render() {
-    return `<button id="addToFav" class="btn-small"/>
-                <label for="favorite-cities"/>
-                <select id="favorite-cities"/>`;
+    return `<div class="form-item">
+                <button id="addToFav" class="control control--size--small control--theme--gray"></button>
+            </div>
+            <div class="form-item">
+              <label for="favorite-cities">
+                  <select id="favorite-cities" class="select"/>
+              </label>
+            </div>`;
   }
 }
 

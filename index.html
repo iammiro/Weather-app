@@ -12,19 +12,5 @@
             <p>2018 - <a href="https://github.com/miroslav-kolomiets">miroslav-kolomiets</a></p>
         </footer>
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAh_XQ81L-28bp1dy60eKIL5txR-CjPxC0"></script>
-        <script>
-            if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => {
-                    navigator.serviceWorker
-                        .register('/sw.js')
-                        .then((registration) => {
-                            console.log('SW registered: ', registration);
-                        })
-                        .catch((registrationError) => {
-                            console.log('SW registration failed: ', registrationError);
-                        });
-                });
-            }
-        </script>
     </body>
 </html>

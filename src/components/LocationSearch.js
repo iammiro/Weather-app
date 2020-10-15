@@ -13,7 +13,7 @@ class LocationSearch extends Component {
     this.props = props;
     bindAll(this, 'handleSubmit');
     this.host = document.createElement('div');
-    this.host.id = 'input-search-container';
+    this.host.className = 'toolbar-row';
     this.host.addEventListener('submit', this.handleSubmit);
     this.host.addEventListener('click', getCurrentUserPosition);
   }
@@ -29,15 +29,23 @@ class LocationSearch extends Component {
   }
 
   render() {
-    const { isValid } = this.state;
+    // const { isValid } = this.state;
     const { city } = this.state.city;
-    return `<form class="option ${isValid ? 'address' : 'address-invalid'}">
-                    <label for="address" id="">
-                        <input id="address" type="text" name="search" required class="address-input" placeholder="TYPE CITY NAME" value="${city}">
-                    </label>
-                    <button id="submit" class="btn-small"/>
-                    <button id="currentPos" class="btn-small"/>
-                </form>`;
+    return `<form class="option">
+              <div class="form-row">
+                <div class="form-item">
+                  <button id="currentPos" class="control control--size--small control--theme--gray"></button>
+              </div>
+              <div class="form-item">
+                <label for="address" id="">
+                    <input id="address" type="text" name="search" required class="input-field" placeholder="TYPE CITY NAME" value="${city}">
+                </label>
+              </div>
+              <div class="form-item">
+                <button id="submit" class="control control--size--small control--theme--gray"></button>
+              </div>
+              </div>
+            </form>`;
   }
 }
 

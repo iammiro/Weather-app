@@ -14,7 +14,7 @@ class App extends Component {
   constructor() {
     super();
     this.host = document.createElement('div');
-    this.host.classList.add('application-container');
+    this.host.classList.add('toolbar');
     this.state = {
       city: 'Kiev',
     };
@@ -30,14 +30,17 @@ class App extends Component {
   render() {
     const toRender = [
       this._locationSearch.update(this.state.city),
-      this._favoriteCities.update(),
       this._setUnits.update(),
-      this._recentlyCities.update(),
+      this._favoriteCities.update(),
+      // this._recentlyCities.update(),
     ];
 
     this._handlingURL.getParamFromUrl();
 
-    getForecastFromApi(currentUserPosition.get('latitude'), currentUserPosition.get('longitude'));
+    getForecastFromApi(
+      currentUserPosition.get('latitude'),
+      currentUserPosition.get('longitude'),
+    );
 
     return toRender;
   }
