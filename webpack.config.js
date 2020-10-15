@@ -25,8 +25,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
  *
  */
 
-const workboxPlugin = require('workbox-webpack-plugin');
-
 /*
  * We've enabled TerserPlugin for you! This minifies your app
  * in order to load faster and run less javascript.
@@ -46,10 +44,6 @@ module.exports = {
 
     plugins: [new webpack.ProgressPlugin(), new HtmlWebpackPlugin({
         template: 'index.html'
-    }), new workboxPlugin.GenerateSW({
-        swDest: 'sw.js',
-        clientsClaim: true,
-        skipWaiting: false,
     })],
 
     module: {
@@ -57,6 +51,17 @@ module.exports = {
             {
                 test: /\.css$/i,
                 use: ['style-loader', 'css-loader'],
+            },
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    // Creates `style` nodes from JS strings
+                    'style-loader',
+                    // Translates CSS into CommonJS
+                    'css-loader',
+                    // Compiles Sass to CSS
+                    'sass-loader',
+                ],
             },
             {
                 test: /\.(png|jpe?g|svg)$/,

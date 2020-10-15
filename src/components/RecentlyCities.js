@@ -13,7 +13,7 @@ class RecentlyCities extends Component {
     };
     bindAll(this, 'showRecentCityForecast');
     this.host = document.createElement('div');
-    this.host.id = 'recently-viewed-cities-block';
+    this.host.className = 'toolbar-row';
     this.host.addEventListener('click', this.showRecentCityForecast);
     this.url = new HandlingURL();
   }

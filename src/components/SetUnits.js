@@ -8,7 +8,7 @@ class SetUnits extends Component {
     super();
     bindAll(this, 'setUnits');
     this.host = document.createElement('div');
-    this.host.id = ('units-container');
+    this.host.className = ('toolbar-row');
     this.host.addEventListener('click', this.setUnits);
   }
 
@@ -22,7 +22,8 @@ class SetUnits extends Component {
   }
 
   render() {
-    return '<button id="us-unit" class="unit-button">˚F, mph</button><button id="si-unit" class="unit-button">˚C, m/s</button>';
+    return `<div class="form-item"><button id="us-unit" class="control control--size--medium control--theme--gray">˚F, mph</button></div>
+            <div class="form-item"><button id="si-unit" class="control control--size--medium control--theme--gray">˚C, m/s</button></div>`;
   }
 }
 
